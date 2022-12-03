@@ -40,15 +40,16 @@
 (global-hl-line-mode +1)
 (recentf-mode 1)
 (global-display-line-numbers-mode +1)
-
+(show-paren-mode +1)
 
 ;;;;;;;;;;;;;;
 ;; packages ;;
 ;;;;;;;;;;;;;;
 
-(use-package emacs
-  :config
-  (add-hook 'prog-mode-hook #'aggressive-indent-mode))
+(use-package magit)
+
+(use-package aggressive-indent
+  :config (add-hook 'prog-mode-hook #'aggressive-indent-mode))
 
 (use-package whole-line-or-region
   :config (whole-line-or-region-global-mode +1))
@@ -185,7 +186,6 @@
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
-         ("C-s" . consult-line) ;; needed by consult-line to detect isearch
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
