@@ -46,6 +46,9 @@
 ;; packages ;;
 ;;;;;;;;;;;;;;
 
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
+
 (use-package magit)
 
 (use-package aggressive-indent
@@ -81,10 +84,8 @@
 (use-package all-the-icons
   :after doom-modeline)
 
-(use-package solarized-theme)
-
-(use-package doom-themes
-  :config (load-theme 'doom-dark+ t))
+(use-package modus-theme
+  :config (load-theme 'modus-vivendi t))
 
 (use-package key-chord
   :config (key-chord-mode +1))

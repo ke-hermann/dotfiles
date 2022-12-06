@@ -1,6 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3400
+SETUVAR _fish_abbr_agar:sudo\x20apt\x20autoremove
+SETUVAR _fish_abbr_agi:sudo\x20apt\x20install
+SETUVAR _fish_abbr_agr:sudo\x20apt\x20remove
+SETUVAR _fish_abbr_agu:sudo\x20apt\x20update\x20\x26\x26\x20sudo\x20apt\x20upgrade
 SETUVAR _fish_abbr_dnfi:sudo\x20dnf\x20install
 SETUVAR _fish_abbr_dnfr:sudo\x20dnf\x20remove
 SETUVAR _fish_abbr_dnfs:dnf\x20search
@@ -45,4 +49,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dwhite
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/home/nrmncr/bin
+SETUVAR fish_user_paths:/home/linuxbrew/\x2elinuxbrew/bin\x1e/home/nrmncr/bin
