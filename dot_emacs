@@ -16,8 +16,8 @@
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-      (package-install 'use-package))
-  
+  (package-install 'use-package))
+
 (eval-when-compile
   (require 'use-package))
 
@@ -46,7 +46,41 @@
   (show-paren-mode +1)
   (auto-save-visited-mode +1))
 
+;;; Vim Bindings
+(use-package evil
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  ;; allows for using cgn
+  ;; (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  ;; no vim insert bindings
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-C-u-scroll t)
+  :config
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (evil-mode 1))
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
+
+(use-package evil-cleverparens
+  :after paredit
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
+  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode))
+
 (use-package exec-path-from-shell
+  :disabled (string= system-type "windows-nt")
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -101,13 +135,10 @@
 
 ;; Enable vertico
 (use-package vertico
+  :bind (("C-n" . vertico-next)
+	 ("C-p" . vertico-previous))
   :init
   (vertico-mode +1))
-
-(use-package vertico-buffer
-  :after vertico
-  :ensure nil
-  :init (vertico-buffer-mode +1))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
