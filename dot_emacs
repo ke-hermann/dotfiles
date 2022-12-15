@@ -1,3 +1,7 @@
+;;; package --- personal emacs configuration files
+;;; Commentary:
+
+;;; Code:
 ;; separate custom file location
 (setq custom-file "~/.config/emacs-custom.el")
 (load custom-file)
@@ -36,18 +40,16 @@
   (setq vc-follow-symlinks t)
   (setq ring-bell-function 'ignore)
   (setq custom-safe-themes t)
+  (setq display-line-numbers-type nil)
   (electric-pair-mode +1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (menu-bar-mode -1)
   (global-hl-line-mode +1)
   (recentf-mode 1)
-  (global-display-line-numbers-mode -1)
   (show-paren-mode +1)
   (auto-save-visited-mode +1))
 
-(use-package solarized-theme
-  :config (load-theme 'solarized-gruvbox-light t))
 
 ;;; Vim Bindings
 (use-package evil
@@ -103,8 +105,7 @@
 (use-package which-key
   :config (which-key-mode +1))
 
-(use-package ace-window
-  :config (global-set-key (kbd "M-o") 'ace-window))
+(use-package ace-window)
 
 (use-package cider)
 
@@ -116,9 +117,18 @@
 (use-package eglot)
 
 (use-package doom-modeline
-  :config (doom-modeline-mode +1))
+  :config
+  (setq doom-modeline-icon (not (string= system-type "windows-nt")))
+  (doom-modeline-mode +1))
+
+(use-package modus-themes
+  :config
+  (setq modus-themes-mode-line '(moody borderless accented))
+  (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
+  (load-theme 'modus-vivendi t))
 
 (use-package all-the-icons
+  :disabled (string= system-type "windows-nt")
   :after doom-modeline)
 
 (use-package key-chord
@@ -128,6 +138,15 @@
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
+
+;; Package to manage keybindings, useful because it can sanely handle evil-mode bindings
+(use-package general
+  :config
+  (general-define-key
+   :states '(normal visual insert emacs)
+   :keymaps '(normal evil-cleverparens-mode-map)
+   "M-o" 'ace-window))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; completion framework setup ;;
@@ -304,5 +323,6 @@
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-  )
+  (setq consult-narrow-key "<"))
+(provide '.emacs)
+;;; .emacs ends here
