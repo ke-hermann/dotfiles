@@ -99,6 +99,14 @@
 (use-package company
   :config (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package tree-sitter
+  :config
+  (global-tree-sitter-mode +1)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs
+  :after tree-sitter)
+
 (use-package flycheck
   :config (global-flycheck-mode))
 
@@ -116,12 +124,16 @@
 
 (use-package eglot)
 
+(use-package doom-themes
+  :config (load-theme 'doom-challenger-deep t))
+
 (use-package doom-modeline
   :config
   (setq doom-modeline-icon (not (string= system-type "windows-nt")))
   (doom-modeline-mode +1))
 
 (use-package modus-themes
+  :disabled t
   :config
   (setq modus-themes-mode-line '(moody borderless accented))
   (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
@@ -144,7 +156,7 @@
   :config
   (general-define-key
    :states '(normal visual insert emacs)
-   :keymaps '(normal evil-cleverparens-mode-map)
+   :keymaps '(normal prog-mode-map evil-cleverparens-mode-map eshell-mode-map)
    "M-o" 'ace-window))
 
 
