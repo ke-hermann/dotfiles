@@ -91,7 +91,9 @@
 (use-package magit)
 
 (use-package aggressive-indent
-  :config (add-hook 'prog-mode-hook #'aggressive-indent-mode))
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
 
 (use-package whole-line-or-region
   :config (whole-line-or-region-global-mode +1))
@@ -125,7 +127,8 @@
 (use-package eglot)
 
 (use-package doom-themes
-  :config (load-theme 'doom-challenger-deep t))
+  :disabled t
+  :config (load-theme 'doom-solarized-light t))
 
 (use-package doom-modeline
   :config
@@ -133,7 +136,6 @@
   (doom-modeline-mode +1))
 
 (use-package modus-themes
-  :disabled t
   :config
   (setq modus-themes-mode-line '(moody borderless accented))
   (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
