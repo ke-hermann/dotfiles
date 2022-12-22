@@ -126,9 +126,8 @@
 
 (use-package eglot)
 
-(use-package doom-themes
-  :disabled t
-  :config (load-theme 'doom-solarized-light t))
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
 
 (use-package doom-modeline
   :config
@@ -136,9 +135,10 @@
   (doom-modeline-mode +1))
 
 (use-package modus-themes
+  :disabled t
   :config
   (setq modus-themes-mode-line '(moody borderless accented))
-  (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
+  ;; (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
   (load-theme 'modus-vivendi t))
 
 (use-package all-the-icons
