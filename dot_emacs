@@ -128,7 +128,7 @@
 (use-package eglot)
 
 (use-package solarized-theme
-  :config (load-theme 'doom-ayu-dark t))
+  :config (load-theme 'doom-solarized-light t))
 
 (use-package doom-modeline
   :config
