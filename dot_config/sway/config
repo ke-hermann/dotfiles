@@ -18,6 +18,8 @@ smart_gaps on
 
 gaps inner 10
 
+font pango: Inter Medium 11 
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -176,6 +178,9 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+# Default window settings
+for_window [app_id="nautilus"] floating enable
+
 #
 # Status Bar:
 #
@@ -189,8 +194,8 @@ bar {
 
     colors {
         statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        background #181818
+	focused_workspace #181818 #D0312D #ffffff
     }
 }
 

@@ -5,6 +5,7 @@ SETUVAR _fish_abbr_agar:sudo\x20apt\x20autoremove
 SETUVAR _fish_abbr_agi:sudo\x20apt\x20install
 SETUVAR _fish_abbr_agr:sudo\x20apt\x20remove
 SETUVAR _fish_abbr_agu:sudo\x20apt\x20update\x20\x26\x26\x20sudo\x20apt\x20upgrade
+SETUVAR _fish_abbr_aguu:sudo\x20apt\x20update\x20\x26\x26\x20sudo\x20apt\x20upgrade\x20\x2dy
 SETUVAR _fish_abbr_dnfi:sudo\x20dnf\x20install
 SETUVAR _fish_abbr_dnfr:sudo\x20dnf\x20remove
 SETUVAR _fish_abbr_dnfs:dnf\x20search
