@@ -127,20 +127,14 @@
 
 (use-package eglot)
 
-(use-package doom-themes
-  :config (load-theme 'sanityinc-tomorrow-night t))
-
-(use-package doom-modeline
-  :config
-  (setq doom-modeline-icon (not (string= system-type "windows-nt")))
-  (doom-modeline-mode +1))
-
 (use-package modus-themes
-  :disabled t
   :config
   (setq modus-themes-mode-line '(moody borderless accented))
-  ;; (setq modus-themes-vivendi-color-overrides '((bg-main . "#080808")))
-  (load-theme 'modus-vivendi t))
+  (load-theme 'modus-vivendi-tinted t))
+
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
 
 (use-package all-the-icons
   :disabled (string= system-type "windows-nt")
@@ -199,6 +193,7 @@
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
+
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
