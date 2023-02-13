@@ -93,6 +93,7 @@ command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 " Leader
 let mapleader = ','
 
+inoremap jk <Esc>
 " Normal mode remappings
 nnoremap <C-q> :q!<CR>
 nnoremap <F4> :bd<CR>
