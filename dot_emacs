@@ -28,28 +28,32 @@
 ;; always make sure packages are going to be installed
 (setq use-package-always-ensure t)
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; GENERAL SETTINGS ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq vc-follow-symlinks t)
+(setq ring-bell-function 'ignore)
+(setq custom-safe-themes t)
+(setq display-line-numbers-type nil)
+(electric-pair-mode +1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(global-hl-line-mode +1)
+(recentf-mode 1)
+(show-paren-mode +1)
+(auto-save-visited-mode +1)
+(set-frame-font "Ubuntu Mono 13")
 
 ;;;;;;;;;;;;;;
 ;; packages ;;
 ;;;;;;;;;;;;;;
 
-(use-package emacs
-  :config
-  (setq make-backup-files nil)
-  (setq auto-save-default nil)
-  (setq vc-follow-symlinks t)
-  (setq ring-bell-function 'ignore)
-  (setq custom-safe-themes t)
-  (setq display-line-numbers-type nil)
-  (electric-pair-mode +1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (menu-bar-mode -1)
-  (global-hl-line-mode +1)
-  (recentf-mode 1)
-  (show-paren-mode +1)
-  (auto-save-visited-mode +1))
 
+(use-package undo-fu)
 
 ;;; Vim Bindings
 (use-package evil
@@ -67,7 +71,6 @@
   (evil-mode 1))
 
 (use-package evil-surround
-  :ensure t
   :config
   (global-evil-surround-mode 1))
 
@@ -122,18 +125,14 @@
 (use-package paredit
   :config
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 (use-package eglot)
 
-(use-package modus-themes
-  :config
-  (setq modus-themes-mode-line '(moody borderless accented))
-  (load-theme 'modus-vivendi-tinted t))
+(use-package solarized-theme
+  :config (load-theme 'solarized-selenized-dark t))
 
 (use-package doom-modeline
-  :ensure t
   :hook (after-init . doom-modeline-mode))
 
 (use-package all-the-icons
@@ -217,8 +216,6 @@
 
 
 (use-package embark
-  :ensure t
-
   :bind
   (("C-," . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -239,7 +236,6 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
-  :ensure t ; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
