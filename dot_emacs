@@ -130,7 +130,7 @@
 (use-package eglot)
 
 (use-package badwolf-theme
-  :config (load-theme 'badwolf t))
+  :config (load-theme 'tao-yin t))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
