@@ -46,7 +46,7 @@
 (recentf-mode 1)
 (show-paren-mode +1)
 (auto-save-visited-mode +1)
-(set-frame-font "JetBrains Mono 11")
+(set-frame-font "Iosevka 12")
 
 ;;;;;;;;;;;;;;
 ;; packages ;;
@@ -153,7 +153,16 @@
   (general-define-key
    :states '(normal visual insert emacs)
    :keymaps '(normal prog-mode-map evil-cleverparens-mode-map eshell-mode-map)
-   "M-o" 'ace-window))
+   "M-o" 'ace-window)
+  (general-define-key
+   :states '(normal visual)
+   :keymaps '(cider-repl-mode-map)
+   "g y" 'cider-switch-to-last-clojure-buffer)
+  (general-define-key
+   :states '(normal visual)
+   :keymaps '(cider-mode-map clojure-mode-map)
+   "g y" 'cider-switch-to-repl-buffer)
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
