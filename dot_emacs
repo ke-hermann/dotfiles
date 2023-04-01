@@ -49,7 +49,7 @@
 (recentf-mode 1)
 (show-paren-mode +1)
 (auto-save-visited-mode +1)
-(set-frame-font "Iosevka 11")
+(set-frame-font "Iosevka 12")
 
 ;;;;;;;;;;;;;;
 ;; packages ;;
@@ -83,12 +83,6 @@
   :config
   (setq evil-want-integration t)
   (evil-collection-init))
-
-(use-package evil-cleverparens
-  :after paredit
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode))
 
 (use-package exec-path-from-shell
   :disabled (string= system-type "windows-nt")
@@ -155,10 +149,6 @@
   :config
   (general-define-key
    "C-," 'helm-apropos)
-  (general-define-key
-   :states '(normal visual insert emacs)
-   :keymaps '(normal prog-mode-map evil-cleverparens-mode-map eshell-mode-map)
-   "M-o" 'ace-window)
   (general-define-key
    :states '(normal visual)
    :keymaps '(cider-repl-mode-map)
