@@ -3,7 +3,13 @@
 
 ;;; Code:
 ;; separate custom file location
-(setq custom-file "~/.config/emacs-custom.el")
+
+(defconst CFG-PATH "~/.config/emacs-custom.el")
+
+(unless (file-exists-p CFG-PATH)
+  (write-region "" nil CFG-PATH))
+
+(setq custom-file CFG-PATH)
 (load custom-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -35,7 +41,6 @@
 (setq vc-follow-symlinks t)
 (setq ring-bell-function 'ignore)
 (setq custom-safe-themes t)
-(setq display-line-numbers-type nil)
 (electric-pair-mode +1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -172,3 +177,6 @@
   (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
   (global-set-key (kbd "C-x C-f") #'helm-find-files)
   (helm-mode 1))
+
+(provide '.emacs)
+;;; .emacs ends here
