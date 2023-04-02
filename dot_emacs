@@ -5,6 +5,7 @@
 ;; separate custom file location
 
 (defconst CFG-PATH "~/.config/emacs-custom.el")
+(defvar current-theme 'solarized-light)
 
 (unless (file-exists-p CFG-PATH)
   (write-region "" nil CFG-PATH))
@@ -12,9 +13,7 @@
 (setq custom-file CFG-PATH)
 (load custom-file)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; straight package manager setup ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Straight and use-package bootstrapping
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -32,30 +31,27 @@
 (setq package-enable-at-startup nil)
 (straight-use-package 'use-package)
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; GENERAL SETTINGS ;;
-;;;;;;;;;;;;;;;;;;;;;;
 
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq vc-follow-symlinks t)
-(setq ring-bell-function 'ignore)
-(setq custom-safe-themes t)
-(electric-pair-mode +1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(global-hl-line-mode +1)
-(recentf-mode 1)
-(show-paren-mode +1)
-(auto-save-visited-mode +1)
-(set-frame-font "Iosevka 12")
-
-;;;;;;;;;;;;;;
-;; packages ;;
-;;;;;;;;;;;;;;
+;; General settings that don't fit anywhere else
+(use-package emacs
+  :config
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+  (setq vc-follow-symlinks t)
+  (setq ring-bell-function 'ignore)
+  (setq custom-safe-themes t)
+  (electric-pair-mode +1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (global-hl-line-mode +1)
+  (recentf-mode 1)
+  (show-paren-mode +1)
+  (auto-save-visited-mode +1)
+  (set-frame-font "Iosevka 10"))
 
 
+;; Packages
 (use-package undo-fu)
 
 ;;; Vim Bindings
@@ -126,8 +122,11 @@
 
 (use-package eglot)
 
-(use-package base16-theme
-  :config (load-theme 'base16-default-dark t))
+(use-package solarized-theme
+  :straight t
+  :config
+  (global-set-key [f9] #'switch-theme)
+  (load-theme 'solarized-light t))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
@@ -167,6 +166,21 @@
   (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
   (global-set-key (kbd "C-x C-f") #'helm-find-files)
   (helm-mode 1))
+
+;; utility functions
+(defun switch-theme ()
+  "Switch between solarized dark and light."
+  (interactive)
+  (if (eq current-theme 'solarized-light)
+      (progn
+	(disable-theme 'solarized-light)
+	(load-theme 'solarized-dark t)
+	(setq current-theme 'solarized-dark)
+	)
+    (progn
+      (disable-theme 'solarized-dark)
+      (load-theme 'solarized-light t)
+      (setq current-theme 'solarized-light))))
 
 (provide '.emacs)
 ;;; .emacs ends here
