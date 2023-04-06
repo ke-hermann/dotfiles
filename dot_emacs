@@ -4,8 +4,8 @@
 ;;; Code:
 ;; separate custom file location
 
+
 (defconst CFG-PATH "~/.config/emacs-custom.el")
-(defvar current-theme 'doom-solarized-light)
 
 (unless (file-exists-p CFG-PATH)
   (write-region "" nil CFG-PATH))
@@ -123,11 +123,10 @@
 
 (use-package eglot)
 
-(use-package doom-themes
+(use-package solarized-theme
   :straight t
-  :config
-  (global-set-key [f9] #'switch-theme)
-  (load-theme 'doom-solarized-light t))
+  :config (load-theme 'solarized-dark t))
+
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
@@ -168,20 +167,8 @@
   (global-set-key (kbd "C-x C-f") #'helm-find-files)
   (helm-mode 1))
 
-;; utility functions
-(defun switch-theme ()
-  "Switch between solarized dark and light."
-  (interactive)
-  (if (eq current-theme 'doom-solarized-light)
-      (progn
-	(disable-theme 'doom-solarized-light)
-	(load-theme 'doom-solarized-dark t)
-	(setq current-theme 'doom-solarized-dark)
-	)
-    (progn
-      (disable-theme 'doom-solarized-dark)
-      (load-theme 'doom-solarized-light t)
-      (setq current-theme 'doom-solarized-light))))
+(use-package helm-themes
+  :straight t)
 
 (provide '.emacs)
 ;;; .emacs ends here
