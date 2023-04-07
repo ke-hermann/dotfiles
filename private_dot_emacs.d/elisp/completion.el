@@ -1,7 +1,9 @@
+;;; package --- Completions
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; completion framework setup ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Commentary:
+; Completion with Vertico, Marginalia, Embark and Consult, config largely copied from github.
+
+;;; Code:
 
 ;; Enable vertico
 (use-package vertico
@@ -180,3 +182,6 @@
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<"))
+
+(provide 'completion)
+;;; completion.el ends here
