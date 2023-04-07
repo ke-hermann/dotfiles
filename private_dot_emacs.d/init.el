@@ -164,5 +164,5 @@
 
 (load-file "~/.emacs.d/elisp/completion.el")
 
-(provide '.emacs)
-;;; .emacs ends here
+(provide 'init)
+;;; init.el ends here
