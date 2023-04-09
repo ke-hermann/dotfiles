@@ -1,0 +1,4 @@
+{{- if .chezmoi.hostname "Desktop" }}
+.config
+.zshrc
+{{- end }}
