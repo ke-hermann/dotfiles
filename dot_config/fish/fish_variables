@@ -10,6 +10,9 @@ SETUVAR _fish_abbr_dnfi:sudo\x20dnf\x20install
 SETUVAR _fish_abbr_dnfr:sudo\x20dnf\x20remove
 SETUVAR _fish_abbr_dnfs:dnf\x20search
 SETUVAR _fish_abbr_dnfu:sudo\x20dnf\x20upgrade
+SETUVAR _fish_abbr_pci:sudo\x20pacman\x20\x2dS
+SETUVAR _fish_abbr_pcs:sudo\x20pacman\x20\x2dSs
+SETUVAR _fish_abbr_pcu:sudo\x20pacman\x20\x2dSyu
 SETUVAR _fish_abbr_refresh_2D_fonts:sudo\x20fc\x2dcache\x20\x2dfv
 SETUVAR fish_color_autosuggestion:586e75
 SETUVAR fish_color_cancel:\x2d\x2dreverse

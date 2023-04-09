@@ -30,6 +30,7 @@
 
 (setq package-enable-at-startup nil)
 (straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 
 ;; General settings that don't fit anywhere else
@@ -48,12 +49,13 @@
   (recentf-mode 1)
   (show-paren-mode +1)
   (auto-save-visited-mode +1)
-  (set-frame-font "Iosevka 13")
-  (add-hook 'prog-mode-hook #'linum-mode))
+  (set-frame-font "Iosevka 13"))
 
 
 ;; Packages
 (use-package undo-fu)
+
+(use-package key-chord)
 
 ;;; Vim Bindings
 (use-package evil

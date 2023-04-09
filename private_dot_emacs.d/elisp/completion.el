@@ -13,6 +13,7 @@
   (vertico-mode +1))
 
 (use-package vertico-buffer
+  :straight f
   :after vertico
   :config (vertico-buffer-mode +1))
 
