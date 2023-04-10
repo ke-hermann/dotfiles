@@ -42,20 +42,34 @@
   (setq ring-bell-function 'ignore)
   (setq custom-safe-themes t)
   (electric-pair-mode +1)
+  ;; Hide unnecessary UI elements
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (menu-bar-mode -1)
+  ;; show line numbers and currently selected line
   (global-hl-line-mode +1)
+  (global-display-line-numbers-mode +1)
+  ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (auto-save-visited-mode +1)
   (set-frame-font "Iosevka 13"))
 
 
 ;; Packages
 (use-package undo-fu)
 
-(use-package key-chord)
+;; This package implements support for mapping a pair of simultaneously pressed keys to a command
+;; and for mapping the same key being pressed twice in quick succession to a command.
+(use-package key-chord
+  :config (key-chord-mode +1))
+
+;; super-save auto-saves your buffers, when certain events happen - e.g.
+;; you switch between buffers, an Emacs frame loses focus, etc.
+;;You can think of it as both something that augments and replaces the standard auto-save-mode.
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
 
 ;;; Vim Bindings
 (use-package evil
@@ -72,6 +86,7 @@
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (evil-mode 1))
 
+;; tpope's vim bindings that enable wrapping easily.
 (use-package evil-surround
   :config
   (global-evil-surround-mode 1))
