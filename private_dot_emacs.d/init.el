@@ -33,6 +33,9 @@
 (setq straight-use-package-by-default t)
 
 
+;; load completion stack: Vertico, Marginalia, Embark, Consult
+(load-file "~/.emacs.d/elisp/completion.el")
+
 ;; General settings that don't fit anywhere else
 (use-package emacs
   :config
@@ -52,7 +55,7 @@
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (set-frame-font "Iosevka 12"))
+  (set-frame-font "JetBrains Mono 12"))
 
 
 ;; Packages
@@ -162,6 +165,7 @@
 ;; Package to manage keybindings, useful because it can sanely handle evil-mode bindings
 (use-package general
   :config
+  ;; Clojure/Cider bindings
   (general-define-key
    :states '(normal visual)
    :keymaps '(cider-repl-mode-map)
@@ -170,9 +174,9 @@
    :states '(normal visual)
    :keymaps '(cider-mode-map clojure-mode-map)
    "g y" 'cider-switch-to-repl-buffer)
-  )
-
-(load-file "~/.emacs.d/elisp/completion.el")
+  ;; theme switching
+  (general-define-key "<f8>" (lambda () (interactive) (consult-theme 'doom-solarized-dark)))
+  (general-define-key "<f9>" (lambda () (interactive) (consult-theme 'doom-solarized-light))))
 
 (provide 'init)
 ;;; init.el ends here
