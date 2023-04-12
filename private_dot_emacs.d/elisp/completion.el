@@ -12,12 +12,6 @@
   :init
   (vertico-mode +1))
 
-(use-package vertico-buffer
-  :disabled t
-  :straight f
-  :after vertico
-  :config (vertico-buffer-mode +1))
-
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
@@ -128,7 +122,7 @@
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
+         ("C-s" . consult-line)
          ("M-s L" . consult-line-multi)
          ("M-s m" . consult-multi-occur)
          ("M-s k" . consult-keep-lines)

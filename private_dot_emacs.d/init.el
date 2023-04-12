@@ -52,7 +52,7 @@
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (set-frame-font "Iosevka 13"))
+  (set-frame-font "Iosevka 12"))
 
 
 ;; Packages
@@ -129,7 +129,8 @@
 (use-package which-key
   :config (which-key-mode +1))
 
-(use-package ace-window)
+(use-package ace-window
+  :bind (("M-o" . ace-window)))
 
 (use-package cider)
 
@@ -140,16 +141,8 @@
 
 (use-package eglot)
 
-(use-package modus-themes
-  :straight t
-  :config
-  (require 'modus-themes)
-  (setq modus-themes-common-palette-overrides
-	'((border-mode-line-active bg-mode-line-active)
-          (border-mode-line-inactive bg-mode-line-inactive)))
-  (load-theme 'modus-vivendi :no-confirm)
-  )
-
+(use-package doom-themes
+  :config (load-theme 'doom-solarized-light))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
