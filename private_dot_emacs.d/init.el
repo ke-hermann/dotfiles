@@ -13,6 +13,9 @@
 (setq custom-file CFG-PATH)
 (load custom-file)
 
+;; figure out what OS we're on
+(defvar windows? (string= system-type "windows-nt"))
+
 ;; Straight and use-package bootstrapping
 
 (defvar bootstrap-version)
@@ -34,7 +37,16 @@
 
 
 ;; load completion stack: Vertico, Marginalia, Embark, Consult
-(load-file "~/.emacs.d/elisp/completion.el")
+;; (load-file "~/.emacs.d/elisp/completion.el")
+;; for the time being just sticking to helm
+
+(use-package helm
+  :init
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  (global-set-key (kbd "C-,") #'helm-apropos)
+  (helm-mode +1))
 
 ;; General settings that don't fit anywhere else
 (use-package emacs
@@ -55,7 +67,7 @@
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (set-frame-font "JetBrains Mono 12"))
+  (set-frame-font "JetBrains Mono 10"))
 
 
 ;; Packages
@@ -102,7 +114,7 @@
   (evil-collection-init))
 
 (use-package exec-path-from-shell
-  :disabled (string= system-type "windows-nt")
+  :disabled windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -151,7 +163,7 @@
   :hook (after-init . doom-modeline-mode))
 
 (use-package all-the-icons
-  :disabled (string= system-type "windows-nt")
+  :disabled windows?
   :after doom-modeline)
 
 (use-package key-chord
