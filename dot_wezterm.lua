@@ -2,7 +2,8 @@ local wezterm = require 'wezterm'
 local config = {}
 
 -- config.color_scheme = 'Solarized (light) (terminal.sexy)'
-config.color_scheme = 'Default Dark (base16)'
+config.color_scheme = 'Solarized (light) (terminal.sexy)'
+
 
 config.font = wezterm.font 'JetBrains Mono'
 

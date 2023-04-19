@@ -17,6 +17,10 @@ call plug#begin()
 	Plug 'stephpy/vim-php-cs-fixer'
 	Plug 'pantharshit00/vim-prisma'
 
+	" Fuzzy file finding
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
 	" Git
 	Plug 'airblade/vim-gitgutter'
 call plug#end()
@@ -86,12 +90,20 @@ let g:vim_markdown_frontmatter = 1
 let g:tex_conceal = ''
 let g:vim_markdown_math = 1
 
+
 " Language server stuff
 let g:python3_host_prog = '/usr/bin/python'
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 
 " Leader
-let mapleader = ','
+nnoremap <SPACE> <Nop>
+let mapleader =' '
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 inoremap jk <Esc>
 " Normal mode remappings
