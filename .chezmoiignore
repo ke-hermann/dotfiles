@@ -1,8 +1,11 @@
-{{- if eq .chezmoi.hostname "Desktop" }}
-.config
+{{- if eq .chezmoi.os "windows" }}
+.config/fish
+.config/kitty
+.config/nvim
+.config/sway
 .zshrc
 {{- end }}
 
-{{- if ne .chezmoi.hostname "Desktop" }}
+{{- if eq .chezmoi.os "linux" }}
 Documents/
 {{- end }}
