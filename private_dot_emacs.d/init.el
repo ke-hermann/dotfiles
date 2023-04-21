@@ -67,7 +67,7 @@
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (set-frame-font "JetBrains Mono 10"))
+  (set-frame-font "JetBrains Mono 12"))
 
 
 ;; Packages
