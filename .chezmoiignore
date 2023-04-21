@@ -4,8 +4,11 @@
 .config/nvim
 .config/sway
 .zshrc
+.scripts
+.wezterm.lua
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
-Documents/
+Documents
+AppData
 {{- end }}
