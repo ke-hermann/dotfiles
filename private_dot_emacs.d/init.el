@@ -4,7 +4,6 @@
 ;;; Code:
 ;; separate custom file location
 
-
 (defconst CFG-PATH "~/.config/emacs-custom.el")
 
 (unless (file-exists-p CFG-PATH)
@@ -14,42 +13,20 @@
 (load custom-file)
 
 ;; figure out what OS we're on
-(defvar windows? (string= system-type "windows-nt"))
+(defvar os-windows? (string= system-type "windows-nt"))
 
-;; Straight and use-package bootstrapping
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(setq package-enable-at-startup nil)
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
+;; MELPA setup
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;; load completion stack: Vertico, Marginalia, Embark, Consult
 ;; (load-file "~/.emacs.d/elisp/completion.el")
 ;; for the time being just sticking to helm
 
-(use-package helm
-  :init
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-  (global-set-key (kbd "C-x C-f") #'helm-find-files)
-  (global-set-key (kbd "C-,") #'helm-apropos)
-  (global-set-key (kbd "C-s") #'helm-occur)
-  (global-set-key (kbd "C-x C-r") #'helm-recentf)
-  (helm-mode +1))
-
+(require 'use-package)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 ;; General settings that don't fit anywhere else
 (use-package emacs
   :config
@@ -72,17 +49,25 @@
   (set-frame-font "JetBrains Mono 12"))
 
 
+(use-package helm
+  :init
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  (global-set-key (kbd "C-,") #'helm-apropos)
+  (global-set-key (kbd "C-s") #'helm-occur)
+  (global-set-key (kbd "C-x C-r") #'helm-recentf)
+  (helm-mode +1))
+
+
 ;; Packages
 (use-package undo-fu)
 
-;; This package implements support for mapping a pair of simultaneously pressed keys to a command
-;; and for mapping the same key being pressed twice in quick succession to a command.
+;; This package implements support for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
   :config (key-chord-mode +1))
 
-;; super-save auto-saves your buffers, when certain events happen - e.g.
-;; you switch between buffers, an Emacs frame loses focus, etc.
-;;You can think of it as both something that augments and replaces the standard auto-save-mode.
+;; super-save auto-saves your buffers
 (use-package super-save
   :ensure t
   :config
@@ -93,17 +78,14 @@
   :demand t
   :bind (("<escape>" . keyboard-escape-quit))
   :init
-  ;; allows for using cgn
-  ;; (setq evil-search-module 'evil-search)
   (setq evil-want-keybinding nil)
-  ;; no vim insert bindings
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-C-u-scroll t)
   :config
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (evil-mode 1))
 
-;; tpope's vim bindings that enable wrapping easily.
+;; easy wrapping of text objects
 (use-package evil-surround
   :config
   (global-evil-surround-mode 1))
@@ -116,7 +98,7 @@
   (evil-collection-init))
 
 (use-package exec-path-from-shell
-  :disabled windows?
+  :disabled os-windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -165,7 +147,7 @@
   :hook (after-init . doom-modeline-mode))
 
 (use-package all-the-icons
-  :disabled windows?
+  :disabled os-windows?
   :after doom-modeline)
 
 (use-package key-chord

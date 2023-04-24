@@ -52,6 +52,16 @@ require('packer').startup(function(use)
 		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 	}
 
+	-- Lua
+	use {
+		"folke/which-key.nvim",
+		config = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+			require("which-key").setup {}
+		end
+	}
+
 	if packer_bootstrap then
 		require('packer').sync()
 	end
@@ -61,7 +71,7 @@ end)
 -- PLUGIN SETUP --
 ------------------
 
--- LSP 
+-- LSP
 local lsp = require('lsp-zero').preset({})
 
 lsp.on_attach(function(client, bufnr)
@@ -83,12 +93,12 @@ cmp.setup({
 	}
 })
 
--- Autopair  
+-- Autopair
 require("nvim-autopairs").setup()
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 lsp.setup()
--- Lualine 
+-- Lualine
 require('lualine').setup {
 	options = {
 		theme = 'solarized_light',
