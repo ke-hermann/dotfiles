@@ -171,7 +171,8 @@ vim.opt.breakindent = true
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-
+-- enable exiting terminal-mode with `jk`
+vim.cmd.tnoremap('jk <C-\\><C-n>')
 
 -- colors
 vim.opt.background = 'dark'
