@@ -14,9 +14,13 @@ local packer_bootstrap = ensure_packer()
 
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
+	-- Themes
+	use 'lifepillar/vim-solarized8'
+	use 'folke/tokyonight.nvim'
+	use({ 'rose-pine/neovim', as = 'rose-pine' })
 	-- Plugins
 	use 'tpope/vim-surround'
-	use 'lifepillar/vim-solarized8'
+	use 'tpope/vim-fugitive'
 	use "windwp/nvim-autopairs"
 	-- Telescope, fuzzy finder
 	use {
@@ -62,6 +66,14 @@ require('packer').startup(function(use)
 		end
 	}
 
+	use {
+		'nvim-treesitter/nvim-treesitter',
+		run = function()
+			local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+			ts_update()
+		end,
+	}
+
 	if packer_bootstrap then
 		require('packer').sync()
 	end
@@ -85,6 +97,14 @@ lsp.format_on_save({
 	}
 })
 
+lsp.ensure_installed({
+	'pyright',
+	'lua_ls'
+})
+
+lsp.setup()
+
+-- CMP
 local cmp = require('cmp')
 
 cmp.setup({
@@ -98,15 +118,23 @@ require("nvim-autopairs").setup()
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 lsp.setup()
+
 -- Lualine
 require('lualine').setup {
 	options = {
-		theme = 'solarized_light',
+		theme = 'tokyonight',
 		component_separators = '|',
 		section_separators = { left = '', right = '' },
 	}
 }
 
+-- Treesitter
+require 'nvim-treesitter.configs'.setup {
+	ensure_installed = { "c", "python", "lua", "vim", "vimdoc", "query" },
+	-- Automatically install missing parsers when entering buffer
+	auto_install = true,
+	highlight = { enable = true }
+}
 
 -------------------------
 -- GENERAL KEYBINDINGS --
@@ -146,9 +174,8 @@ vim.opt.shiftwidth = 4
 
 
 -- colors
-vim.o.background = 'light'
-vim.api.nvim_command('colorscheme solarized8')
-
+vim.opt.background = 'dark'
+vim.cmd.colorscheme('tokyonight-night')
 
 -------------
 -- KEYMAPS --
