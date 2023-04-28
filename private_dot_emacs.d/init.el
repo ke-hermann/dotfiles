@@ -43,10 +43,13 @@
   ;; show line numbers and currently selected line
   (global-hl-line-mode +1)
   (global-display-line-numbers-mode +1)
+  (setq display-line-numbers 'relative)
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
-  (set-frame-font "JetBrains Mono 12"))
+  (if os-windows?
+      (set-frame-font "JetBrains Mono 11")
+    (set-frame-font "JetBrains Mono 12")))
 
 
 (use-package helm
@@ -141,7 +144,7 @@
 (use-package eglot)
 
 (use-package doom-themes
-  :config (load-theme 'doom-solarized-dark))
+  :config (load-theme 'doom-dracula))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
@@ -170,9 +173,6 @@
    :states '(normal visual)
    :keymaps '(cider-mode-map clojure-mode-map)
    "g y" 'cider-switch-to-repl-buffer)
-  ;; theme switching
-  (general-define-key "<f8>" (lambda () (interactive) (consult-theme 'doom-solarized-dark)))
-  (general-define-key "<f9>" (lambda () (interactive) (consult-theme 'doom-solarized-light))))
 
 (provide 'init)
 ;;; init.el ends here
