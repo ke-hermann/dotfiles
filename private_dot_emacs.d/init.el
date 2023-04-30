@@ -143,11 +143,13 @@
 
 (use-package eglot)
 
-(use-package doom-themes
-  :config (load-theme 'doom-dracula))
+(use-package solarized-theme
+  :config (load-theme 'doom-solarized-light))
 
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :config
+  )
 
 (use-package all-the-icons
   :disabled os-windows?
@@ -172,7 +174,7 @@
   (general-define-key
    :states '(normal visual)
    :keymaps '(cider-mode-map clojure-mode-map)
-   "g y" 'cider-switch-to-repl-buffer)
+   "g y" 'cider-switch-to-repl-buffer))
 
 (provide 'init)
 ;;; init.el ends here
