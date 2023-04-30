@@ -18,7 +18,7 @@ smart_gaps on
 
 gaps inner 10
 
-font pango: Inter Medium 11 
+font pango: Inter 11 
 
 ### Variables
 #
@@ -39,7 +39,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 include /etc/sway/config-vars.d/*
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/nrmncr/Pictures/Wallpaper/elden.png  fill
+output * bg /home/kevin/Pictures/wallpaperbetter.com_3840x2160.jpg fill
 ### Key bindings
 #
 # Basics:
@@ -178,25 +178,12 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
 # Default window settings
 for_window [app_id="nautilus"] floating enable
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #181818
-	focused_workspace #181818 #D0312D #ffffff
-    }
+bar { 
+     swaybar_command waybar
 }
 
 include /etc/sway/config.d/*
