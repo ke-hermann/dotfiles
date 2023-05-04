@@ -144,7 +144,7 @@
 (use-package eglot)
 
 (use-package solarized-theme
-  :config (load-theme 'doom-solarized-light))
+  :config (load-theme 'doom-solarized-dark))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)

@@ -1,7 +1,7 @@
 # Read `man 5 sway` for a complete reference.
 
 input * {
-    xkb_layout "de"
+    xkb_layout "us_intl"
     xkb_options caps:ctrl_modifier
 }
 
