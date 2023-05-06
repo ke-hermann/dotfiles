@@ -42,8 +42,8 @@
   (menu-bar-mode -1)
   ;; show line numbers and currently selected line
   (global-hl-line-mode +1)
-  (global-display-line-numbers-mode +1)
   (setq display-line-numbers 'relative)
+  (global-display-line-numbers-mode +1)
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
@@ -143,8 +143,9 @@
 
 (use-package eglot)
 
-(use-package solarized-theme
-  :config (load-theme 'doom-solarized-dark))
+(use-package doom-themes
+  :config (load-theme 'doom-challenger-deep t))
+
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
