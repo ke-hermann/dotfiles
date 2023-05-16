@@ -42,13 +42,6 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-beta-archive-keyring.gpg]
 sudo apt update
 sudo apt install brave-browser-beta
 
-# vim plugin manager 
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
 # flatpak setup
 sudo apt install flatpak
 sudo apt install gnome-software-plugin-flatpak
