@@ -29,3 +29,10 @@
 
 (map! [f8] (lambda () (interactive) (consult-theme 'doom-solarized-dark)))
 (map! [f9] (lambda () (interactive) (consult-theme 'doom-solarized-light)))
+
+;;;;;;;;;;;;;;;;;;;
+;; VARIOUS HOOKS ;;
+;;;;;;;;;;;;;;;;;;;
+
+(add-hook! clojure-mode
+           (paredit-mode +1))
