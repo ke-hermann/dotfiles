@@ -14,8 +14,8 @@
 ;; - `doom-unicode-font' -- for unicode glyphs
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 
-(setq doom-theme 'doom-solarized-light)
-(setq doom-font (font-spec :family "JetBrains Mono" :size 15 :weight 'regular))
+(setq doom-theme 'doom-dark+)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 16 :weight 'regular))
 
 (setq display-line-numbers-type 'relative)
 

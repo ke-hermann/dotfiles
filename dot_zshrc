@@ -111,4 +111,4 @@ alias zdup="sudo zypper dup"
 
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.emacs.d/bin:$PATH
-
+export PATH=$HOME/.local/bin:$PATH
