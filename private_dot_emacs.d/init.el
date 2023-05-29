@@ -49,7 +49,7 @@
   (show-paren-mode +1)
   (if os-windows?
       (set-frame-font "JetBrains Mono 11")
-    (set-frame-font "JetBrains Mono 12")))
+    (set-frame-font "Iosevka 14")))
 
 
 (use-package helm
@@ -78,7 +78,7 @@
 
 ;;; Vim Bindings
 (use-package evil
-  :demand t
+  :after (key-chord)
   :bind (("<escape>" . keyboard-escape-quit))
   :init
   (setq evil-want-keybinding nil)
@@ -86,7 +86,7 @@
   (setq evil-want-C-u-scroll t)
   :config
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (evil-mode 1))
+  (evil-mode +1))
 
 ;; easy wrapping of text objects
 (use-package evil-surround
@@ -144,13 +144,12 @@
 (use-package eglot)
 
 (use-package doom-themes
-  :config (load-theme 'doom-challenger-deep t))
+  :config (load-theme 'doom-dark+ t))
 
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  :config
-  )
+  :config (doom-modeline-mode +1))
 
 (use-package all-the-icons
   :disabled os-windows?
