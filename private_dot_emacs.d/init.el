@@ -67,8 +67,7 @@
 (use-package undo-fu)
 
 ;; This package implements support for mapping a pair of simultaneously pressed keys .
-(use-package key-chord
-  :config (key-chord-mode +1))
+(use-package key-chord)
 
 ;; super-save auto-saves your buffers
 (use-package super-save
@@ -78,15 +77,12 @@
 
 ;;; Vim Bindings
 (use-package evil
-  :after (key-chord)
-  :bind (("<escape>" . keyboard-escape-quit))
-  :init
-  (setq evil-want-keybinding nil)
+  :init (setq evil-want-keybinding nil)
+  :config
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-C-u-scroll t)
-  :config
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (evil-mode +1))
+  (evil-mode 1)
+  (define-key evil-insert-state-map "jk" 'evil-normal-state))
 
 ;; easy wrapping of text objects
 (use-package evil-surround
