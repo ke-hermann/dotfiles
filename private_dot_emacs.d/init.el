@@ -67,7 +67,8 @@
 (use-package undo-fu)
 
 ;; This package implements support for mapping a pair of simultaneously pressed keys .
-(use-package key-chord)
+(use-package key-chord
+  :config (key-chord-mode 1))
 
 ;; super-save auto-saves your buffers
 (use-package super-save
@@ -77,12 +78,18 @@
 
 ;;; Vim Bindings
 (use-package evil
-  :init (setq evil-want-keybinding nil)
-  :config
-  (setq evil-undo-system 'undo-fu)
+  :after (key-chord)
+  :init
+  (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
-  (evil-mode 1)
-  (define-key evil-insert-state-map "jk" 'evil-normal-state))
+  (setq evil-undo-system 'undo-fu)
+  :config (evil-mode 1))
+
+(use-package evil-escape
+  :config
+  (setq-default evil-escape-key-sequence "jk")
+  (evil-escape-mode +1))
+
 
 ;; easy wrapping of text objects
 (use-package evil-surround
@@ -142,35 +149,17 @@
 (use-package doom-themes
   :config (load-theme 'doom-dark+ t))
 
+(use-package nerd-icons)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :config (doom-modeline-mode +1))
-
-(use-package all-the-icons
-  :disabled os-windows?
-  :after doom-modeline)
-
-(use-package key-chord
-  :config (key-chord-mode +1))
 
 (use-package projectile
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-;; Package to manage keybindings, useful because it can sanely handle evil-mode bindings
-(use-package general
-  :config
-  ;; Clojure/Cider bindings
-  (general-define-key
-   :states '(normal visual)
-   :keymaps '(cider-repl-mode-map)
-   "g y" 'cider-switch-to-last-clojure-buffer)
-  (general-define-key
-   :states '(normal visual)
-   :keymaps '(cider-mode-map clojure-mode-map)
-   "g y" 'cider-switch-to-repl-buffer))
 
 (provide 'init)
 ;;; init.el ends here
