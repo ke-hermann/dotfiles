@@ -16,9 +16,6 @@ require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	-- Themes
 	use 'lifepillar/vim-solarized8'
-	use 'folke/tokyonight.nvim'
-	use({ 'rose-pine/neovim', as = 'rose-pine' })
-	use { "catppuccin/nvim", as = "catppuccin" }
 	use({ 'projekt0n/github-nvim-theme' })
 
 	-- Plugins

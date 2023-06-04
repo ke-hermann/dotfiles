@@ -1,8 +1,8 @@
 local wezterm = require 'wezterm'
 local config = {}
 
-config.color_scheme = 'GitHub Dark'
-config.font = wezterm.font 'JetBrains Mono'
+config.color_scheme = 'Solarized Light (Gogh)'
+config.font = wezterm.font 'Berkeley Mono'
 config.font_size = 13
 config.window_close_confirmation = 'NeverPrompt'
 
