@@ -19,6 +19,8 @@ require('packer').startup(function(use)
 	use 'folke/tokyonight.nvim'
 	use({ 'rose-pine/neovim', as = 'rose-pine' })
 	use { "catppuccin/nvim", as = "catppuccin" }
+	use({ 'projekt0n/github-nvim-theme' })
+
 	-- Plugins
 	use 'tpope/vim-surround'
 	use 'tpope/vim-fugitive'
@@ -127,7 +129,7 @@ lsp.setup()
 -- Lualine
 require('lualine').setup {
 	options = {
-		theme = 'catppuccin',
+		theme = 'horizon',
 		component_separators = '|',
 		section_separators = { left = '', right = '' },
 	}
@@ -140,11 +142,6 @@ require 'nvim-treesitter.configs'.setup {
 	auto_install = true,
 	highlight = { enable = true }
 }
-
--- catppuccin theme
-require('catppuccin').setup({
-	flavour = "mocha"
-})
 
 -------------------------
 -- GENERAL KEYBINDINGS --
@@ -186,7 +183,7 @@ vim.cmd.tnoremap('jk <C-\\><C-n>')
 
 -- colors
 vim.opt.background = 'dark'
-vim.cmd.colorscheme('catppuccin')
+vim.cmd('colorscheme github_dark_high_contrast')
 
 -------------
 -- KEYMAPS --
