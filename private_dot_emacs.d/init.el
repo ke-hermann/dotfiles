@@ -49,7 +49,7 @@
   (show-paren-mode +1)
   (if os-windows?
       (set-frame-font "JetBrains Mono 11")
-    (set-frame-font "Iosevka 14")))
+    (set-frame-font "Berkeley Mono 12")))
 
 (use-package diminish
   :init
@@ -119,6 +119,8 @@
 (use-package whole-line-or-region
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
+
+(use-package pyvenv)
 
 (use-package company
   :diminish company-mode
