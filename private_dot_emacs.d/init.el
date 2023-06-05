@@ -51,8 +51,12 @@
       (set-frame-font "JetBrains Mono 11")
     (set-frame-font "Iosevka 14")))
 
+(use-package diminish
+  :init
+  (diminish 'eldoc-mode))
 
 (use-package helm
+  :diminish helm-mode
   :init
   (global-set-key (kbd "M-x") #'helm-M-x)
   (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
@@ -72,6 +76,7 @@
 
 ;; super-save auto-saves your buffers
 (use-package super-save
+  :diminish super-save-mode
   :ensure t
   :config
   (super-save-mode +1))
@@ -86,6 +91,7 @@
   :config (evil-mode 1))
 
 (use-package evil-escape
+  :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
   (evil-escape-mode +1))
@@ -98,6 +104,7 @@
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
+  :diminish evil-collection-unimpaired-mode
   :after evil
   :config
   (setq evil-want-integration t)
@@ -109,15 +116,12 @@
 
 (use-package magit)
 
-(use-package aggressive-indent
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
-
 (use-package whole-line-or-region
+  :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
 
 (use-package company
+  :diminish company-mode
   :config (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package tree-sitter
@@ -132,6 +136,7 @@
   :config (global-flycheck-mode))
 
 (use-package which-key
+  :diminish which-key-mode
   :config (which-key-mode +1))
 
 (use-package ace-window
@@ -140,6 +145,7 @@
 (use-package cider)
 
 (use-package paredit
+  :diminish paredit-mode
   :config
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
@@ -147,13 +153,15 @@
 (use-package eglot)
 
 (use-package doom-themes
-  :config (load-theme 'doom-dark+ t))
+  :config (load-theme 'github-dark-vscode t))
 
 (use-package nerd-icons)
 
 (use-package doom-modeline
+  :disabled t
   :hook (after-init . doom-modeline-mode)
-  :config (doom-modeline-mode +1))
+  :config
+  (doom-modeline-mode +1))
 
 (use-package projectile
   :config
