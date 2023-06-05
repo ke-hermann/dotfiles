@@ -18,7 +18,7 @@
 ;; MELPA setup
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/") t)
 
 ;; load completion stack: Vertico, Marginalia, Embark, Consult
 ;; (load-file "~/.emacs.d/elisp/completion.el")
@@ -47,8 +47,9 @@
   ;; enable history
   (recentf-mode 1)
   (show-paren-mode +1)
+  ;; set font
   (if os-windows?
-      (set-frame-font "JetBrains Mono 11")
+      (set-frame-font "JetBrains Mono 10")
     (set-frame-font "Berkeley Mono 12")))
 
 (use-package diminish
@@ -154,8 +155,10 @@
 
 (use-package eglot)
 
-(use-package doom-themes
-  :config (load-theme 'github-dark-vscode t))
+(use-package doom-themes)
+
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
 
 (use-package nerd-icons)
 
