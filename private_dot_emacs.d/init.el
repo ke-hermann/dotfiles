@@ -46,11 +46,13 @@
   (global-display-line-numbers-mode +1)
   ;; enable history
   (recentf-mode 1)
+  ;; automatically load changed file s
+  (global-auto-revert-mode +1)
   (show-paren-mode +1)
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 10")
-    (set-frame-font "Berkeley Mono 12")))
+    (set-frame-font "JetBrains Mono 13")))
 
 (use-package diminish
   :init
