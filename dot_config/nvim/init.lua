@@ -126,7 +126,7 @@ lsp.setup()
 -- Lualine
 require('lualine').setup {
 	options = {
-		theme = 'horizon',
+		theme = 'solarized',
 		component_separators = '|',
 		section_separators = { left = '', right = '' },
 	}
@@ -180,7 +180,7 @@ vim.cmd.tnoremap('jk <C-\\><C-n>')
 
 -- colors
 vim.opt.background = 'dark'
-vim.cmd('colorscheme github_dark_high_contrast')
+vim.cmd('colorscheme solarized8')
 
 -------------
 -- KEYMAPS --

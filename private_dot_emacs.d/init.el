@@ -52,7 +52,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 10")
-    (set-frame-font "JetBrains Mono 13")))
+    (set-frame-font "Berkeley Mono 13")))
 
 (use-package diminish
   :init

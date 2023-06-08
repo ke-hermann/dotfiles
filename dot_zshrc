@@ -107,6 +107,10 @@ source $ZSH/oh-my-zsh.sh
 
 alias zin="sudo zypper in -y"
 alias zdup="sudo zypper dup"
+alias agi="sudo apt install -y"
+alias aguu="sudo apt update && sudo apt upgrade"
+alias agr="sudo apt remove"
+alias agc="sudo apt clean"
 
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.emacs.d/bin:$PATH
@@ -114,3 +118,4 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/Qt/6.5.1/gcc_64/bin:$PATH
 
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/kevin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
