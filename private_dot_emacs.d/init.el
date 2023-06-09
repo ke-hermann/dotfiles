@@ -12,8 +12,9 @@
 (setq custom-file CFG-PATH)
 (load custom-file)
 
-;; add custom theme folders to path
-(setq custom-theme-load-path (append custom-theme-load-path "~/.emacs.d/elisp/emacs-color-theme-solarized"))
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/emacs-color-theme-solarized")
+(load-theme 'solarized t)
 
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
@@ -52,12 +53,10 @@
   ;; automatically load changed file s
   (global-auto-revert-mode +1)
   (show-paren-mode +1)
-  ;; theme
-  (load-theme 'solarized t)
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 10")
-    (set-frame-font "JetBrains Mono 12")))
+    (set-frame-font "Iosevka 14")))
 
 (use-package diminish
   :init
