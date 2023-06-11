@@ -14,7 +14,7 @@
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/emacs-color-theme-solarized")
-(load-theme 'solarized t)
+;; (load-theme 'solarized t)
 
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
@@ -56,7 +56,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 10")
-    (set-frame-font "Iosevka 14")))
+    (set-frame-font "Source Code Pro Semibold 13")))
 
 (use-package diminish
   :init
@@ -161,15 +161,14 @@
 
 (use-package eglot)
 
-(use-package doom-themes)
+(use-package doom-themes
+  :config (load-theme 'doom-solarized-dark t))
 
 (use-package nerd-icons)
 
 (use-package doom-modeline
-  :disabled t
   :hook (after-init . doom-modeline-mode)
-  :config
-  (doom-modeline-mode +1))
+  :config (doom-modeline-mode +1))
 
 (use-package projectile
   :config
