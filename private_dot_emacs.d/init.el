@@ -23,6 +23,11 @@
 (require 'use-package)
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE CONFIG ;;
+;;;;;;;;;;;;;;;;;;;;
+
 ;; General settings that don't fit anywhere else
 (use-package emacs
   :config
@@ -47,7 +52,7 @@
   (show-paren-mode +1)
   ;; set font
   (if os-windows?
-      (set-frame-font "JetBrains Mono 10")
+      (set-frame-font "JetBrains Mono 11")
     (set-frame-font "Ubuntu Mono 13")))
 
 (use-package diminish
