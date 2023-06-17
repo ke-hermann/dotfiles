@@ -53,7 +53,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 11")
-    (set-frame-font "Ubuntu Mono 13")))
+    (set-frame-font "JetBrains Mono 11")))
 
 (use-package diminish
   :init
@@ -116,7 +116,6 @@
   (evil-collection-init))
 
 (use-package exec-path-from-shell
-  :disabled os-windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -157,7 +156,6 @@
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-(use-package eglot)
 
 (use-package doom-themes)
 
@@ -176,6 +174,28 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANGUAGE SERVER SUPPORT ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook ((python-mode . lsp)
+	 (c-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPLETION STACK ;;

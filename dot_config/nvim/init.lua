@@ -126,7 +126,7 @@ lsp.setup()
 -- Lualine
 require('lualine').setup {
 	options = {
-		theme = 'solarized',
+		theme = 'solarized_light',
 		component_separators = '|',
 		section_separators = { left = '', right = '' },
 	}
@@ -179,7 +179,7 @@ vim.opt.shiftwidth = 4
 vim.cmd.tnoremap('jk <C-\\><C-n>')
 
 -- colors
-vim.opt.background = 'dark'
+vim.opt.background = 'light'
 vim.cmd('colorscheme solarized8')
 
 -------------
