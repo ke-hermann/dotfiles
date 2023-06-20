@@ -43,8 +43,7 @@
   (menu-bar-mode -1)
   ;; show line numbers and currently selected line
   (global-hl-line-mode +1)
-  (setq display-line-numbers 'relative)
-  (global-display-line-numbers-mode +1)
+  (setq display-line-numbers nil)
   ;; enable history
   (recentf-mode 1)
   ;; automatically load changed file s
@@ -53,7 +52,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "JetBrains Mono 11")
-    (set-frame-font "JetBrains Mono 11")))
+    (set-frame-font "Iosevka 13")))
 
 (use-package diminish
   :init
@@ -157,10 +156,12 @@
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 
+(use-package ef-themes)
+
 (use-package doom-themes)
 
-(use-package ef-themes
-  :config (load-theme 'ef-bio t))
+(use-package base16-theme
+  :config (load-theme 'base16-default-dark t))
 
 (use-package nerd-icons)
 
