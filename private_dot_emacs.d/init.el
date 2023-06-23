@@ -160,8 +160,10 @@
 
 (use-package doom-themes)
 
-(use-package base16-theme
-  :config (load-theme 'base16-default-dark t))
+(use-package base16-theme)
+
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
 
 (use-package nerd-icons)
 

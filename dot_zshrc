@@ -119,3 +119,4 @@ export PATH=$HOME/Qt/6.5.1/gcc_64/bin:$PATH
 
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /home/kevin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/kevin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
