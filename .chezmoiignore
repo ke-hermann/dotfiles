@@ -2,14 +2,15 @@
 .config/fish
 .config/kitty
 .config/sway
-.zshrc
 .scripts
 .wezterm.lua
+.zshrc
+dot_zsh_plugins.txt
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
-Documents
 AppData
+Documents
 {{- end }}
 
 .config/doom

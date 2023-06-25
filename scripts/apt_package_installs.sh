@@ -1,5 +1,8 @@
 #!/bin/sh 
 
+# run system update first
+sudo apt update && sudo apt upgrade
+
 # package installs
 
 sudo apt install git -y
@@ -35,12 +38,9 @@ sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 curl -sS https://starship.rs/install.sh | sh
 
 # brave browser 
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-beta-archive-keyring.gpg https://brave-browser-apt-beta.s3.brave.com/brave-browser-beta-archive-keyring.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-beta-archive-keyring.gpg] https://brave-browser-apt-beta.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-beta.list
-
-sudo apt update
-sudo apt install brave-browser-beta
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt install brave-browser
 
 # flatpak setup
 sudo apt install flatpak
