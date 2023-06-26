@@ -1,4 +1,4 @@
 [git]
-    autoCommit = false
-    autoPush = false
+    autoCommit = true
+    autoPush = true
     edit.watch = true

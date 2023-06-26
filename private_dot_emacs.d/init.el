@@ -156,14 +156,15 @@
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 
-(use-package ef-themes)
 
 (use-package doom-themes)
 
 (use-package base16-theme)
 
-(use-package solarized-theme
-  :config (load-theme 'solarized-dark t))
+(use-package solarized-theme)
+
+(use-package ef-themes
+  :config (load-theme 'ef-bio t))
 
 (use-package nerd-icons)
 
@@ -176,6 +177,8 @@
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
+
+(use-package poetry)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
