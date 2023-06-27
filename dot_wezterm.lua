@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 local config = {}
 
-config.color_scheme = 'Default Dark (base16)'
+config.color_scheme = 'Ef-Bio'
 config.font = wezterm.font 'Iosevka'
 config.font_size = 14
 config.window_close_confirmation = 'NeverPrompt'
