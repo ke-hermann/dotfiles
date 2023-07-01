@@ -12,6 +12,7 @@ alias agc="sudo apt clean"
 # path additions
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$PATH:/home/kevin/.dotnet/tools
 
 # source antidote
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
