@@ -1,10 +1,7 @@
 # .zsh_plugins.txt
 
-# comments are supported like this
 rupa/z
 zsh-users/zsh-completions
-
-# empty lines are skipped
 
 # annotations are also allowed:
 romkatv/zsh-bench kind:path
@@ -21,11 +18,6 @@ belak/zsh-utils path:history
 belak/zsh-utils path:prompt
 belak/zsh-utils path:utility
 belak/zsh-utils path:completion
-
-# prompts:
-#   with prompt plugins, remember to add this to your .zshrc:
-#   `autoload -Uz promptinit && promptinit && prompt pure`
-sindresorhus/pure     kind:fpath
 
 # popular fish-like plugins
 mattmc3/zfunctions

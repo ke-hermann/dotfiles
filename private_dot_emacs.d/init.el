@@ -170,6 +170,7 @@
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
+  :init (setq doom-modeline-icon nil)
   :config (doom-modeline-mode +1))
 
 (use-package projectile
@@ -200,11 +201,6 @@
 ;; optionally if you want to use debugger
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
-;; optional if you want which-key integration
-(use-package which-key
-    :config
-    (which-key-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPLETION STACK ;;

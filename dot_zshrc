@@ -20,4 +20,4 @@ source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 # initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load
 
-promptinit && prompt pure
+eval "$(starship init zsh)"

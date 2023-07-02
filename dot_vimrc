@@ -3,6 +3,7 @@ call plug#begin()
 Plug 'nanotech/jellybeans.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'lifepillar/vim-solarized8'
 
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
@@ -42,8 +43,9 @@ filetype plugin indent on
 syntax on
 
 set termguicolors
-colorscheme jellybeans
-let g:airline_theme='jellybeans'
+set background=light
+colorscheme solarized8
+let g:airline_theme='solarized'
 
 " keybindings
 inoremap jk <Esc>
