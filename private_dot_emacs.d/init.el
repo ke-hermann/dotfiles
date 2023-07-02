@@ -43,7 +43,8 @@
   (menu-bar-mode -1)
   ;; show line numbers and currently selected line
   (global-hl-line-mode +1)
-  (setq display-line-numbers nil)
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1)
   ;; enable history
   (recentf-mode 1)
   ;; automatically load changed file s
@@ -51,7 +52,7 @@
   (show-paren-mode +1)
   ;; set font
   (if os-windows?
-      (set-frame-font "JetBrains Mono 11")
+      (set-frame-font "Cascadia Code 11")
     (set-frame-font "Iosevka 14")))
 
 (use-package diminish
@@ -87,14 +88,17 @@
 
 ;;; Vim Bindings
 (use-package evil
+  :disabled t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-undo-system 'undo-fu)
+  (setq evil-insert-state-cursor 'box)
   :config (evil-mode 1))
 
 (use-package evil-escape
+  :disabled t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -103,11 +107,13 @@
 
 ;; easy wrapping of text objects
 (use-package evil-surround
+  :disabled t
   :config
   (global-evil-surround-mode 1))
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
+  :disabled t
   :diminish evil-collection-unimpaired-mode
   :after evil
   :config
@@ -115,6 +121,7 @@
   (evil-collection-init))
 
 (use-package exec-path-from-shell
+  :disabled os-windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -123,7 +130,6 @@
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
 
-(use-package pyvenv)
 
 (use-package company
   :diminish company-mode
@@ -155,8 +161,6 @@
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-
-
 (use-package doom-themes)
 
 (use-package base16-theme)
@@ -165,6 +169,8 @@
 
 (use-package ef-themes
   :config (load-theme 'ef-bio t))
+
+(use-package tao-theme)
 
 (use-package nerd-icons)
 
@@ -178,24 +184,23 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package poetry)
+(use-package poetry
+  :config (poetry-tracking-mode +1))
+
+(use-package pyvenv)
 
 (use-package lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (XXX-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+	 (XXX-mode . lsp)
+	 ;; if you want which-key integration
+	 (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
-;; if you are helm user
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
-;; if you are ivy user
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; optionally if you want to use debugger
@@ -208,10 +213,15 @@
 
 ;; Enable vertico
 (use-package vertico
-  :bind (("C-n" . vertico-next)
-	 ("C-p" . vertico-previous))
+  :bind (("M-n" . scroll-up)
+	 ("M-p" . scroll-down))
   :init
   (vertico-mode +1))
+
+(use-package vertico-buffer
+  :load-path "elpa/vertico-*"
+  :after (vertico)
+  :config (vertico-buffer-mode +1))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -222,11 +232,11 @@
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
 (defun crm-indicator (args)
   (cons (format "[CRM%s] %s"
-                (replace-regexp-in-string
-                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                 crm-separator)
-                (car args))
-        (cdr args)))
+		(replace-regexp-in-string
+		 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+		 crm-separator)
+		(car args))
+	(cdr args)))
 (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
 ;; Do not allow the cursor in the minibuffer prompt
@@ -241,15 +251,15 @@
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
-         :map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
+	 :map minibuffer-local-map
+	 ("M-A" . marginalia-cycle))
 
   ;; The :init configuration is always executed (Not lazy!)
   :init
@@ -275,9 +285,9 @@
 
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
+	       '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+		 nil
+		 (window-parameters (mode-line-format . none)))))
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
@@ -289,55 +299,55 @@
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro)
-         ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)	;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
+	 ("C-c h" . consult-history)
+	 ("C-c m" . consult-mode-command)
+	 ("C-c k" . consult-kmacro)
+	 ;; C-x bindings (ctl-x-map)
+	 ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
+	 ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
+	 ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+	 ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
+	 ("C-x r b" . consult-bookmark)	;; orig. bookmark-jump
+	 ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
 	 ("C-x C-r" . consult-recent-file)    ;; orig. r
-         ;; Custom M-# bindings for fast register access
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store) ;; orig. abbrev-prefix-mark (unrelated)
-         ("C-M-#" . consult-register)
-         ;; Other custom bindings
-         ("M-y" . consult-yank-pop)	;; orig. yank-pop
-         ("<help> a" . consult-apropos)	;; orig. apropos-command
-         ;; M-g bindings (goto-map)
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake) ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)	 ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line) ;; orig. goto-line
-         ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
-         ;; M-s bindings (search-map)
-         ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
-         ("C-s" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("M-s m" . consult-multi-occur)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
-         ;; Isearch integration
-         ("M-s e" . consult-isearch-history)
-         :map isearch-mode-map
-         ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
-         ("M-s L" . consult-line-multi)	;; needed by consult-line to detect isearch
-         ;; Minibuffer history
-         :map minibuffer-local-map
-         ("M-s" . consult-history) ;; orig. next-matching-history-element
-         ("M-r" . consult-history)) ;; orig. previous-matching-history-element
+	 ;; Custom M-# bindings for fast register access
+	 ("M-#" . consult-register-load)
+	 ("M-'" . consult-register-store) ;; orig. abbrev-prefix-mark (unrelated)
+	 ("C-M-#" . consult-register)
+	 ;; Other custom bindings
+	 ("M-y" . consult-yank-pop)	;; orig. yank-pop
+	 ("<help> a" . consult-apropos)	;; orig. apropos-command
+	 ;; M-g bindings (goto-map)
+	 ("M-g e" . consult-compile-error)
+	 ("M-g f" . consult-flymake) ;; Alternative: consult-flycheck
+	 ("M-g g" . consult-goto-line)	 ;; orig. goto-line
+	 ("M-g M-g" . consult-goto-line) ;; orig. goto-line
+	 ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
+	 ("M-g m" . consult-mark)
+	 ("M-g k" . consult-global-mark)
+	 ("M-g i" . consult-imenu)
+	 ("M-g I" . consult-imenu-multi)
+	 ;; M-s bindings (search-map)
+	 ("M-s d" . consult-find)
+	 ("M-s D" . consult-locate)
+	 ("M-s g" . consult-grep)
+	 ("M-s G" . consult-git-grep)
+	 ("M-s r" . consult-ripgrep)
+	 ("M-s l" . consult-line)
+	 ("M-s L" . consult-line-multi)
+	 ("M-s m" . consult-multi-occur)
+	 ("M-s k" . consult-keep-lines)
+	 ("M-s u" . consult-focus-lines)
+	 ;; Isearch integration
+	 ("M-s e" . consult-isearch-history)
+	 :map isearch-mode-map
+	 ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
+	 ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
+	 ("M-s L" . consult-line-multi)	;; needed by consult-line to detect isearch
+	 ;; Minibuffer history
+	 :map minibuffer-local-map
+	 ("M-s" . consult-history) ;; orig. next-matching-history-element
+	 ("M-r" . consult-history)) ;; orig. previous-matching-history-element
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
@@ -350,7 +360,7 @@
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
+	register-preview-function #'consult-register-format)
 
   ;; Optionally tweak the register preview window.
   ;; This adds thin lines, sorting and hides the mode line of the window.
@@ -358,7 +368,7 @@
 
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+	xref-show-definitions-function #'consult-xref)
 
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
@@ -376,7 +386,6 @@
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<"))
-
 
 (provide 'init)
 ;;; init.el ends here
