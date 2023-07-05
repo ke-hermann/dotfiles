@@ -1,7 +1,7 @@
 # Read `man 5 sway` for a complete reference.
 
 input * {
-    xkb_layout "us_intl"
+    xkb_layout "us"
     xkb_options caps:ctrl_modifier
 }
 
@@ -18,19 +18,19 @@ smart_gaps on
 
 gaps inner 10
 
-font pango: Iosevka Aile 13 
+font pango: Iosevka Aile Medium 13 
 
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
-set $mod Mod1
+set $mod Mod4
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term kitty
+set $term wezterm
     # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -39,7 +39,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 include /etc/sway/config-vars.d/*
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/kevin/Pictures/wallpaperbetter.com_3840x2160.jpg fill
+output * bg ~/Pictures/wallpapers/fan-wennan-3.jpg fill
 ### Key bindings
 #
 # Basics:
@@ -183,7 +183,20 @@ bindsym $mod+r mode "resize"
 for_window [app_id="nautilus"] floating enable
 
 bar { 
-     swaybar_command waybar
+     swaybar_command swaybar
+     position top
+
+    # When The status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #121212
+	focused_workspace #d0312d #d0312d #ffffff	
+        inactive_workspace #282828 #282828 #ffffff
+    }
+     
 }
 
 include /etc/sway/config.d/*
