@@ -168,7 +168,7 @@
 (use-package solarized-theme)
 
 (use-package ef-themes
-  :config (load-theme 'ef-bio t))
+  :config (load-theme 'catppuccin t))
 
 (use-package tao-theme)
 
