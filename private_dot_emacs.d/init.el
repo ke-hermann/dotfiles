@@ -53,7 +53,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "Cascadia Code 11")
-    (set-frame-font "Iosevka 14")))
+    (set-frame-font "Ubuntu Mono 13")))
 
 (use-package diminish
   :init
@@ -88,7 +88,6 @@
 
 ;;; Vim Bindings
 (use-package evil
-  :disabled t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
@@ -98,7 +97,6 @@
   :config (evil-mode 1))
 
 (use-package evil-escape
-  :disabled t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -107,13 +105,11 @@
 
 ;; easy wrapping of text objects
 (use-package evil-surround
-  :disabled t
   :config
   (global-evil-surround-mode 1))
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
-  :disabled t
   :diminish evil-collection-unimpaired-mode
   :after evil
   :config
@@ -162,15 +158,12 @@
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 (use-package doom-themes)
-
-(use-package base16-theme)
-
+(use-package ef-themes)
+(use-package tao-theme)
 (use-package solarized-theme)
 
-(use-package ef-themes
+(use-package catppuccin-theme
   :config (load-theme 'catppuccin t))
-
-(use-package tao-theme)
 
 (use-package nerd-icons)
 
@@ -189,21 +182,8 @@
 
 (use-package pyvenv)
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-	 (XXX-mode . lsp)
-	 ;; if you want which-key integration
-	 (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+(use-package eglot)
 
-;; optionally
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-;; optionally if you want to use debugger
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
