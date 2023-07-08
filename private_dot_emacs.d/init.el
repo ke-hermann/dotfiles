@@ -53,7 +53,7 @@
   ;; set font
   (if os-windows?
       (set-frame-font "Cascadia Code 11")
-    (set-frame-font "Ubuntu Mono 13")))
+    (set-frame-font "JetBrains Mono 13")))
 
 (use-package diminish
   :init
@@ -158,12 +158,12 @@
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
 (use-package doom-themes)
-(use-package ef-themes)
 (use-package tao-theme)
 (use-package solarized-theme)
+(use-package catppuccin-theme)
 
-(use-package catppuccin-theme
-  :config (load-theme 'catppuccin t))
+(use-package ef-themes
+  :config (load-theme 'ef-bio t))
 
 (use-package nerd-icons)
 
