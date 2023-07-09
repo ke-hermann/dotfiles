@@ -1,0 +1,27 @@
+* {
+	font-size: 15px;
+	font-family: Iosevka Aile;
+	font-weight: bold;
+}
+
+window#waybar {
+	background: #121212;
+	color: #fdf6e3;
+}
+
+#workspaces button {
+	padding: 0 2px;
+	color: #fdf6e3;
+}
+#workspaces button.focused {
+	color: #f47360;
+}
+#workspaces button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+#workspaces button:hover {
+	background: #1a1a1a;
+	border: #1a1a1a;
+	padding: 0 3px;
+}

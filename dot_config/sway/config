@@ -183,19 +183,19 @@ bindsym $mod+r mode "resize"
 for_window [app_id="nautilus"] floating enable
 
 bar { 
-     swaybar_command swaybar
+     swaybar_command waybar
      position top
 
     # When The status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+#     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #121212
-	focused_workspace #d0312d #d0312d #ffffff	
-        inactive_workspace #282828 #282828 #ffffff
-    }
+#     colors {
+#         statusline #ffffff
+#         background #121212
+# 	focused_workspace #d0312d #d0312d #ffffff	
+#         inactive_workspace #282828 #282828 #ffffff
+#     }
      
 }
 

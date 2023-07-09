@@ -126,7 +126,7 @@ lsp.setup()
 -- Lualine
 require('lualine').setup {
 	options = {
-		theme = 'solarized_light',
+		theme = 'solarizedk',
 		component_separators = '|',
 		section_separators = { left = '', right = '' },
 	}
