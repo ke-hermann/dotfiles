@@ -1,0 +1,3 @@
+abbr "zin"="sudo zypper in -y"
+abbr "zrm"="sudo zypper remove"
+abbr "zup"="sudo zypper dup"
