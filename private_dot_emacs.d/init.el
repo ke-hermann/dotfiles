@@ -157,15 +157,15 @@
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-(use-package doom-themes)
+(use-package nerd-icons)
 (use-package tao-theme)
 (use-package solarized-theme)
 (use-package catppuccin-theme)
+(use-package ef-themes)
 
-(use-package ef-themes
-  :config (load-theme 'ef-bio t))
+(use-package doom-themes
+  :config (load-theme 'doom-solarized-light t))
 
-(use-package nerd-icons)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
