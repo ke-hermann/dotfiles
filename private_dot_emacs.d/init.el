@@ -1,4 +1,4 @@
-;;; package --- personal emacs configuration files
+1;;; package --- personal emacs configuration files
 ;;; Commentary:
 
 ;;; Code:
@@ -49,11 +49,7 @@
   (recentf-mode 1)
   ;; automatically load changed file s
   (global-auto-revert-mode +1)
-  (show-paren-mode +1)
-  ;; set font
-  (if os-windows?
-      (set-frame-font "Cascadia Code 11")
-    (set-frame-font "JetBrains Mono 13")))
+  (show-paren-mode +1))
 
 (use-package diminish
   :init
