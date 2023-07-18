@@ -25,6 +25,8 @@ require('packer').startup(function(use)
 		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 	}
 
+	use 'folke/which-key.nvim'
+
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v2.x',
@@ -43,83 +45,74 @@ require('packer').startup(function(use)
 		{'hrsh7th/nvim-cmp'},     -- Required
 		{'hrsh7th/cmp-nvim-lsp'}, -- Required
 		{'L3MON4D3/LuaSnip'},     -- Required
-	}
-}
-end)
+	}} end)
 
--- Setup 
-vim.opt.guicursor = ""
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smartindent = true
+	-- Setup 
+	vim.opt.guicursor = ""
+	vim.opt.tabstop = 4
+	vim.opt.softtabstop = 4
+	vim.opt.shiftwidth = 4
+	vim.opt.expandtab = true
+	vim.opt.smartindent = true
 
-vim.opt.wrap = false
+	vim.opt.wrap = false
 
-vim.opt.swapfile = false
-vim.opt.backup = false
+	vim.opt.swapfile = false
+	vim.opt.backup = false
 
--- Set highlight on search
-vim.o.hlsearch = false
-vim.opt.incsearch = true
+	-- Set highlight on search
+	vim.o.hlsearch = false
+	vim.opt.incsearch = true
 
--- Make line numbers default
-vim.opt.relativenumber = true
+	-- Make line numbers default
+	vim.opt.relativenumber = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+	-- Enable mouse mode
+	vim.o.mouse = 'a'
 
--- Sync clipboard between OS and Neovim.
-vim.o.clipboard = 'unnamedplus'
+	-- Sync clipboard between OS and Neovim.
+	vim.o.clipboard = 'unnamedplus'
 
--- Save undo history
-vim.o.undofile = true
+	-- Save undo history
+	vim.o.undofile = true
 
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+	-- Case-insensitive searching UNLESS \C or capital in search
+	vim.o.ignorecase = true
+	vim.o.smartcase = true
 
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+	-- Keep signcolumn on by default
+	vim.wo.signcolumn = 'yes'
 
--- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+	-- Set completeopt to have a better completion experience
+	vim.o.completeopt = 'menuone,noselect'
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+	-- NOTE: You should make sure your terminal supports this
+	vim.o.termguicolors = true
 
+	vim.cmd('set background=light')
+	vim.cmd('colorscheme solarized8')
 
+	--  Telescope config
+	local builtin = require('telescope.builtin')
+	vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+	vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+	vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+	vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
--- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+    require("which-key").setup()
 
-vim.cmd('set background=light')
-vim.cmd('colorscheme solarized8')
+	-- lsp config 
+	local lsp = require('lsp-zero').preset({})
 
---  Telescope config
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+	lsp.on_attach(function(client, bufnr)
+		lsp.default_keymaps({buffer = bufnr})
+	end)
 
--- lualine
-require('lualine').setup { options = { theme = 'solarized' }}
+	-- (Optional) Configure lua language server for neovim
+	require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
--- lsp config 
-local lsp = require('lsp-zero').preset({})
+	lsp.setup()
 
-lsp.on_attach(function(client, bufnr)
-	lsp.default_keymaps({buffer = bufnr})
-end)
-
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
-lsp.setup()
-
--- Keymaps 
-local options = { noremap = true }
-vim.keymap.set("i", "jk", "<Esc>", options)
+	-- Keymaps 
+	local options = { noremap = true }
+	vim.keymap.set("i", "jk", "<Esc>", options)
