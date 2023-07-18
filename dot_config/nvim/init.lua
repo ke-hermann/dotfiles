@@ -92,6 +92,8 @@ require('packer').startup(function(use)
 	vim.cmd('set background=light')
 	vim.cmd('colorscheme solarized8')
 
+	require('lualine').setup { options = { theme = 'solarized_light' } }
+
 	--  Telescope config
 	local builtin = require('telescope.builtin')
 	vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -99,7 +101,7 @@ require('packer').startup(function(use)
 	vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 	vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-    require("which-key").setup()
+	require("which-key").setup()
 
 	-- lsp config 
 	local lsp = require('lsp-zero').preset({})
@@ -112,6 +114,16 @@ require('packer').startup(function(use)
 	require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 	lsp.setup()
+
+	-- Make sure you setup `cmp` after lsp-zero
+
+	local cmp = require('cmp')
+
+	cmp.setup({
+		mapping = {
+			['<CR>'] = cmp.mapping.confirm({select = false}),
+		}
+	})
 
 	-- Keymaps 
 	local options = { noremap = true }
