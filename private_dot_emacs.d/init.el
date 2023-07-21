@@ -1,4 +1,4 @@
-1;;; package --- personal emacs configuration files
+;;; package --- personal emacs configuration files
 ;;; Commentary:
 
 ;;; Code:
@@ -49,7 +49,10 @@
   (recentf-mode 1)
   ;; automatically load changed file s
   (global-auto-revert-mode +1)
-  (show-paren-mode +1))
+  (show-paren-mode +1)
+  ;; global keymaps
+  (global-set-key "\C-x\C-m" 'execute-extended-command)
+  (global-set-key "\C-c\C-m" 'execute-extended-command))
 
 (use-package diminish
   :init
@@ -160,7 +163,7 @@
 (use-package ef-themes)
 
 (use-package doom-themes
-  :config (load-theme 'doom-solarized-light t))
+  :config (load-theme 'catppuccin t))
 
 
 (use-package doom-modeline
