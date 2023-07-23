@@ -90,19 +90,19 @@ require('packer').startup(function(use)
     -- NOTE: You should make sure your terminal supports this
     vim.o.termguicolors = true
 
-    -- vim.cmd('set background=light')
-    -- vim.cmd('colorscheme solarized8')
-    require("catppuccin").setup({ flavour = "mocha" })
-    vim.cmd.colorscheme "catppuccin"
+    vim.cmd('set background=light')
+    vim.cmd('colorscheme solarized8')
+    -- require("catppuccin").setup({ flavour = "mocha" })
+    -- vim.cmd.colorscheme "catppuccin"
 
-    require('lualine').setup { options = { theme = 'catppuccin' } }
+    require('lualine').setup { options = { theme = 'solarized_light' } }
 
     --  Telescope config
     local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "find file" })
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "grep"})
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "find buffer" })
+    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags" })
 
     require("which-key").setup()
 
@@ -131,3 +131,4 @@ require('packer').startup(function(use)
     -- Keymaps 
     local options = { noremap = true }
     vim.keymap.set("i", "jk", "<Esc>", options)
+    vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>" , { desc = "open file explorer" })

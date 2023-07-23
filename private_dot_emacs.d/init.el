@@ -87,6 +87,7 @@
 
 ;;; Vim Bindings
 (use-package evil
+  :disabled t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
@@ -96,6 +97,7 @@
   :config (evil-mode 1))
 
 (use-package evil-escape
+  :disabled t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -104,6 +106,7 @@
 
 ;; easy wrapping of text objects
 (use-package evil-surround
+  :disabled t
   :config
   (global-evil-surround-mode 1))
 
