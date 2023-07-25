@@ -11,8 +11,7 @@
 (use-package catppuccin-theme)
 (use-package ef-themes)
 
-(use-package doom-themes
-  :config (load-theme 'doom-solarized-light t))
+(use-package doom-themes)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)

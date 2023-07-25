@@ -5,7 +5,9 @@
 ;; separate custom file location
 
 ;; custom file setup
+(setq custom-safe-themes t)
 (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
+(load custom-file)
 
 ;;;;;;;;;;;;;;;;;
 ;; MELPA setup ;;
@@ -52,8 +54,8 @@
 ;;;;;;;;;;;;;
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'doom-solarized-light)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'doom-solarized-dark)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-elea-dark)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-kassio)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 
 (provide 'init)
