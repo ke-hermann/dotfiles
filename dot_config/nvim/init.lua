@@ -7,8 +7,10 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     use 'lifepillar/vim-solarized8'
-    use ({'folke/tokyonight.nvim', as = 'tokyonight'})
-    use "EdenEast/nightfox.nvim"
+    use 'EdenEast/nightfox.nvim'
+    use 'chriskempson/base16-vim'
+
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -92,17 +94,9 @@ require('packer').startup(function(use)
     vim.o.termguicolors = true
 
     -- vim.cmd('set background=light')
-    require("nightfox").setup({
-        options = {
+    vim.cmd[[colorscheme base16-default-dark]]
 
-        transparent = true, -- Enable this to disable setting the background color
-        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
-    }
-    })
-
-    vim.cmd[[colorscheme carbonfox]]
-
-    require('lualine').setup { options = { theme = 'nightfox' } }
+    require('lualine').setup { options = { theme = 'base16' } }
 
     --  Telescope config
     local builtin = require('telescope.builtin')
@@ -135,11 +129,17 @@ require('packer').startup(function(use)
         }
     })
 
+    -- treesitter  setup
+    require'nvim-treesitter.configs'.setup {
+        -- A list of parser names, or "all" (the five listed parsers should always be installed)
+        ensure_installed = { "c", "lua", "python", "vim", "vimdoc", "query" },
+        sync_install = false,
+        auto_install = true
+    }
+
     -- Keymaps 
-    local options = { noremap = true }
-    vim.keymap.set("i", "jk", "<Esc>", options)
+    vim.keymap.set("i", "jk", "<Esc>")
+    vim.keymap.set("t", "jk", [[<C-\><C-n>]]) -- normal mode mapping for term emulator
     vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>" , { desc = "open file explorer" })
     vim.keymap.set('n', '<leader>bl', ":set background=light<CR>", { desc = "set light background" })
     vim.keymap.set('n', '<leader>bd', ":set background=dark<CR>", { desc = "set dark  background" })
-
-

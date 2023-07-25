@@ -2,21 +2,16 @@ local wezterm = require 'wezterm'
 local config = {}
 
 config.font = wezterm.font 'JetBrains Mono'
-config.font_size = 13
+config.font_size = 11
 config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
 
--- config.color_scheme = 'Builtin Solarized Light'
-local dimmer = { brightness = 0.1 }
+-- Spawn powershell on windows
+if package.config:sub(1, 1) == '\\' then
+	config.default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'}
+end
 
-config.background = {
-	{
-		source = {
-			File = wezterm.home_dir .. '/.local/resources/shodan2.jpg'
-		},
-		hsb = dimmer,
-	}
-}
+config.color_scheme = 'Default Dark (base16)'
 
 config.keys = {
 	{

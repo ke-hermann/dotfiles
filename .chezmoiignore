@@ -3,7 +3,6 @@
 .config/kitty
 .config/sway
 .scripts
-.wezterm.lua
 .zshrc
 dot_zsh_plugins.txt
 {{- end }}
