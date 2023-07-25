@@ -7,7 +7,8 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     use 'lifepillar/vim-solarized8'
-    use { "catppuccin/nvim", as = "catppuccin" }
+    use ({'folke/tokyonight.nvim', as = 'tokyonight'})
+    use "EdenEast/nightfox.nvim"
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -90,12 +91,18 @@ require('packer').startup(function(use)
     -- NOTE: You should make sure your terminal supports this
     vim.o.termguicolors = true
 
-    vim.cmd('set background=light')
-    vim.cmd('colorscheme solarized8')
-    -- require("catppuccin").setup({ flavour = "mocha" })
-    -- vim.cmd.colorscheme "catppuccin"
+    -- vim.cmd('set background=light')
+    require("nightfox").setup({
+        options = {
 
-    require('lualine').setup { options = { theme = 'solarized_light' } }
+        transparent = true, -- Enable this to disable setting the background color
+        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
+    }
+    })
+
+    vim.cmd[[colorscheme carbonfox]]
+
+    require('lualine').setup { options = { theme = 'nightfox' } }
 
     --  Telescope config
     local builtin = require('telescope.builtin')
