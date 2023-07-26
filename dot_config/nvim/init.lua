@@ -8,7 +8,7 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'lifepillar/vim-solarized8'
     use 'EdenEast/nightfox.nvim'
-    use 'chriskempson/base16-vim'
+    use 'RRethy/nvim-base16'
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
@@ -30,6 +30,8 @@ require('packer').startup(function(use)
     }
 
     use 'folke/which-key.nvim'
+
+    use 'rcarriga/nvim-notify'
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -70,6 +72,7 @@ require('packer').startup(function(use)
 
     -- Make line numbers default
     vim.opt.relativenumber = true
+    vim.opt.number = true
 
     -- Enable mouse mode
     vim.o.mouse = 'a'
@@ -106,6 +109,8 @@ require('packer').startup(function(use)
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags" })
 
     require("which-key").setup()
+
+    vim.notify = require("notify")
 
     -- lsp config 
     local lsp = require('lsp-zero').preset({})
