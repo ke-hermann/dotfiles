@@ -14,9 +14,9 @@ input type:touchpad {
 default_border pixel 2
 default_floating_border pixel 2
 smart_borders on
-smart_gaps on
 
-gaps inner 10
+# smart_gaps on
+# gaps inner 10
 
 font pango: Iosevka Aile Medium 13 
 
@@ -39,7 +39,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 include /etc/sway/config-vars.d/*
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/wallpapers/fan-wennan-3.jpg fill
+output * bg ~/Pictures/Antaeushinowater.webp fill
 ### Key bindings
 #
 # Basics:

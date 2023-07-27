@@ -1,8 +1,8 @@
 local wezterm = require 'wezterm'
 local config = {}
 
-config.font = wezterm.font 'JetBrains Mono'
-config.font_size = 11
+config.font = wezterm.font 'Berkeley Mono'
+config.font_size = 14
 config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
 
