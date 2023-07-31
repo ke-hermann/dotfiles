@@ -54,7 +54,7 @@
 ;;;;;;;;;;;;;
 
 (global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-elea-dark)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-bio)))
 (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-kassio)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 

@@ -1,0 +1,6 @@
+abbr -g "agi"="sudo apt install"
+abbr -g "agr"="sudo apt remove"
+abbr -g "aguu"="sudo apt update && sudo apt upgrade"
+abbr "zin"="sudo zypper in -y"
+abbr "zrm"="sudo zypper remove"
+abbr "zup"="sudo zypper dup"
