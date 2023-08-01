@@ -15,6 +15,8 @@ end
 
 config.color_scheme = 'Default Dark (base16)'
 
+config.hide_tab_bar_if_only_one_tab = true
+
 config.keys = {
 	{
 		key = 'w',
