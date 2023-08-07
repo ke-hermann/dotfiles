@@ -7,10 +7,7 @@
 
 ;; Enable vertico
 (use-package vertico
-  :bind (("M-n" . scroll-up)
-	 ("M-p" . scroll-down))
-  :init
-  (vertico-mode +1))
+  :init (vertico-mode +1))
 
 (use-package vertico-buffer
   :load-path "elpa/vertico-*"
