@@ -1,19 +1,19 @@
 # ~/.config/alacritty/alacritty.yml
 font:
   normal:
-    family: Berkeley Mono 
+    family: JetBrains Mono 
     style: Regular
 
   bold:
-    family: Berkeley Mono
+    family: JetBrains Mono
     style: Bold
 
   italic:
-    family: Berkeley Mono
+    family: JetBrains Mono
     style: Italic
 
   bold_italic:
-    family: Berkeley MOno
+    family: JetBrains MOno
     style: Bold Italic
 
   size: 14
