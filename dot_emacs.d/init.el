@@ -122,7 +122,7 @@
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 (use-package exec-path-from-shell
-  :disabled os-windows?
+  :disabled ;; os-windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
