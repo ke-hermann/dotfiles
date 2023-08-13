@@ -1,4 +1,4 @@
-1;;; package --- personal emacs configuration files
+;;; package --- personal emacs configuration files
 ;;; Commentary:
 
 ;;; Code:
@@ -122,7 +122,7 @@
   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 (use-package exec-path-from-shell
-  :disabled ;; os-windows?
+  :disabled os-windows?
   :config (exec-path-from-shell-initialize))
 
 (use-package magit)
@@ -169,7 +169,7 @@
 (use-package ef-themes)
 
 (use-package doom-themes
-  :config (load-theme 'doom-gruvbox t))
+  :config (load-theme 'solarized-light t))
 
 
 (use-package doom-modeline
@@ -375,8 +375,8 @@
 ;; KEYMAPS ;;
 ;;;;;;;;;;;;;
 
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'doom-gruvbox-light)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'doom-gruvbox)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
