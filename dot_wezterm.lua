@@ -13,7 +13,7 @@ else
 	config.font_size = 14
 end
 
-config.color_scheme = 'GruvboxDark'
+config.color_scheme = 'Solarized Dark (Gogh)'
 
 config.hide_tab_bar_if_only_one_tab = true
 

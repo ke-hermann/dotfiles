@@ -101,11 +101,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd [[colorscheme gruvbox]]
+vim.cmd [[colorscheme solarized8]]
 
 require('lualine').setup {
     options = {
-        theme = 'gruvbox',
+        theme = 'solarized',
         icons_enabled = 'false'
     }}
 
@@ -134,6 +134,16 @@ end)
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
+
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+
+cmp.setup({
+  mapping = {
+    ['<Tab>'] = cmp_action.tab_complete(),
+    ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+  }
+})
 
 -- treesitter  setup
 require 'nvim-treesitter.configs'.setup {
