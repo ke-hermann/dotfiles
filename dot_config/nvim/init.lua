@@ -12,8 +12,6 @@ require('packer').startup(function(use)
     use 'RRethy/nvim-base16'
     use { "ellisonleao/gruvbox.nvim" }
 
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
@@ -101,11 +99,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd [[colorscheme solarized8]]
+vim.cmd [[colorscheme base16-default-dark]]
 
 require('lualine').setup {
     options = {
-        theme = 'solarized',
+        theme = 'base16',
         icons_enabled = 'false'
     }}
 
@@ -144,14 +142,6 @@ cmp.setup({
     ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
   }
 })
-
--- treesitter  setup
-require 'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "lua", "python", "vim", "vimdoc", "query" },
-    sync_install = false,
-    auto_install = true
-}
 
 require("oil").setup()
 
