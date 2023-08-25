@@ -104,7 +104,9 @@ vim.cmd [[colorscheme base16-default-dark]]
 require('lualine').setup {
     options = {
         theme = 'base16',
-        icons_enabled = 'false'
+        icons_enabled = 'false',
+        component_separators = { left = ' ', right = ' '},
+        section_separators = { left = ' ', right = ' '},
     }}
 
 --  Telescope config

@@ -169,7 +169,7 @@
 (use-package ef-themes)
 
 (use-package doom-themes
-  :config (load-theme 'solarized-light t))
+  :config (load-theme 'ef-bio t))
 
 
 (use-package doom-modeline
