@@ -6,7 +6,7 @@ config.warn_about_missing_glyphs = false
 
 -- Spawn powershell on windows
 if package.config:sub(1, 1) == '\\' then
-	config.default_prog = { 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'}
+	config.default_prog = { 'nu'}
 	config.font = wezterm.font 'Cascadia Code'
 	config.font_size = 12
 else

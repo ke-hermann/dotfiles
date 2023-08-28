@@ -10,7 +10,9 @@ require('packer').startup(function(use)
     use 'lifepillar/vim-solarized8'
     use 'EdenEast/nightfox.nvim'
     use 'RRethy/nvim-base16'
+    use {'nyoom-engineering/oxocarbon.nvim'}
     use { "ellisonleao/gruvbox.nvim" }
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -36,6 +38,11 @@ require('packer').startup(function(use)
     use {
         'stevearc/oil.nvim',
         config = function() require('oil').setup() end
+    }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
     }
 
     use {
@@ -99,11 +106,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd [[colorscheme base16-default-dark]]
+vim.cmd [[colorscheme oxocarbon]]
 
 require('lualine').setup {
     options = {
-        theme = 'base16',
+        theme = 'horizon',
         icons_enabled = 'false',
         component_separators = { left = ' ', right = ' '},
         section_separators = { left = ' ', right = ' '},
@@ -146,6 +153,15 @@ cmp.setup({
 })
 
 require("oil").setup()
+
+-- Treesitter Setup
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "python" },
+  sync_install = false,
+  auto_install = true,
+}
 
 -- Keymaps
 vim.keymap.set("i", "jk", "<Esc>")
