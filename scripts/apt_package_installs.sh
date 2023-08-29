@@ -27,6 +27,7 @@ sudo apt install qbittorrent -y
 sudo apt install fonts-firacode -y
 sudo apt install lm-sensors -y
 sudo apt install gnome-tweaks -y
+sudo apt install zoxide -y
 
 # snap packages
 snap install discord
