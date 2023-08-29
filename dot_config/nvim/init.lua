@@ -24,6 +24,8 @@ require('packer').startup(function(use)
     use 'tpope/vim-rhubarb'
     use 'tpope/vim-surround'
 
+    use 'Raimondi/delimitMate'
+
     -- Detect tabstop and shiftwidth automatically
     use 'tpope/vim-sleuth'
     use {
