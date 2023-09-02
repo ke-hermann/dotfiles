@@ -64,21 +64,7 @@
   :init
   (diminish 'eldoc-mode))
 
-(use-package helm
-  :disabled t
-  :diminish helm-mode
-  :init
-  (global-set-key (kbd "M-x") #'helm-M-x)
-  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-  (global-set-key (kbd "C-x C-f") #'helm-find-files)
-  (global-set-key (kbd "C-,") #'helm-apropos)
-  (global-set-key (kbd "C-s") #'helm-occur)
-  (global-set-key (kbd "C-x C-r") #'helm-recentf)
-  (helm-mode +1))
-
-
 ;; Packages
-(use-package undo-fu)
 
 ;; This package implements support for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
@@ -97,7 +83,6 @@
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
-  (setq evil-undo-system 'undo-fu)
   (setq evil-insert-state-cursor 'box)
   :config (evil-mode 1))
 
@@ -178,7 +163,7 @@
 (use-package ef-themes)
 
 (use-package doom-themes
-  :config (load-theme 'ef-bio t))
+  :config (load-theme 'doom-tokyo-night t))
 
 
 (use-package doom-modeline
