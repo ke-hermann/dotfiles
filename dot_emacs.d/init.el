@@ -15,14 +15,23 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;; MELPA setup
-(require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(require 'use-package)
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+(setq package-enable-at-startup nil)
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE CONFIG ;;
@@ -200,11 +209,6 @@
 (use-package vertico
   :init
   (vertico-mode +1))
-
-(use-package vertico-buffer
-  :load-path "elpa/vertico-*"
-  :after (vertico)
-  :config (vertico-buffer-mode +1))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist

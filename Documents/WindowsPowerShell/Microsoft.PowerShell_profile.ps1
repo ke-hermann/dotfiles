@@ -12,9 +12,9 @@ $ENV:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
 #   ContinuationPrompt = 'DarkGray'
 #   Default            = 'DarkGray'
 # }
-#  
+ 
 # # Logging / Progress colors
-#  
+ 
 # $p = $host.privatedata
 # $p.ErrorForegroundColor    = "Red"
 # $p.ErrorBackgroundColor    = "White"

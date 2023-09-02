@@ -8,11 +8,9 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     -- Themes
     use 'lifepillar/vim-solarized8'
-    use 'EdenEast/nightfox.nvim'
     use 'RRethy/nvim-base16'
     use {'nyoom-engineering/oxocarbon.nvim'}
-    use { "ellisonleao/gruvbox.nvim" }
-    use { "catppuccin/nvim", as = "catppuccin" }
+    use ({ 'projekt0n/github-nvim-theme' })
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -148,10 +146,21 @@ local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
-  mapping = {
-    ['<Tab>'] = cmp_action.tab_complete(),
-    ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-  }
+    mapping = {
+        ['<Tab>'] = cmp_action.tab_complete(),
+        ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+        ["<CR>"] = cmp.mapping({
+            i = function(fallback)
+                if cmp.visible() and cmp.get_active_entry() then
+                    cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                else
+                    fallback()
+                end
+            end,
+            s = cmp.mapping.confirm({ select = true }),
+            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+        }),
+    }
 })
 
 require("oil").setup()
