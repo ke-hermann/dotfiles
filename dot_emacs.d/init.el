@@ -1,72 +1,92 @@
 ;;; package --- personal emacs configuration files
 ;;; Commentary:
-
 ;;; Code:
-;; separate custom file location
-
-(defconst CFG-PATH "~/.config/emacs-custom.el")
-
-(unless (file-exists-p CFG-PATH)
-  (write-region "" nil CFG-PATH))
-
-(setq custom-file CFG-PATH)
-(load custom-file)
 
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; Elpaca Setup
+(defvar elpaca-installer-version 0.5)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil
+                              :files (:defaults (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (call-process "git" nil buffer t "clone"
+                                       (plist-get order :repo) repo)))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(setq package-enable-at-startup nil)
+(if os-windows?
+    (elpaca-no-symlink-mode))
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t))
 
-;;;;;;;;;;;;;;;;;;;;
-;; PACKAGE CONFIG ;;
-;;;;;;;;;;;;;;;;;;;;
+;; Block until current queue processed.
+(elpaca-wait)
 
-;; General settings that don't fit anywhere else
-(use-package emacs
-  :config
-  (setq make-backup-files nil)
-  (setq auto-save-default nil)
-  (setq vc-follow-symlinks t)
-  (setq ring-bell-function 'ignore)
-  (setq custom-safe-themes t)
-  (electric-pair-mode +1)
-  ;; Hide unnecessary UI elements
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (menu-bar-mode -1)
-  ;; show line numbers and currently selected line
-  (global-hl-line-mode +1)
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode +1)
-  ;; enable history
-  (recentf-mode 1)
-  ;; automatically load changed file s
-  (global-auto-revert-mode +1)
-  (show-paren-mode +1))
+;; no backup or custom file
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq custom-file nil)
+(setq vc-follow-symlinks t)
+;; shut the annoying alarm sound up
+(setq ring-bell-function 'ignore)
+(setq custom-safe-themes t)
+(electric-pair-mode +1)
+;; Hide unnecessary UI elements
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+;; show line numbers and currently selected line
+(global-hl-line-mode +1)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode +1)
+;; enable history
+(recentf-mode 1)
+;; automatically load changed file s
+(global-auto-revert-mode +1)
+(show-paren-mode +1)
+;; font
+(set-face-attribute 'default nil :font "JetBrains Mono-14")
+;; theme
 
 (use-package diminish
   :init
   (diminish 'eldoc-mode))
 
-;; Packages
-
-;; This package implements support for mapping a pair of simultaneously pressed keys .
+;; This package implements suppor for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
   :config (key-chord-mode 1))
 
@@ -76,44 +96,6 @@
   :ensure t
   :config
   (super-save-mode +1))
-
-;;; Vim Bindings
-(use-package evil
-  :after (key-chord)
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-insert-state-cursor 'box)
-  :config (evil-mode 1))
-
-(use-package evil-escape
-  :diminish evil-escape-mode
-  :config
-  (setq-default evil-escape-key-sequence "jk")
-  (evil-escape-mode +1))
-
-
-;; easy wrapping of text objects
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-
-;;; Vim Bindings Everywhere else
-(use-package evil-collection
-  :diminish evil-collection-unimpaired-mode
-  :after evil
-  :config
-  (setq evil-want-integration t)
-  (evil-collection-init))
-
-(use-package vimish-fold
-  :ensure
-  :after evil)
-
-(use-package evil-vimish-fold
-  :ensure
-  :after vimish-fold
-  :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
 
 (use-package exec-path-from-shell
   :disabled os-windows?
@@ -161,7 +143,9 @@
 (use-package ef-themes)
 
 (use-package doom-themes
-  :config (load-theme 'doom-tokyo-night t))
+  :config
+  (setq custom-theme-directory "~/.emacs.d/themes")
+  (load-theme 'nord-darker t))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
@@ -178,24 +162,21 @@
 
 (use-package pyvenv)
 
-(use-package eglot)
+(use-package rust-mode)
+
+(use-package eglot
+  :config
+  (add-hook 'rust-mode-hook 'eglot-ensure))
 
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; COMPLETION STACK ;;
-;;;;;;;;;;;;;;;;;;;;;;
+;; Completion
 
 ;; Enable vertico
 (use-package vertico
   :init
   (vertico-mode +1))
-
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :init
-  (savehist-mode))
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
@@ -356,16 +337,29 @@
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<"))
 
-
 ;;;;;;;;;;;;;
 ;; KEYMAPS ;;
 ;;;;;;;;;;;;;
+
 
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
 (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key (kbd "C-x C-n") 'company-complete)
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(lua-mode rainbow-mode embark-consult)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

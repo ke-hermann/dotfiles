@@ -14,7 +14,9 @@ else
    config.font_size = 14
 end
 
-config.color_scheme = 'Tokyo Night'
+config.color_scheme = 'nord'
+-- darker background color
+config.colors = { background = '#15181e' }
 
 config.use_fancy_tab_bar = false
 
