@@ -5,7 +5,10 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;; Elpaca Setup
+;;;;;;;;;;;;;;;;;;;;;;
+;; Elpaca Bootstrap ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
 (defvar elpaca-installer-version 0.5)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -56,6 +59,10 @@
 ;; Block until current queue processed.
 (elpaca-wait)
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; General Settings ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
 ;; no backup or custom file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -79,7 +86,7 @@
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
 ;; font
-(set-face-attribute 'default nil :font "JetBrains Mono-14")
+(set-face-attribute 'default nil :font "JetBrains Mono-12")
 ;; theme
 
 (use-package diminish
@@ -171,7 +178,43 @@
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-;; Completion
+;;;;;;;;;;;;;;;;
+;; Evil Setup ;;
+;;;;;;;;;;;;;;;;
+
+(use-package evil
+  :after (key-chord)
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-insert-state-cursor 'box)
+  (setq evil-undo-sytem 'undo-redo)
+  :config (evil-mode 1))
+
+(use-package evil-escape
+  :diminish evil-escape-mode
+  :config
+  (setq-default evil-escape-key-sequence "jk")
+  (evil-escape-mode +1))
+
+
+;; easy wrapping of text objects
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
+  :diminish evil-collection-unimpaired-mode
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
+
+
+;;;;;;;;;;;;;;;;
+;; COMPLETION ;;
+;;;;;;;;;;;;;;;;
 
 ;; Enable vertico
 (use-package vertico
