@@ -36,14 +36,18 @@
 (global-display-line-numbers-mode +1)
 ;; enable history
 (recentf-mode 1)
-;; automatically load changed file s
+;; automatically load changed files
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
-;; font
-(set-face-attribute 'default nil :font "JetBrains Mono-13")
-;; theme
+;; font and custom theme dir
+(set-face-attribute 'default nil :font "Iosevka-16")
+(setq custom-theme-directory "~/.emacs.d/themes")
 
 (setq use-package-always-ensure t)
+
+;;;;;;;;;;;;;;
+;; Packages ;;
+;;;;;;;;;;;;;;
 
 (use-package diminish
   :config
@@ -56,7 +60,6 @@
 ;; super-save auto-saves your buffers
 (use-package super-save
   :diminish super-save-mode
-  :ensure t
   :config
   (super-save-mode +1))
 
@@ -103,17 +106,14 @@
 
 (use-package nerd-icons)
 
-(use-package ef-themes)
-
 (use-package doom-themes
   :config
-  (setq custom-theme-directory "~/.emacs.d/themes")
-  (load-theme 'nord-darker t))
+  ;;(load-theme 'nord-darker t)
+  )
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init (setq doom-modeline-icon nil)
-  :config (doom-modeline-mode +1))
+(use-package ef-themes
+  :config
+  (load-theme 'ef-bio t))
 
 (use-package projectile
   :config
@@ -127,9 +127,14 @@
 
 (use-package rust-mode)
 
+(use-package lua-mode)
+
+(use-package go-mode)
+
 (use-package eglot
   :config
-  (add-hook 'rust-mode-hook 'eglot-ensure))
+  (add-hook 'rust-mode-hook 'eglot-ensure)
+  (add-hook 'lua-mode-hook 'eglot-ensure))
 
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
@@ -218,7 +223,6 @@
 
 
 (use-package embark
-  :ensure t
 
   :bind
   (("C-," . embark-act)         ;; pick some comfortable binding
@@ -240,7 +244,6 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
-  :ensure t ; only need to install it, embark loads it after consult if found
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 

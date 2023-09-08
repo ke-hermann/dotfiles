@@ -10,13 +10,11 @@ if package.config:sub(1, 1) == '\\' then
    config.font = wezterm.font 'Cascadia Code'
    config.font_size = 12
 else
-   config.font = wezterm.font 'JetBrains Mono'
-   config.font_size = 14
+   config.font = wezterm.font 'Iosevka'
+   config.font_size = 16
 end
 
-config.color_scheme = 'nord'
--- darker background color
-config.colors = { background = '#15181e' }
+config.color_scheme = 'Ef-Bio'
 
 config.use_fancy_tab_bar = false
 
@@ -43,4 +41,5 @@ config.keys = {
 }
 
 
-return config
+return 
+config
