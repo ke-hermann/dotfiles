@@ -13,6 +13,14 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;;;;;;;;;;;;;;;;;
+;; custom file ;;
+;;;;;;;;;;;;;;;;;
+
+(setq custom-file "~/.emacs.d/custom.el")
+(when (file-exists-p custom-file)
+      (load-file custom-file))
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; General Settings ;;
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -20,7 +28,6 @@
 ;; no backup or custom file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-(setq custom-file nil)
 (setq vc-follow-symlinks t)
 ;; shut the annoying alarm sound up
 (setq ring-bell-function 'ignore)
@@ -181,6 +188,10 @@
 (use-package vertico
   :init
   (vertico-mode +1))
+
+(use-package vertico-buffer
+  :load-path "elpa/vertico-*"
+  :config (vertico-buffer-mode +1))
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.

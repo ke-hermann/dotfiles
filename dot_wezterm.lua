@@ -3,7 +3,7 @@ local config = {}
 
 config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
-config.default_prog = { 'nu'}
+-- config.default_prog = { 'nu'}
 
 -- Spawn powershell on windows
 if package.config:sub(1, 1) == '\\' then
@@ -14,7 +14,7 @@ else
    config.font_size = 16
 end
 
-config.color_scheme = 'Ef-Bio'
+config.color_scheme = 'Oxocarbon Dark'
 
 config.use_fancy_tab_bar = false
 
