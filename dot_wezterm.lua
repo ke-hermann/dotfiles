@@ -14,7 +14,7 @@ else
    config.font_size = 16
 end
 
-config.color_scheme = 'Oxocarbon Dark'
+config.color_scheme = 'Default Dark (base16)'
 
 config.use_fancy_tab_bar = false
 

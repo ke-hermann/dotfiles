@@ -5,25 +5,19 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; Melpa Bootstrap ;;
-;;;;;;;;;;;;;;;;;;;;;;
+;; Melpa Bootstrap
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;;;;;;;;;;;;;;;;;
-;; custom file ;;
-;;;;;;;;;;;;;;;;;
+;; custom file
 
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
       (load-file custom-file))
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; General Settings ;;
-;;;;;;;;;;;;;;;;;;;;;;
+;; General Settings
 
 ;; no backup or custom file
 (setq make-backup-files nil)
@@ -37,8 +31,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-;; show line numbers and currently selected line
-(global-hl-line-mode +1)
+;; (global-hl-line-mode +1)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 ;; enable history
@@ -52,9 +45,7 @@
 
 (setq use-package-always-ensure t)
 
-;;;;;;;;;;;;;;
-;; Packages ;;
-;;;;;;;;;;;;;;
+;; Packages
 
 (use-package diminish
   :config
@@ -146,9 +137,7 @@
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-;;;;;;;;;;;;;;;;
-;; Evil Setup ;;
-;;;;;;;;;;;;;;;;
+;; Evil Setup
 
 (use-package evil
   :after (key-chord)
@@ -179,10 +168,11 @@
   (setq evil-want-integration t)
   (evil-collection-init))
 
+;; formatting
+(use-package format-all
+  :config (add-hook 'prog-mode-hook 'format-all-mode))
 
-;;;;;;;;;;;;;;;;
-;; COMPLETION ;;
-;;;;;;;;;;;;;;;;
+;; COMPLETION
 
 ;; Enable vertico
 (use-package vertico
@@ -350,9 +340,7 @@
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<"))
 
-;;;;;;;;;;;;;
-;; KEYMAPS ;;
-;;;;;;;;;;;;;
+;; KEYMAPS
 
 
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
