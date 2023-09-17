@@ -138,7 +138,6 @@
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;; Evil Setup
-
 (use-package evil
   :after (key-chord)
   :init
@@ -342,13 +341,13 @@
 
 ;; KEYMAPS
 
-
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
 (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "C-x C-n") 'company-complete)
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 (provide 'init)
 ;;; init.el ends here
