@@ -10,7 +10,7 @@ if package.config:sub(1, 1) == '\\' then
    config.font = wezterm.font 'Cascadia Code'
    config.font_size = 12
 else
-   config.font = wezterm.font 'Iosevka'
+   config.font = wezterm.font 'JetBrains Mono'
    config.font_size = 16
 end
 
