@@ -1,10 +1,15 @@
 {{- if eq .chezmoi.os "windows" }}
+.config/alacritty
 .config/fish
 .config/kitty
 .config/sway
+.config/waybar
+.config/zsh-abbr
 .scripts
+.tmux.conf
+.vimrc
+.zsh_plugins.txt
 .zshrc
-dot_zsh_plugins.txt
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
