@@ -11,7 +11,7 @@ if package.config:sub(1, 1) == '\\' then
    config.font_size = 12
 else
    config.font = wezterm.font 'JetBrains Mono'
-   config.font_size = 16
+   config.font_size = 14
 end
 
 config.color_scheme = 'Ef-Bio'
