@@ -40,7 +40,7 @@
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
 ;; font and custom theme dir
-(set-face-attribute 'default nil :font "JetBrains Mono-14")
+(set-face-attribute 'default nil :font "Iosevka-16")
 (setq custom-theme-directory "~/.emacs.d/themes")
 
 (setq use-package-always-ensure t)
@@ -104,10 +104,7 @@
 
 (use-package nerd-icons)
 
-(use-package doom-themes
-  :config
-  ;;(load-theme 'nord-darker t)
-  )
+(use-package doom-themes)
 
 (use-package ef-themes
   :config
