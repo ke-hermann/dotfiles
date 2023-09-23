@@ -14,7 +14,7 @@ else
    config.font_size = 14
 end
 
-config.color_scheme = 'Ef-Bio'
+config.color_scheme = 'Oxocarbon Dark'
 
 config.use_fancy_tab_bar = false
 
@@ -41,5 +41,5 @@ config.keys = {
 }
 
 
-return 
-config
+return
+    config

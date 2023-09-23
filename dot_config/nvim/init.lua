@@ -7,10 +7,7 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     -- Themes
-    use 'lifepillar/vim-solarized8'
-    use 'RRethy/nvim-base16'
-    use {'nyoom-engineering/oxocarbon.nvim'}
-    use ({ 'projekt0n/github-nvim-theme' })
+    use { 'nyoom-engineering/oxocarbon.nvim' }
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -50,14 +47,14 @@ require('packer').startup(function(use)
         branch = 'v2.x',
         requires = {
             -- LSP Support
-            { 'neovim/nvim-lspconfig' },   -- Required
-            { 'williamboman/mason.nvim' }, -- Optional
+            { 'neovim/nvim-lspconfig' },             -- Required
+            { 'williamboman/mason.nvim' },           -- Optional
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
-            { 'hrsh7th/nvim-cmp' }, -- Required
+            { 'hrsh7th/nvim-cmp' },     -- Required
             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' }, -- Required
+            { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
 end)
@@ -112,9 +109,9 @@ require('lualine').setup {
     options = {
         theme = 'horizon',
         icons_enabled = 'false',
-        component_separators = { left = ' ', right = ' '},
-        section_separators = { left = ' ', right = ' '},
-    }}
+        component_separators = { left = ' ', right = ' ' },
+        section_separators = { left = ' ', right = ' ' },
+    } }
 
 --  Telescope config
 local builtin = require('telescope.builtin')
@@ -136,8 +133,8 @@ local lsp = require('lsp-zero').preset({})
 
 
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-  lsp.buffer_autoformat()
+    lsp.default_keymaps({ buffer = bufnr })
+    lsp.buffer_autoformat()
 end)
 
 -- (Optional) Configure lua language server for neovim
@@ -170,11 +167,11 @@ require("oil").setup()
 
 -- Treesitter Setup
 
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "python" },
-  sync_install = false,
-  auto_install = true,
+require 'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all" (the five listed parsers should always be installed)
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "python" },
+    sync_install = false,
+    auto_install = true,
 }
 
 -- Keymaps
