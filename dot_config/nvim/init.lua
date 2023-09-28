@@ -8,6 +8,8 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     -- Themes
     use { 'nyoom-engineering/oxocarbon.nvim' }
+    use { "ellisonleao/gruvbox.nvim" }
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -103,11 +105,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd [[colorscheme oxocarbon]]
+vim.cmd.colorscheme "catppuccin-mocha"
 
 require('lualine').setup {
     options = {
-        theme = 'horizon',
+        theme = 'catppuccin',
         icons_enabled = 'false',
         component_separators = { left = ' ', right = ' ' },
         section_separators = { left = ' ', right = ' ' },
