@@ -10,6 +10,9 @@ require('packer').startup(function(use)
     use { 'nyoom-engineering/oxocarbon.nvim' }
     use { "ellisonleao/gruvbox.nvim" }
     use { "catppuccin/nvim", as = "catppuccin" }
+    use "RRethy/nvim-base16"
+
+
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -105,11 +108,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme "base16-default-dark"
 
 require('lualine').setup {
     options = {
-        theme = 'catppuccin',
+        theme = 'base16',
         icons_enabled = 'false',
         component_separators = { left = ' ', right = ' ' },
         section_separators = { left = ' ', right = ' ' },
