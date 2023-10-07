@@ -39,7 +39,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 include /etc/sway/config-vars.d/*
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/Armored Core VI.jpeg fill
+output * bg ~/Pictures/wallpaper.jpg fill
 ### Key bindings
 #
 # Basics:

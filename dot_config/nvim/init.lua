@@ -186,3 +186,4 @@ vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>", { desc = "open file explorer"
 vim.keymap.set('n', '<leader>bl', ":set background=light<CR>", { desc = "set light background" })
 vim.keymap.set('n', '<leader>bd', ":set background=dark<CR>", { desc = "set dark  background" })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set('n', '<leader>ps', ":PackerSync<CR>", { desc = "packer settings" })
