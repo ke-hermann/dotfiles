@@ -1,3 +1,16 @@
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
+end
+
+local packer_bootstrap = ensure_packer()
+
 vim.cmd [[packadd packer.nvim]]
 
 vim.g.mapleader = ' '
@@ -8,11 +21,10 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     -- Themes
     use { 'nyoom-engineering/oxocarbon.nvim' }
-    use { "ellisonleao/gruvbox.nvim" }
-    use { "catppuccin/nvim", as = "catppuccin" }
-    use "RRethy/nvim-base16"
-
-
+    use 'shaunsingh/solarized.nvim'
+    use({ 'projekt0n/github-nvim-theme' })
+    use 'cocopon/iceberg.vim'
+    use 'RRethy/nvim-base16'
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -108,12 +120,12 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.cmd('set background=dark')
-vim.cmd.colorscheme "base16-default-dark"
+require('github-theme').setup()
+vim.cmd('colorscheme base16-default-dark')
 
 require('lualine').setup {
     options = {
         theme = 'base16',
-        icons_enabled = 'false',
         component_separators = { left = ' ', right = ' ' },
         section_separators = { left = ' ', right = ' ' },
     } }

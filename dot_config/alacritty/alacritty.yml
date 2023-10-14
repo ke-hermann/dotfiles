@@ -16,7 +16,7 @@ font:
     family: JetBrains MOno
     style: Bold Italic
 
-  size: 14
+  size: 12
 
 # Base16 Default Dark 256 - alacritty color config
 # Chris Kempson (http://chriskempson.com)
