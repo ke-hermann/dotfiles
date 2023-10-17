@@ -118,10 +118,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
-
 vim.cmd('set background=dark')
-require('github-theme').setup()
-vim.cmd('colorscheme base16-default-dark')
+vim.cmd('colorscheme iceberg')
 
 require('lualine').setup {
     options = {

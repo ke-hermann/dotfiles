@@ -11,10 +11,10 @@ if package.config:sub(1, 1) == '\\' then
    config.font_size = 12
 else
    config.font = wezterm.font 'JetBrains Mono'
-   config.font_size = 15
+   config.font_size = 13
 end
 
-config.color_scheme = 'Default Dark (base16)'
+config.color_scheme = 'iceberg-dark'
 
 config.use_fancy_tab_bar = false
 

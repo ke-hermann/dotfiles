@@ -81,7 +81,7 @@
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
 ;; font and custom theme dir
-(set-face-attribute 'default nil :font "Iosevka-16")
+(set-face-attribute 'default nil :font "Iosevka-14")
 (setq custom-theme-directory "~/.emacs.d/themes")
 
 (setq use-package-always-ensure t)
