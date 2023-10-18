@@ -28,6 +28,7 @@ sudo apt install fonts-firacode -y
 sudo apt install lm-sensors -y
 sudo apt install gnome-tweaks -y
 sudo apt install zoxide -y
+sudo apt install zsh -y
 
 # snap packages
 snap install discord
@@ -38,11 +39,6 @@ sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 # starship shell
 curl -sS https://starship.rs/install.sh | sh
 
-# brave browser 
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt install brave-browser
-
 # flatpak setup
 sudo apt install flatpak
 sudo apt install gnome-software-plugin-flatpak
@@ -51,3 +47,11 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 # install flatpaks
 flatpak install flathub org.wezfurlong.wezterm
 flatpak install flathub com.github.geigi.cozy
+
+# antidote, zsh plugin manager 
+git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+
+# git identity setup
+git config --global user.name "Kevin Hermann"
+git config --global user.email "hermannkevin@gmail.com"
+

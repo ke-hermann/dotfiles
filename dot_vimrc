@@ -1,6 +1,5 @@
 call plug#begin()
 
-Plug 'nanotech/jellybeans.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'lifepillar/vim-solarized8'
