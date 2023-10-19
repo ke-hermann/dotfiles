@@ -123,7 +123,7 @@ vim.cmd('colorscheme iceberg')
 
 require('lualine').setup {
     options = {
-        theme = 'base16',
+        theme = 'iceberg',
         component_separators = { left = ' ', right = ' ' },
         section_separators = { left = ' ', right = ' ' },
     } }

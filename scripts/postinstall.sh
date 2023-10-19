@@ -55,3 +55,13 @@ git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antid
 git config --global user.name "Kevin Hermann"
 git config --global user.email "hermannkevin@gmail.com"
 
+# terminal setup 
+bash -c  "$(wget -qO- https://git.io/vQgMr)"
+
+# vim plug 
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# change system editor to vim
+sudo update-alternatives --set editor /usr/bin/vim.basic
+

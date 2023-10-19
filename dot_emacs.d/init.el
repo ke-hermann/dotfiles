@@ -5,58 +5,19 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-(defvar elpaca-installer-version 0.5)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil
-                              :files (:defaults (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (call-process "git" nil buffer t "clone"
-                                       (plist-get order :repo) repo)))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
-
-;; Install use-package support
-(elpaca elpaca-use-package
-  ;; Enable :elpaca use-package keyword.
-  (elpaca-use-package-mode)
-  ;; Assume :elpaca t unless otherwise specified.
-  (setq elpaca-use-package-by-default t))
-
-;; Block until current queue processed.
-(elpaca-wait)
+;; melpa setup 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
 ;; custom file
 
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
       (load-file custom-file))
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
 
 ;; General Settings
 
@@ -84,102 +45,128 @@
 (set-face-attribute 'default nil :font "JetBrains Mono-14")
 (setq custom-theme-directory "~/.emacs.d/themes")
 
-(setq use-package-always-ensure t)
-
 ;; Packages
 
 (use-package diminish
+  :ensure t
   :config
   (diminish 'eldoc-mode))
 
 ;; This package implements suppor for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
+  :ensure t
   :config (key-chord-mode 1))
 
 ;; super-save auto-saves your buffers
 (use-package super-save
+  :ensure t
   :diminish super-save-mode
   :config
   (super-save-mode +1))
 
 (use-package exec-path-from-shell
+  :ensure t
   :disabled os-windows?
   :config (exec-path-from-shell-initialize))
 
-(use-package magit)
+(use-package magit
+  :ensure t)
 
 (use-package whole-line-or-region
+  :ensure t
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
 
 
 (use-package company
+  :ensure t
   :diminish company-mode
   :config (global-company-mode +1))
 
 (use-package tree-sitter
+  :ensure t
   :config
   (global-tree-sitter-mode +1)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs
+  :ensure t
   :after tree-sitter)
 
 (use-package flycheck
+  :ensure t
   :config (global-flycheck-mode))
 
 (use-package which-key
+  :ensure t
   :diminish which-key-mode
   :config (which-key-mode +1))
 
 (use-package ace-window
+  :ensure t
   :bind (("M-o" . ace-window)))
 
-(use-package cider)
+(use-package cider
+  :ensure t)
 
 (use-package paredit
+  :ensure t
   :diminish paredit-mode
   :config
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-(use-package nerd-icons)
+(use-package nerd-icons
+  :ensure t)
 
-(use-package doom-themes)
+(use-package doom-themes
+  :ensure t)
 
 (use-package doom-modeline
+  :ensure t
   :config (doom-modeline-mode +1))
 
 (use-package ef-themes
-  :config
-  (load-theme 'ef-bio t))
+  :ensure t)
+
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
 
 (use-package projectile
+  :ensure t
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
 (use-package poetry
+  :ensure t
   :config (poetry-tracking-mode +1))
 
-(use-package pyvenv)
+(use-package pyvenv
+  :ensure t)
 
-(use-package rust-mode)
+(use-package rust-mode
+  :ensure t)
 
-(use-package lua-mode)
+(use-package lua-mode
+  :ensure t)
 
-(use-package go-mode)
+(use-package go-mode
+  :ensure t)
 
 (use-package eglot
+  :ensure t
   :config
   (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'lua-mode-hook 'eglot-ensure))
 
-(use-package dap-mode)
+(use-package dap-mode
+  :ensure t)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;; Evil Setup
 (use-package evil
+  :ensure t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
@@ -189,6 +176,7 @@
   :config (evil-mode 1))
 
 (use-package evil-escape
+  :ensure t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -197,11 +185,13 @@
 
 ;; easy wrapping of text objects
 (use-package evil-surround
+  :ensure t
   :config
   (global-evil-surround-mode 1))
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
+  :ensure t
   :diminish evil-collection-unimpaired-mode
   :after evil
   :config
@@ -210,12 +200,14 @@
 
 ;; formatting
 (use-package format-all
+  :ensure t
   :config (add-hook 'prog-mode-hook 'format-all-mode))
 
 ;; COMPLETION
 
 ;; Enable vertico
 (use-package vertico
+  :ensure t
   :init
   (vertico-mode +1))
 
@@ -240,6 +232,7 @@
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
+  :ensure t
   :init
   (setq completion-styles '(orderless basic)
 	completion-category-defaults nil
@@ -247,6 +240,7 @@
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
+  :ensure t
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
 	 :map minibuffer-local-map
@@ -260,6 +254,7 @@
 
 
 (use-package embark
+  :ensure t
 
   :bind
   (("C-," . embark-act)         ;; pick some comfortable binding
@@ -281,11 +276,13 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
+  :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Example configuration for Consult
 (use-package consult
+  :ensure t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
 	 ("C-c h" . consult-history)
