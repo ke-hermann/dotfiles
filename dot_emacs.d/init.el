@@ -42,7 +42,7 @@
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
 ;; font and custom theme dir
-(set-face-attribute 'default nil :font "JetBrains Mono-14")
+(set-face-attribute 'default nil :font "Iosevka-14")
 (setq custom-theme-directory "~/.emacs.d/themes")
 
 ;; Packages
@@ -167,6 +167,7 @@
 ;; Evil Setup
 (use-package evil
   :ensure t
+  :disabled t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
@@ -177,6 +178,7 @@
 
 (use-package evil-escape
   :ensure t
+  :disabled t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -186,12 +188,14 @@
 ;; easy wrapping of text objects
 (use-package evil-surround
   :ensure t
+  :disabled t
   :config
   (global-evil-surround-mode 1))
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
   :ensure t
+  :disabled t
   :diminish evil-collection-unimpaired-mode
   :after evil
   :config
