@@ -17,7 +17,10 @@
       (load-file custom-file))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'eleuther t)
 
+;; font
+(set-face-attribute 'default nil :font "Iosevka-14")
 
 ;; General Settings
 
@@ -41,8 +44,8 @@
 ;; automatically load changed files
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
-;; font and custom theme dir
-(set-face-attribute 'default nil :font "Iosevka-14")
+;; custom theme dir
+
 (setq custom-theme-directory "~/.emacs.d/themes")
 
 ;; Packages
@@ -119,18 +122,16 @@
 (use-package nerd-icons
   :ensure t)
 
-(use-package doom-themes
-  :ensure t)
-
 (use-package doom-modeline
+  :after (nerd-icons)
   :ensure t
   :config (doom-modeline-mode +1))
 
-(use-package ef-themes
+(use-package doom-themes
   :ensure t)
 
-(use-package solarized-theme
-  :config (load-theme 'solarized-dark t))
+(use-package ef-themes
+  :ensure t)
 
 (use-package projectile
   :ensure t
@@ -378,7 +379,6 @@
   (setq consult-narrow-key "<"))
 
 ;; KEYMAPS
-
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
 (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
