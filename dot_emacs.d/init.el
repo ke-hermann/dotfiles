@@ -42,7 +42,7 @@
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
 ;; font and custom theme dir
-(set-face-attribute 'default nil :font "Iosevka-14")
+(set-face-attribute 'default nil :font "JetBrains Mono-15")
 (setq custom-theme-directory "~/.emacs.d/themes")
 
 ;; Packages
@@ -130,7 +130,7 @@
   :ensure t)
 
 (use-package solarized-theme
-  :config (load-theme 'solarized-dark t))
+  :config (load-theme 'eleuther t))
 
 (use-package projectile
   :ensure t
