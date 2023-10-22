@@ -5,19 +5,19 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;; melpa setup 
+;; MELPA setup
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; always treat themes as safe, load before custom file
+(setq custom-safe-themes t)
 ;; custom file
-
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
-      (load-file custom-file))
+  (load-file custom-file))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
 
 ;; General Settings
 
@@ -27,7 +27,6 @@
 (setq vc-follow-symlinks t)
 ;; shut the annoying alarm sound up
 (setq ring-bell-function 'ignore)
-(setq custom-safe-themes t)
 (electric-pair-mode +1)
 ;; Hide unnecessary UI elements
 (tool-bar-mode -1)
@@ -119,18 +118,16 @@
 (use-package nerd-icons
   :ensure t)
 
-(use-package doom-themes
-  :ensure t)
-
 (use-package doom-modeline
+  :after (nerd-icons)
   :ensure t
   :config (doom-modeline-mode +1))
 
-(use-package ef-themes
+(use-package doom-themes
   :ensure t)
 
-(use-package solarized-theme
-  :config (load-theme 'eleuther t))
+(use-package ef-themes
+  :ensure t)
 
 (use-package projectile
   :ensure t
@@ -167,7 +164,6 @@
 ;; Evil Setup
 (use-package evil
   :ensure t
-  :disabled t
   :after (key-chord)
   :init
   (setq evil-want-keybinding nil)
@@ -178,7 +174,6 @@
 
 (use-package evil-escape
   :ensure t
-  :disabled t
   :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
@@ -188,14 +183,12 @@
 ;; easy wrapping of text objects
 (use-package evil-surround
   :ensure t
-  :disabled t
   :config
   (global-evil-surround-mode 1))
 
 ;;; Vim Bindings Everywhere else
 (use-package evil-collection
   :ensure t
-  :disabled t
   :diminish evil-collection-unimpaired-mode
   :after evil
   :config
@@ -205,7 +198,9 @@
 ;; formatting
 (use-package format-all
   :ensure t
-  :config (add-hook 'prog-mode-hook 'format-all-mode))
+  :config
+  (add-hook 'prog-mode-hook 'format-all-mode)
+  (add-hook 'prog-mode-hook 'format-all-ensure-formatter))
 
 ;; COMPLETION
 
@@ -214,6 +209,9 @@
   :ensure t
   :init
   (vertico-mode +1))
+
+(use-package vertico-buffer
+  :config (vertico-buffer-mode +1))
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
@@ -378,9 +376,8 @@
   (setq consult-narrow-key "<"))
 
 ;; KEYMAPS
-
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
+;; (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
+;; (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
