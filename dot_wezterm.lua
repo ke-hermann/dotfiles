@@ -3,16 +3,9 @@ local config = {}
 
 config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
--- config.default_prog = { 'nu'}
 
--- Spawn powershell on windows
-if package.config:sub(1, 1) == '\\' then
-   config.font = wezterm.font 'Cascadia Code'
-   config.font_size = 12
-else
-   config.font = wezterm.font 'JetBrains Mono'
-   config.font_size = 13
-end
+config.font = wezterm.font 'Cascadia Code'
+config.font_size = 14
 
 config.color_scheme = 'iceberg-dark'
 
