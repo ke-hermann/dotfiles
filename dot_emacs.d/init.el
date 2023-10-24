@@ -12,14 +12,11 @@
 
 ;; always treat themes as safe, load before custom file
 (setq custom-safe-themes t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 ;; custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load-file custom-file))
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
-;; General Settings
 
 ;; no backup or custom file
 (setq make-backup-files nil)
@@ -40,9 +37,6 @@
 ;; automatically load changed files
 (global-auto-revert-mode +1)
 (show-paren-mode +1)
-;; font and custom theme dir
-(set-face-attribute 'default nil :font "JetBrains Mono-15")
-(setq custom-theme-directory "~/.emacs.d/themes")
 
 ;; Packages
 
@@ -121,7 +115,9 @@
 (use-package doom-modeline
   :after (nerd-icons)
   :ensure t
-  :config (doom-modeline-mode +1))
+  :config
+  (setq doom-modeline-icon nil)
+  (doom-modeline-mode +1))
 
 (use-package doom-themes
   :ensure t)
@@ -160,40 +156,6 @@
 (use-package dap-mode
   :ensure t)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
-;; Evil Setup
-(use-package evil
-  :ensure t
-  :after (key-chord)
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-insert-state-cursor 'box)
-  (setq evil-undo-sytem 'undo-redo)
-  :config (evil-mode 1))
-
-(use-package evil-escape
-  :ensure t
-  :diminish evil-escape-mode
-  :config
-  (setq-default evil-escape-key-sequence "jk")
-  (evil-escape-mode +1))
-
-
-;; easy wrapping of text objects
-(use-package evil-surround
-  :ensure t
-  :config
-  (global-evil-surround-mode 1))
-
-;;; Vim Bindings Everywhere else
-(use-package evil-collection
-  :ensure t
-  :diminish evil-collection-unimpaired-mode
-  :after evil
-  :config
-  (setq evil-want-integration t)
-  (evil-collection-init))
 
 ;; formatting
 (use-package format-all

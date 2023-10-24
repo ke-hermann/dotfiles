@@ -5,7 +5,7 @@ config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
 
 config.font = wezterm.font 'Cascadia Code'
-config.font_size = 14
+config.font_size = 16
 
 config.color_scheme = 'iceberg-dark'
 
