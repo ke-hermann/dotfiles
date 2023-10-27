@@ -26,6 +26,7 @@ require('packer').startup(function(use)
     use 'cocopon/iceberg.vim'
     use 'RRethy/nvim-base16'
 
+
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
@@ -119,11 +120,13 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.cmd('set background=dark')
-vim.cmd('colorscheme iceberg')
+-- vim.cmd('colorscheme iceberg')
+vim.cmd('colorscheme github_dark_high_contrast')
+
 
 require('lualine').setup {
     options = {
-        theme = 'iceberg',
+        theme = 'auto',
         component_separators = { left = ' ', right = ' ' },
         section_separators = { left = ' ', right = ' ' },
     } }
@@ -184,8 +187,8 @@ require("oil").setup()
 
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "python" },
-    sync_install = false,
+    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "python" },
+    sync_install = true,
     auto_install = true,
 }
 

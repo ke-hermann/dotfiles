@@ -166,7 +166,7 @@
   (add-hook 'prog-mode-hook 'format-all-ensure-formatter))
 
 ;; COMPLETION
-(load-file "./elisp/completion-config.el")
+(load-file "~/.emacs.d/elisp/completion-config.el")
 
 ;; KEYMAPS
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-kassio)))
