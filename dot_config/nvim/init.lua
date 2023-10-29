@@ -120,8 +120,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.cmd('set background=dark')
--- vim.cmd('colorscheme iceberg')
-vim.cmd('colorscheme github_dark_high_contrast')
+vim.cmd('colorscheme iceberg')
 
 
 require('lualine').setup {
@@ -152,7 +151,7 @@ local lsp = require('lsp-zero').preset({})
 
 lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
-    lsp.buffer_autoformat()
+    -- lsp.buffer_autoformat()
 end)
 
 -- (Optional) Configure lua language server for neovim
