@@ -7,7 +7,7 @@ config.warn_about_missing_glyphs = false
 config.font = wezterm.font 'Cascadia Code'
 config.font_size = 16
 
-config.color_scheme = 'iceberg-dark'
+config.color_scheme = 'Tomorrow Night Burns'
 
 config.use_fancy_tab_bar = false
 
