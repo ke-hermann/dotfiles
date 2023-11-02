@@ -20,11 +20,7 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     -- Themes
-    use { 'nyoom-engineering/oxocarbon.nvim' }
-    use 'shaunsingh/solarized.nvim'
-    use({ 'projekt0n/github-nvim-theme' })
-    use 'cocopon/iceberg.vim'
-    use 'RRethy/nvim-base16'
+    use 'folke/tokyonight.nvim'
 
 
     use {
@@ -120,15 +116,10 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.cmd('set background=dark')
-vim.cmd('colorscheme iceberg')
+require("tokyonight").setup({ style = "night"})
+vim.cmd[[colorscheme tokyonight]]
 
 
-require('lualine').setup {
-    options = {
-        theme = 'auto',
-        component_separators = { left = ' ', right = ' ' },
-        section_separators = { left = ' ', right = ' ' },
-    } }
 
 --  Telescope config
 local builtin = require('telescope.builtin')
