@@ -21,6 +21,7 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     -- Themes
     use 'folke/tokyonight.nvim'
+    use { "catppuccin/nvim", as = "catppuccin" }
 
 
     use {
@@ -116,10 +117,17 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.cmd('set background=dark')
-require("tokyonight").setup({ style = "night"})
-vim.cmd[[colorscheme tokyonight]]
+require("catppuccin").setup({ flavour = "mocha" })
+vim.cmd[[colorscheme catppuccin]]
 
+-- lualine setup 
 
+require('lualine').setup {
+    options = {
+        icons_enabled = true,
+        theme = 'catppuccin',
+    }
+}
 
 --  Telescope config
 local builtin = require('telescope.builtin')
