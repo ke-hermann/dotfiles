@@ -3,9 +3,9 @@
 
 (custom-theme-set-faces
  'signalis
- '(default ((t (:family "Geist Mono" :foundry "outline" :width normal :height 128 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#DADADA" :background "#151515" :stipple nil :inherit nil))))
+ '(default ((t (:family "Berkeley Mono" :foundry "outline" :width normal :height 143 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#DADADA" :background "#151515" :stipple nil :inherit nil))))
  '(cursor ((t (:foreground "#F6F6F6" :background "#FAFAFA"))))
- '(fixed-pitch ((t (:family "Geist Mono"))))
+ '(fixed-pitch ((t (:family "Berkeley Mono"))))
  '(variable-pitch ((t (:height 1.0 :foreground "#C3C3C3"))))
  '(escape-glyph ((t (:weight bold :foreground "#F6F6F6"))))
  '(homoglyph ((t (:foreground "#832e31"))))
@@ -26,7 +26,7 @@
  '(font-lock-escape-face ((t (:inherit (font-lock-regexp-grouping-backslash)))))
  '(font-lock-function-call-face ((t (:inherit (font-lock-function-name-face)))))
  '(font-lock-function-name-face ((t (:weight normal :slant normal :box (:line-width (1 . -1) :color "#9E9E9E" :style nil) :foreground "#59abfc"))))
- '(font-lock-keyword-face ((t (:foreground "#fc595f" :weight semi-bold))))
+ '(font-lock-keyword-face ((t (:foreground "#fc6759" :weight semi-bold))))
  '(font-lock-negation-char-face ((t (:foreground "#FAFAFA"))))
  '(font-lock-number-face ((t nil)))
  '(font-lock-misc-punctuation-face ((t (:inherit (font-lock-punctuation-face)))))
@@ -37,9 +37,9 @@
  '(font-lock-punctuation-face ((t nil)))
  '(font-lock-regexp-grouping-backslash ((t (:weight bold :foreground "#DADADA"))))
  '(font-lock-regexp-grouping-construct ((t (:weight bold :foreground "#F6F6F6"))))
- '(font-lock-string-face ((t (:slant normal :foreground "#C3C3C3"))))
+ '(font-lock-string-face ((t (:foreground "#a9fc59" :slant normal))))
  '(font-lock-type-face ((t (:slant italic :foreground "#fc595f"))))
- '(font-lock-variable-name-face ((t (:foreground "#d2494e" :slant normal))))
+ '(font-lock-variable-name-face ((t (:slant normal :foreground "#fcab59"))))
  '(font-lock-variable-use-face ((t (:inherit (font-lock-variable-name-face)))))
  '(font-lock-warning-face ((t (:inherit (warning)))))
  '(button ((t (:underline (:color foreground-color :style line :position nil)))))

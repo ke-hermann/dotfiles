@@ -31,12 +31,19 @@
 (scroll-bar-mode -1)
 ;; (global-hl-line-mode +1)
 (defvar display-line-numbers-type)
+
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 ;; enable history
 (recentf-mode 1)
+
 ;; automatically load changed files
+(defvar global-auto-revert-non-file-buffers)
+(defvar auto-revert-verbose)
+
 (global-auto-revert-mode +1)
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
 (show-paren-mode +1)
 
 ;; Packages
@@ -108,6 +115,7 @@
   :after (nerd-icons)
   :ensure t
   :config
+  (setq column-number-mode +1)
   (setq doom-modeline-icon nil)
   (doom-modeline-mode +1))
 
@@ -146,8 +154,10 @@
   (add-hook 'lua-mode-hook 'eglot-ensure))
 
 (use-package dap-mode
-  :ensure t)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+  :ensure t
+  :config
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy))
 
 ;; formatting
 (use-package format-all
@@ -165,6 +175,7 @@
 (global-set-key (kbd "<f8>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key (kbd "M-f") 'forward-to-word)
 (global-set-key (kbd "C-x C-n") 'company-complete)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
