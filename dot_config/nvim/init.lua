@@ -21,6 +21,8 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     -- Themes
     use 'folke/tokyonight.nvim'
+    use 'cocopon/iceberg.vim'
+    use {'nyoom-engineering/oxocarbon.nvim'}
     use { "catppuccin/nvim", as = "catppuccin" }
 
 
@@ -117,15 +119,14 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.cmd('set background=dark')
-require("catppuccin").setup({ flavour = "mocha" })
-vim.cmd[[colorscheme catppuccin]]
+vim.cmd.colorscheme "iceberg"
 
 -- lualine setup 
 
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'catppuccin',
+        theme = 'iceberg',
     }
 }
 

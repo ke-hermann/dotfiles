@@ -11,6 +11,8 @@ olets/zsh-abbr    kind:defer
 ohmyzsh/ohmyzsh path:lib
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/magic-enter
+ohmyzsh/ohmyzsh path:plugins/dnf
+
 
 # or lighter-weight ones like zsh-utils
 belak/zsh-utils path:editor

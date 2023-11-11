@@ -13,3 +13,5 @@ source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load
 
 eval "$(starship init zsh)"
+
+[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
