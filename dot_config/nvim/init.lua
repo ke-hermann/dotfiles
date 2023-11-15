@@ -1,82 +1,66 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+-- Bootstrap LAZY
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 
-local packer_bootstrap = ensure_packer()
-
-vim.cmd [[packadd packer.nvim]]
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-require('packer').startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-    -- Themes
-    use 'folke/tokyonight.nvim'
-    use 'cocopon/iceberg.vim'
-    use {'nyoom-engineering/oxocarbon.nvim'}
-    use { "catppuccin/nvim", as = "catppuccin" }
+vim.opt.rtp:prepend(lazypath)
 
 
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.2',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
-    -- Git related plugins
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-rhubarb'
-    use 'tpope/vim-surround'
+-- install plugins
 
-    use 'Raimondi/delimitMate'
-
-    -- Detect tabstop and shiftwidth automatically
-    use 'tpope/vim-sleuth'
-    use {
+require("lazy").setup({
+    -- theme
+    "nyoom-engineering/oxocarbon.nvim",
+    -- UX helpers
+    "folke/which-key.nvim",
+    "rcarriga/nvim-notify",
+    -- Language Server Protocol
+    "williamboman/mason.nvim",
+    { 'williamboman/mason-lspconfig.nvim' },
+    -- File Navigation
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.4',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    -- Statusline
+    {
         'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
-
-    use 'folke/which-key.nvim'
-
-    use 'rcarriga/nvim-notify'
-
-    use {
+        dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
+    },
+    -- File Explorer with vim keybindings
+    {
         'stevearc/oil.nvim',
-        config = function() require('oil').setup() end
-    }
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
 
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
+    -- tpope plugins
+    "tpope/vim-fugitive",
+    "tpope/vim-rhubarb",
+    "tpope/vim-surround",
+    "tpope/vim-sleuth",
 
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        requires = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },             -- Required
-            { 'williamboman/mason.nvim' },           -- Optional
-            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+    -- LSP zero config
+    { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+    { 'neovim/nvim-lspconfig' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/nvim-cmp' },
+    { 'L3MON4D3/LuaSnip' },
+})
 
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },     -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
-        }
-    }
-end)
+-- Basic Settings
 
--- Setup
+vim.g.mapleader = " " --
 vim.opt.guicursor = ""
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -118,17 +102,12 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
-vim.cmd('set background=dark')
-vim.cmd.colorscheme "iceberg"
+vim.opt.background = "dark" -- set this to dark or light
+vim.cmd("colorscheme oxocarbon")
 
--- lualine setup 
+-- Plugin Setup
 
-require('lualine').setup {
-    options = {
-        icons_enabled = true,
-        theme = 'iceberg',
-    }
-}
+require("mason").setup()
 
 --  Telescope config
 local builtin = require('telescope.builtin')
@@ -139,63 +118,20 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags"
 
 require("which-key").setup()
 
+require('lualine').setup()
+
 vim.notify = require("notify")
 
--- lsp config
---
---
+-- Lsp Config
 
+local lsp_zero = require('lsp-zero')
 
-local lsp = require('lsp-zero').preset({})
-
-
-lsp.on_attach(function(client, bufnr)
-    lsp.default_keymaps({ buffer = bufnr })
-    -- lsp.buffer_autoformat()
+lsp_zero.on_attach(function(client, bufnr)
+  lsp_zero.default_keymaps({buffer = bufnr})
 end)
-
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
-lsp.setup()
-
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
-
-cmp.setup({
-    mapping = {
-        ['<Tab>'] = cmp_action.tab_complete(),
-        ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-        ["<CR>"] = cmp.mapping({
-            i = function(fallback)
-                if cmp.visible() and cmp.get_active_entry() then
-                    cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-                else
-                    fallback()
-                end
-            end,
-            s = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        }),
-    }
-})
-
-require("oil").setup()
-
--- Treesitter Setup
-
-require 'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "python" },
-    sync_install = true,
-    auto_install = true,
-}
 
 -- Keymaps
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("t", "jk", [[<C-\><C-n>]]) -- normal mode mapping for term emulator
 vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>", { desc = "open file explorer" })
-vim.keymap.set('n', '<leader>bl', ":set background=light<CR>", { desc = "set light background" })
-vim.keymap.set('n', '<leader>bd', ":set background=dark<CR>", { desc = "set dark  background" })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-vim.keymap.set('n', '<leader>ps', ":PackerSync<CR>", { desc = "packer settings" })
