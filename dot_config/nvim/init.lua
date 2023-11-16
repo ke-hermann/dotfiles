@@ -19,7 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     -- theme
-    "nyoom-engineering/oxocarbon.nvim",
+    "RRethy/nvim-base16",
+    "cocopon/iceberg.vim",
     -- UX helpers
     "folke/which-key.nvim",
     "rcarriga/nvim-notify",
@@ -103,11 +104,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd("colorscheme oxocarbon")
-
--- Plugin Setup
-
-require("mason").setup()
+vim.cmd('colorscheme base16-default-dark')
 
 --  Telescope config
 local builtin = require('telescope.builtin')
@@ -129,6 +126,15 @@ local lsp_zero = require('lsp-zero')
 lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 end)
+
+-- setup servers 
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {},
+  handlers = {
+    lsp_zero.default_setup,
+  },
+})
 
 -- Keymaps
 vim.keymap.set("i", "jk", "<Esc>")
