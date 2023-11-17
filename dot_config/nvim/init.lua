@@ -21,6 +21,7 @@ require("lazy").setup({
     -- theme
     "RRethy/nvim-base16",
     "cocopon/iceberg.vim",
+    "lifepillar/vim-solarized8",
     -- UX helpers
     "folke/which-key.nvim",
     "rcarriga/nvim-notify",
@@ -104,7 +105,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd('colorscheme base16-default-dark')
+vim.cmd("colorscheme solarized8")
+
 
 --  Telescope config
 local builtin = require('telescope.builtin')
@@ -115,7 +117,14 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags"
 
 require("which-key").setup()
 
-require('lualine').setup()
+require('lualine').setup {
+    options = {
+        icons_enabled = true,
+        theme = 'solarized',
+        component_separators = { left = ' ', right = ' '},
+        section_separators = { left = ' ', right = ' '},
+    }
+}
 
 vim.notify = require("notify")
 
