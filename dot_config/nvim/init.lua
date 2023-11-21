@@ -23,6 +23,8 @@ require("lazy").setup({
     "cocopon/iceberg.vim",
     "lifepillar/vim-solarized8",
     "folke/tokyonight.nvim",
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+
     -- UX helpers
     "folke/which-key.nvim",
     "rcarriga/nvim-notify",
@@ -59,6 +61,8 @@ require("lazy").setup({
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
     { 'L3MON4D3/LuaSnip' },
+
+    'nvim-treesitter/nvim-treesitter'
 })
 
 -- Basic Settings
@@ -104,9 +108,9 @@ vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd("colorscheme iceberg")
+vim.o.termguicolors = true
+vim.cmd("colorscheme base16-default-dark")
 
 
 --  Telescope config
@@ -121,7 +125,7 @@ require("which-key").setup()
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'iceberg',
+        theme = 'auto',
         component_separators = { left = ' ', right = ' '},
         section_separators = { left = ' ', right = ' '},
     }
@@ -145,6 +149,27 @@ require('mason-lspconfig').setup({
     lsp_zero.default_setup,
   },
 })
+
+-- Treesitter config 
+--
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { 'python', 'c', 'cpp', 'lua' },
+  highlight = {
+    enable = true,
+    use_languagetree = true,
+  },
+  indent = {
+    enable = true,
+    prefer_gk_over_autocmd = true,
+  },
+  cintegration = {
+    enable = true,
+    highlight_ignores = { 'Bar', 'Comment' },
+  },
+  autopairs = {
+    enable = true,
+  },
+}
 
 -- Keymaps
 vim.keymap.set("i", "jk", "<Esc>")
