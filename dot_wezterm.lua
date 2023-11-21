@@ -5,9 +5,8 @@ config.window_close_confirmation = 'NeverPrompt'
 config.warn_about_missing_glyphs = false
 
 config.font = wezterm.font 'Berkeley Mono'
-config.font_size = 16
 
-config.color_scheme = "iceberg-dark"
+config.color_scheme = 'Default Dark (base16)'
 
 config.use_fancy_tab_bar = false
 

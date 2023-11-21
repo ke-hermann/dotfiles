@@ -169,7 +169,7 @@
 ;; COMPLETION
 (load-file "~/.emacs.d/elisp/completion-config.el")
 
-;; Evil Mode
+;; Evil Setup
 (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
