@@ -45,6 +45,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
+(set-frame-font "Berkeley Mono 14" nil t)
 
 ;; Packages
 
@@ -124,6 +125,10 @@
 
 (use-package ef-themes
   :ensure t)
+
+(use-package iceberg-theme
+  :init (iceberg-theme-create-theme-file)
+  :config (load-theme 'solarized-iceberg-dark t))
 
 (use-package projectile
   :ensure t
