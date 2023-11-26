@@ -2,14 +2,14 @@
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
 vim.opt.rtp:prepend(lazypath)
@@ -18,51 +18,62 @@ vim.opt.rtp:prepend(lazypath)
 -- install plugins
 
 require("lazy").setup({
-    -- theme
-    "RRethy/nvim-base16",
-    "cocopon/iceberg.vim",
-    "lifepillar/vim-solarized8",
-    "folke/tokyonight.nvim",
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  -- theme
+  "RRethy/nvim-base16",
+  "cocopon/iceberg.vim",
+  "lifepillar/vim-solarized8",
+  "folke/tokyonight.nvim",
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
-    -- UX helpers
-    "folke/which-key.nvim",
-    "rcarriga/nvim-notify",
-    -- Language Server Protocol
-    "williamboman/mason.nvim",
-    { 'williamboman/mason-lspconfig.nvim' },
-    -- File Navigation
-    {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.4',
-        dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    -- Statusline
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
-    },
-    -- File Explorer with vim keybindings
-    {
-        'stevearc/oil.nvim',
-        opts = {},
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-    },
+  -- UX helpers
+  "folke/which-key.nvim",
+  "rcarriga/nvim-notify",
+  -- Language Server Protocol
+  "williamboman/mason.nvim",
+  { 'williamboman/mason-lspconfig.nvim' },
+  -- File Navigation
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.4',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+  -- floating command line 
+  {
+    'VonHeikemen/fine-cmdline.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' }
+  },
+  -- Statusline
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
+  },
+  -- File Explorer with vim keybindings
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
-    -- tpope plugins
-    "tpope/vim-fugitive",
-    "tpope/vim-rhubarb",
-    "tpope/vim-surround",
-    "tpope/vim-sleuth",
+  -- Autopair 
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
+  -- tpope plugins
+  "tpope/vim-fugitive",
+  "tpope/vim-rhubarb",
+  "tpope/vim-surround",
+  "tpope/vim-sleuth",
 
-    -- LSP zero config
-    { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
-    { 'neovim/nvim-lspconfig' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/nvim-cmp' },
-    { 'L3MON4D3/LuaSnip' },
+  -- LSP zero config
+  { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+  { 'neovim/nvim-lspconfig' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/nvim-cmp' },
+  { 'L3MON4D3/LuaSnip' },
 
-    'nvim-treesitter/nvim-treesitter'
+  'nvim-treesitter/nvim-treesitter'
 })
 
 -- Basic Settings
@@ -123,12 +134,12 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags"
 require("which-key").setup()
 
 require('lualine').setup {
-    options = {
-        icons_enabled = true,
-        theme = 'auto',
-        component_separators = { left = ' ', right = ' '},
-        section_separators = { left = ' ', right = ' '},
-    }
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = ' ', right = ' '},
+    section_separators = { left = ' ', right = ' '},
+  }
 }
 
 vim.notify = require("notify")
@@ -144,10 +155,26 @@ end)
 -- setup servers 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {},
+  ensure_installed = {"ruff_lsp", "lua_ls"},
   handlers = {
     lsp_zero.default_setup,
   },
+})
+
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+
+cmp.setup({
+  preselect = 'item',
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+    ['<Tab>'] = cmp_action.luasnip_supertab(),
+    ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
+  }),
+
 })
 
 -- Treesitter config 
@@ -176,3 +203,4 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("t", "jk", [[<C-\><C-n>]]) -- normal mode mapping for term emulator
 vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>", { desc = "open file explorer" })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
