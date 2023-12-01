@@ -45,7 +45,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
-(set-frame-font "Berkeley Mono 14" nil t)
+;; (set-frame-font "Berkeley Mono 13" nil t)
 
 ;; Packages
 
@@ -121,14 +121,14 @@
   (doom-modeline-mode +1))
 
 (use-package doom-themes
-  :ensure t)
+  :ensure t
+  :config (load-theme 'doom-gruvbox t))
 
 (use-package ef-themes
   :ensure t)
 
 (use-package iceberg-theme
-  :init (iceberg-theme-create-theme-file)
-  :config (load-theme 'solarized-iceberg-dark t))
+  :init (iceberg-theme-create-theme-file))
 
 (use-package projectile
   :ensure t
@@ -175,11 +175,11 @@
 (load-file "~/.emacs.d/elisp/completion-config.el")
 
 ;; Evil Setup
-(load-file "~/.emacs.d/elisp/evil-config.el")
+;; (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-kassio)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-bio)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'doom-gruvbox-light)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'doom-gruvbox)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
