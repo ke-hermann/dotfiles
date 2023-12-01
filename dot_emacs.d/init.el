@@ -5,7 +5,7 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;; MELPA setup
+;; melpa setup
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -45,7 +45,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
-(set-frame-font "Berkeley Mono 14" nil t)
+(set-frame-font "Iosevka 16" nil t)
 
 ;; Packages
 
@@ -125,10 +125,6 @@
 
 (use-package ef-themes
   :ensure t)
-
-(use-package iceberg-theme
-  :init (iceberg-theme-create-theme-file)
-  :config (load-theme 'solarized-iceberg-dark t))
 
 (use-package projectile
   :ensure t
