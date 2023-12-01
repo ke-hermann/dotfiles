@@ -5,7 +5,7 @@
 ;; figure out what OS we're on
 (defvar os-windows? (string= system-type "windows-nt"))
 
-;; melpa setup
+;; MELPA setup
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -45,7 +45,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
-(set-frame-font "Iosevka 16" nil t)
+;; (set-frame-font "Berkeley Mono 13" nil t)
 
 ;; Packages
 
@@ -78,7 +78,6 @@
   :ensure t
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
-
 
 (use-package company
   :ensure t
