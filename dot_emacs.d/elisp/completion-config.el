@@ -5,10 +5,8 @@
 (use-package vertico
   :ensure t
   :init
+  (vertico-buffer-mode +1)
   (vertico-mode +1))
-
-(use-package vertico-buffer
-  :config (vertico-buffer-mode +1))
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
