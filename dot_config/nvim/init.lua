@@ -19,9 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     -- theme
-    "RRethy/nvim-base16",
     "lifepillar/vim-solarized8",
-  { "ellisonleao/gruvbox.nvim" },
+    "ellisonleao/gruvbox.nvim",
 
     -- UX helpers
     "folke/which-key.nvim",
@@ -47,11 +46,18 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
+
     -- tpope plugins
     "tpope/vim-fugitive",
     "tpope/vim-rhubarb",
     "tpope/vim-surround",
     "tpope/vim-sleuth",
+    "tpope/vim-fireplace",
 
     -- LSP zero config
     { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
@@ -108,7 +114,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.opt.background = "light" -- set this to dark or light
 vim.o.termguicolors = true
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd("colorscheme gruvbox")
 
 
 --  Telescope config
@@ -123,7 +129,7 @@ require("which-key").setup()
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'gruvbox',
+        theme = 'auto',
         component_separators = { left = ' ', right = ' '},
         section_separators = { left = ' ', right = ' '},
     }
@@ -151,7 +157,7 @@ require('mason-lspconfig').setup({
 -- Treesitter config 
 --
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'python', 'c', 'cpp', 'lua' },
+  ensure_installed = { 'python', 'c', 'cpp', 'lua', 'clojure' },
   highlight = {
     enable = true,
     use_languagetree = true,

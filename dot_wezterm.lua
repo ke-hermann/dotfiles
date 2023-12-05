@@ -6,7 +6,7 @@ config.warn_about_missing_glyphs = false
 
 config.font = wezterm.font("Berkeley Mono Regular")
 
-config.color_scheme = 'Gruvbox light, soft (base16)'
+config.color_scheme = "Gruvbox light, soft (base16)"
 
 config.use_fancy_tab_bar = false
 
