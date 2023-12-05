@@ -5,6 +5,7 @@ compinit
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/home/kevin/.dotnet/tools
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
 # source antidote
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh

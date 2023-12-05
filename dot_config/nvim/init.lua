@@ -20,10 +20,8 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- theme
     "RRethy/nvim-base16",
-    "cocopon/iceberg.vim",
     "lifepillar/vim-solarized8",
-    "folke/tokyonight.nvim",
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "ellisonleao/gruvbox.nvim" },
 
     -- UX helpers
     "folke/which-key.nvim",
@@ -108,9 +106,9 @@ vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.opt.background = "dark" -- set this to dark or light
+vim.opt.background = "light" -- set this to dark or light
 vim.o.termguicolors = true
-vim.cmd("colorscheme base16-default-dark")
+vim.cmd([[colorscheme gruvbox]])
 
 
 --  Telescope config
@@ -125,7 +123,7 @@ require("which-key").setup()
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'auto',
+        theme = 'gruvbox',
         component_separators = { left = ' ', right = ' '},
         section_separators = { left = ' ', right = ' '},
     }
