@@ -59,6 +59,7 @@ require("lazy").setup({
   "tpope/vim-sleuth",
   "tpope/vim-dispatch",
   "Olical/conjure" ,
+  "clojure-vim/vim-jack-in",
 
   -- LSP zero config
   { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
