@@ -66,8 +66,10 @@
   (super-save-mode +1))
 
 (use-package exec-path-from-shell
-  :disabled os-windows?
-  :config (exec-path-from-shell-initialize))
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
 (use-package magit)
 

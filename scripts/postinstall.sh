@@ -64,3 +64,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # change system editor to vim
 sudo update-alternatives --set editor /usr/bin/vim.basic
 
+# homebrew on linux
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# TUI git app
+brew install jesseduffield/lazygit/lazygit
