@@ -57,7 +57,7 @@ require("lazy").setup({
   "tpope/vim-surround",
   "tpope/vim-sleuth",
   "tpope/vim-dispatch",
-  "Olical/conjure" ,
+  "Olical/conjure",
   "clojure-vim/vim-jack-in",
 
   -- LSP zero config
@@ -132,8 +132,8 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    component_separators = { left = ' ', right = ' '},
-    section_separators = { left = ' ', right = ' '},
+    component_separators = { left = ' ', right = ' ' },
+    section_separators = { left = ' ', right = ' ' },
   }
 }
 
@@ -144,7 +144,8 @@ vim.notify = require("notify")
 local lsp_zero = require('lsp-zero')
 
 lsp_zero.on_attach(function(client, bufnr)
-  lsp_zero.default_keymaps({buffer = bufnr})
+  lsp_zero.default_keymaps({ buffer = bufnr })
+  -- lsp_zero.buffer_autoformat()
 end)
 
 -- enable TAB completion and ENTER confirmation
@@ -155,11 +156,11 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<Tab>'] = cmp_action.luasnip_supertab(),
     ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
   })
 })
 
--- setup servers 
+-- setup servers
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = {},
@@ -168,7 +169,7 @@ require('mason-lspconfig').setup({
   },
 })
 
--- Treesitter config 
+-- Treesitter config
 --
 require('nvim-treesitter.configs').setup {
   ensure_installed = { 'python', 'c', 'cpp', 'lua', 'clojure' },
@@ -194,3 +195,19 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("t", "jk", [[<C-\><C-n>]]) -- normal mode mapping for term emulator
 vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>", { desc = "open file explorer" })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+
+-- Formatting Configs 
+local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    pattern = { "*.py" },
+    desc = "Auto-format Python files after saving",
+    callback = function()
+        local fileName = vim.api.nvim_buf_get_name(0)
+        vim.cmd(":silent !black --preview -q " .. fileName)
+        vim.cmd(":silent !isort --profile black --float-to-top -q " .. fileName)
+        vim.cmd(":silent !docformatter --in-place --black " .. fileName)
+    end,
+    group = autocmd_group,
+})
