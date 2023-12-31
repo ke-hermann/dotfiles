@@ -20,6 +20,8 @@ require("lazy").setup({
   -- theme
   "lifepillar/vim-solarized8",
   "ellisonleao/gruvbox.nvim",
+  "cocopon/iceberg.vim",
+{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   -- UX helpers
   "folke/which-key.nvim",
@@ -114,9 +116,14 @@ vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.opt.background = "light" -- set this to dark or light
+vim.opt.background = "dark" -- set this to dark or light
 vim.o.termguicolors = true
-vim.cmd("colorscheme gruvbox")
+
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+})
+
+vim.cmd.colorscheme "catppuccin"
 
 
 --  Telescope config

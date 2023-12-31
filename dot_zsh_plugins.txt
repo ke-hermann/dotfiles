@@ -22,7 +22,7 @@ belak/zsh-utils path:utility
 belak/zsh-utils path:completion
 
 # popular fish-like plugins
-mattmc3/zfunctions
+# mattmc3/zfunctions
 zsh-users/zsh-autosuggestions
 zdharma-continuum/fast-syntax-highlighting kind:defer
 zsh-users/zsh-history-substring-search
