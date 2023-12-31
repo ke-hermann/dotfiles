@@ -8,7 +8,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-insert-state-cursor 'box)
-  (setq evil-undo-sytem 'undo-fu)
+  (setq evil-undo-system 'undo-fu)
   :config (evil-mode 1))
 
 (use-package evil-escape
