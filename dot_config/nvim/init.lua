@@ -21,6 +21,7 @@ require("lazy").setup({
   "lifepillar/vim-solarized8",
   "ellisonleao/gruvbox.nvim",
   "cocopon/iceberg.vim",
+  "nyoom-engineering/oxocarbon.nvim",
 { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   -- UX helpers
@@ -123,7 +124,8 @@ require("catppuccin").setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
 })
 
-vim.cmd.colorscheme "catppuccin"
+vim.opt.background = "dark" -- set this to dark or light
+vim.cmd.colorscheme "oxocarbon"
 
 
 --  Telescope config
@@ -138,7 +140,7 @@ require("which-key").setup()
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = "auto",
     component_separators = { left = ' ', right = ' ' },
     section_separators = { left = ' ', right = ' ' },
   }
