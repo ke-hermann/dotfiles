@@ -16,3 +16,5 @@ antidote load
 eval "$(starship init zsh)"
 
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
+
+eval "$(atuin init zsh)"

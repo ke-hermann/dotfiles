@@ -2,7 +2,7 @@
 
 font:
   normal:
-    family: JetBrains Mono 
+    family: Iosevka
     style: Regular
 
   bold:
@@ -17,11 +17,7 @@ font:
     family: JetBrains MOno
     style: Bold Italic
 
-  size: 17
+  size: 15
 
 import:
-  # uncomment the flavour you want below:
-  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
-#  - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
+  - ~/.config/alacritty/oxocarbon-dark.yml

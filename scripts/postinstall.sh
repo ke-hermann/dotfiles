@@ -5,30 +5,32 @@
 
 # package installs
 
-sudo apt install git -y
-sudo apt install curl  -y
-sudo apt install gh -y
-sudo apt install libfuse2 -y
-sudo apt install fish -y
-sudo apt install gnome-tweaks -y
-sudo apt install npm -y
-sudo apt install nodejs -y
-sudo apt install vlc -y
 sudo apt install build-essential -y
-sudo apt install helix -y
-sudo apt install yarn -y
-sudo apt install ripgrep -y
-sudo apt install htop -y
-sudo apt install vim -y
-sudo apt install tldr -y
-sudo apt install fonts-jetbrains-mono -y
+sudo apt install curl -y
+sudo apt install emacs -y
+sudo apt install fish -y
 sudo apt install fonts-cascadia-code -y
-sudo apt install qbittorrent -y
 sudo apt install fonts-firacode -y
-sudo apt install lm-sensors -y
+sudo apt install fonts-jetbrains-mono -y
+sudo apt install gh -y
+sudo apt install git -y
 sudo apt install gnome-tweaks -y
+sudo apt install gnome-tweaks -y
+sudo apt install helix -y
+sudo apt install htop -y
+sudo apt install libfuse2 -y
+sudo apt install lm-sensors -y
+sudo apt install nodejs -y
+sudo apt install npm -y
+sudo apt install qbittorrent -y
+sudo apt install ripgrep -y
+sudo apt install tldr -y
+sudo apt install vim -y
+sudo apt install vlc -y
+sudo apt install yarn -y
 sudo apt install zoxide -y
 sudo apt install zsh -y
+sudo apt install neofetch -y
 
 # snap packages
 snap install code --classic 
@@ -69,3 +71,10 @@ sudo update-alternatives --set editor /usr/bin/vim.basic
 
 # TUI git app
 brew install jesseduffield/lazygit/lazygit
+
+# atuin setup; improved shell history and cross device sync
+bash (curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh | psub)
+
+atuin login -u wintermute -e hermannkevin@gmail.com
+atuin import auto
+atuin sync
