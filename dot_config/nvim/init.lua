@@ -24,6 +24,13 @@ require("lazy").setup({
   "nyoom-engineering/oxocarbon.nvim",
 { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
+{
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {},
+},
+
   -- UX helpers
   "folke/which-key.nvim",
   "rcarriga/nvim-notify",
@@ -125,7 +132,7 @@ require("catppuccin").setup({
 })
 
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd.colorscheme "oxocarbon"
+vim.cmd[[colorscheme tokyonight-night]]
 
 
 --  Telescope config
@@ -140,7 +147,7 @@ require("which-key").setup()
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = "auto",
+    theme = "tokyonight",
     component_separators = { left = ' ', right = ' ' },
     section_separators = { left = ' ', right = ' ' },
   }
