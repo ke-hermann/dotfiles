@@ -22,18 +22,17 @@ require("lazy").setup({
   "ellisonleao/gruvbox.nvim",
   "cocopon/iceberg.vim",
   "nyoom-engineering/oxocarbon.nvim",
-{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
-{
-  "folke/tokyonight.nvim",
-  lazy = false,
-  priority = 1000,
-  opts = {},
-},
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
 
   -- UX helpers
   "folke/which-key.nvim",
-  "rcarriga/nvim-notify",
   -- Language Server Protocol
   "williamboman/mason.nvim",
   { 'williamboman/mason-lspconfig.nvim' },
@@ -77,7 +76,18 @@ require("lazy").setup({
   { 'hrsh7th/nvim-cmp' },
   { 'L3MON4D3/LuaSnip' },
 
-  'nvim-treesitter/nvim-treesitter'
+  'nvim-treesitter/nvim-treesitter',
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
+  }
 })
 
 -- Basic Settings
@@ -128,11 +138,11 @@ vim.opt.background = "dark" -- set this to dark or light
 vim.o.termguicolors = true
 
 require("catppuccin").setup({
-    flavour = "mocha", -- latte, frappe, macchiato, mocha
+  flavour = "mocha", -- latte, frappe, macchiato, mocha
 })
 
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd[[colorscheme tokyonight-night]]
+vim.cmd.colorscheme "catppuccin"
 
 
 --  Telescope config
@@ -147,13 +157,31 @@ require("which-key").setup()
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = "tokyonight",
+    theme = "catppuccin",
     component_separators = { left = ' ', right = ' ' },
     section_separators = { left = ' ', right = ' ' },
   }
 }
 
-vim.notify = require("notify")
+-- noice setup 
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true,
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})
 
 -- Lsp Config
 
@@ -217,13 +245,13 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-    pattern = { "*.py" },
-    desc = "Auto-format Python files after saving",
-    callback = function()
-        local fileName = vim.api.nvim_buf_get_name(0)
-        vim.cmd(":silent !black --preview -q " .. fileName)
-        vim.cmd(":silent !isort --profile black --float-to-top -q " .. fileName)
-        vim.cmd(":silent !docformatter --in-place --black " .. fileName)
-    end,
-    group = autocmd_group,
+  pattern = { "*.py" },
+  desc = "Auto-format Python files after saving",
+  callback = function()
+    local fileName = vim.api.nvim_buf_get_name(0)
+    vim.cmd(":silent !black --preview -q " .. fileName)
+    vim.cmd(":silent !isort --profile black --float-to-top -q " .. fileName)
+    vim.cmd(":silent !docformatter --in-place --black " .. fileName)
+  end,
+  group = autocmd_group,
 })
