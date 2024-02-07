@@ -142,7 +142,7 @@ require("catppuccin").setup({
 })
 
 vim.opt.background = "dark" -- set this to dark or light
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "oxocarbon"
 
 
 --  Telescope config
@@ -157,7 +157,7 @@ require("which-key").setup()
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = "catppuccin",
+    theme = "auto",
     component_separators = { left = ' ', right = ' ' },
     section_separators = { left = ' ', right = ' ' },
   }
