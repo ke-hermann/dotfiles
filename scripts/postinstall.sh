@@ -40,11 +40,6 @@ sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 # starship shell
 curl -sS https://starship.rs/install.sh | sh
 
-# flatpak setup
-sudo apt install flatpak
-sudo apt install gnome-software-plugin-flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 # install flatpaks
 flatpak install flathub org.wezfurlong.wezterm
 flatpak install flathub com.github.geigi.cozy

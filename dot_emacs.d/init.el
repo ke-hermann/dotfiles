@@ -46,9 +46,16 @@
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
 
+(defvar use-package-always-ensure)
 (setq use-package-always-ensure t)
 
+(set-frame-font "JetBrains Mono 13")
+(load-theme 'ef-bio t)
+
 ;; Packages
+
+(use-package emacs
+  :bind (("C-x m" . menu-bar-mode)))
 
 (use-package diminish
   :ensure t
@@ -137,10 +144,6 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package poetry
-  :ensure t
-  :config (poetry-tracking-mode +1))
-
 (use-package pyvenv
   :ensure t)
 
@@ -191,6 +194,7 @@
   (tree-sitter-require 'python)
   (tree-sitter-require 'clojure)
   (tree-sitter-require 'elisp)
+  (tree-sitter-require 'rust)
   (global-tree-sitter-mode))
 
 ;; COMPLETION

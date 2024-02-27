@@ -1,3 +1,65 @@
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+-- Make line numbers default
+vim.opt.number = true
+-- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.mouse = 'a'
+-- Don't show the mode, since it's already in status line
+vim.opt.showmode = false
+-- Sync clipboard between OS and Neovim.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.opt.clipboard = 'unnamedplus'
+-- Enable break indent
+vim.opt.breakindent = true
+-- Save undo history
+vim.opt.undofile = true
+-- Case-insensitive searching UNLESS \C or capital in search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+-- Keep signcolumn on by default
+vim.opt.signcolumn = 'yes'
+-- Decrease update time
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+-- Sets how neovim will display certain whitespace in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'split'
+-- Show which line your cursor is on
+vim.opt.cursorline = true
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
+
+-- Set highlight on search, but clear on pressing <Esc> in normal mode
+vim.opt.hlsearch = true
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- exit terminal mode
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+
+-- Keybinds to make split navigation easier.
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+
 -- Bootstrap LAZY
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -18,24 +80,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   -- theme
-  "lifepillar/vim-solarized8",
-  "ellisonleao/gruvbox.nvim",
-  "cocopon/iceberg.vim",
-  "nyoom-engineering/oxocarbon.nvim",
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-
   {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
+    "nyoom-engineering/oxocarbon.nvim",
+    config = function() 
+      vim.opt.background = "dark" -- set this to dark or light
+      vim.cmd.colorscheme "oxocarbon"
+    end
   },
-
   -- UX helpers
   "folke/which-key.nvim",
-  -- Language Server Protocol
-  "williamboman/mason.nvim",
-  { 'williamboman/mason-lspconfig.nvim' },
   -- File Navigation
   {
     'nvim-telescope/telescope.nvim',
@@ -45,7 +98,17 @@ require("lazy").setup({
   -- Statusline
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup {
+        options = {
+          icons_enabled = true,
+          theme = "auto",
+          component_separators = { left = ' ', right = ' ' },
+          section_separators = { left = ' ', right = ' ' },
+        }
+      }
+    end
   },
   -- File Explorer with vim keybindings
   {
@@ -68,81 +131,18 @@ require("lazy").setup({
   "tpope/vim-dispatch",
   "Olical/conjure",
   "clojure-vim/vim-jack-in",
-
-  -- LSP zero config
-  { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
-  { 'neovim/nvim-lspconfig' },
-  { 'hrsh7th/cmp-nvim-lsp' },
-  { 'hrsh7th/nvim-cmp' },
-  { 'L3MON4D3/LuaSnip' },
-
   'nvim-treesitter/nvim-treesitter',
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    }
-  }
+
+  {'williamboman/mason.nvim'},
+  {'williamboman/mason-lspconfig.nvim'},
+
+  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+  {'neovim/nvim-lspconfig'},
+  {'hrsh7th/cmp-nvim-lsp'},
+  {'hrsh7th/nvim-cmp'},
+  {'L3MON4D3/LuaSnip'},
+
 })
-
--- Basic Settings
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-vim.opt.guicursor = ""
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smartindent = true
-
-vim.opt.wrap = false
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-
--- Set highlight on search
-vim.o.hlsearch = false
-vim.opt.incsearch = true
-
--- Make line numbers default
-vim.opt.relativenumber = true
-vim.opt.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
-vim.o.clipboard = 'unnamedplus'
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- NOTE: You should make sure your terminal supports this
-vim.opt.background = "dark" -- set this to dark or light
-vim.o.termguicolors = true
-
-require("catppuccin").setup({
-  flavour = "mocha", -- latte, frappe, macchiato, mocha
-})
-
-vim.opt.background = "dark" -- set this to dark or light
-vim.cmd.colorscheme "oxocarbon"
 
 
 --  Telescope config
@@ -154,69 +154,19 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "search help tags"
 
 require("which-key").setup()
 
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = "auto",
-    component_separators = { left = ' ', right = ' ' },
-    section_separators = { left = ' ', right = ' ' },
-  }
-}
 
--- noice setup 
-require("noice").setup({
-  lsp = {
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
-    },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    bottom_search = true, -- use a classic bottom cmdline for search
-    command_palette = true, -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false, -- add a border to hover docs and signature help
-  },
-})
 
--- Lsp Config
-
-local lsp_zero = require('lsp-zero')
-
-lsp_zero.on_attach(function(client, bufnr)
-  lsp_zero.default_keymaps({ buffer = bufnr })
-  -- lsp_zero.buffer_autoformat()
-end)
-
--- enable TAB completion and ENTER confirmation
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
-
-cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-    ['<Tab>'] = cmp_action.luasnip_supertab(),
-    ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  })
-})
-
--- setup servers
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {},
-  handlers = {
-    lsp_zero.default_setup,
-  },
-})
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 -- Treesitter config
 --
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'python', 'c', 'cpp', 'lua', 'clojure' },
+  ensure_installed = { 'python', 'c', 'cpp', 'lua', 'clojure', 'go' },
   highlight = {
     enable = true,
     use_languagetree = true,
@@ -233,6 +183,25 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
+
+-- LSP Config
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.on_attach(function(client, bufnr)
+  -- see :help lsp-zero-keybindings
+  -- to learn the available actions
+  lsp_zero.default_keymaps({buffer = bufnr})
+end)
+
+-- to learn how to use mason.nvim with lsp-zero
+-- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {"pyright", "lua_ls", "gopls"},
+  handlers = {
+    lsp_zero.default_setup,
+  },
+})
 
 -- Keymaps
 vim.keymap.set("i", "jk", "<Esc>")
@@ -255,3 +224,4 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   end,
   group = autocmd_group,
 })
+
