@@ -49,8 +49,8 @@
 (defvar use-package-always-ensure)
 (setq use-package-always-ensure t)
 
-(set-frame-font "JetBrains Mono 13")
-(load-theme 'ef-bio t)
+(set-frame-font "JetBrains Mono 11")
+(load-theme 'gruvbox-light-soft t)
 
 ;; Packages
 

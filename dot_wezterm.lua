@@ -6,7 +6,8 @@ config.warn_about_missing_glyphs = false
 
 config.font = wezterm.font("JetBrains Mono")
 
-config.color_scheme = 'Oxocarbon Dark (Gogh)'
+config.color_scheme = 'Gruvbox light, soft (base16)'
+
 
 config.use_fancy_tab_bar = false
 
@@ -17,7 +18,7 @@ if package.config:sub(1, 1) == "\\" then
 	config.default_prog = { "powershell" }
 	config.font_size = 13
 else
-	config.font_size = 13
+	config.font_size = 12
 end
 
 config.keys = {
