@@ -5,35 +5,34 @@
 
 # package installs
 
-sudo apt install build-essential -y
-sudo apt install curl -y
-sudo apt install emacs -y
-sudo apt install fish -y
-sudo apt install fonts-cascadia-code -y
-sudo apt install fonts-firacode -y
-sudo apt install fonts-jetbrains-mono -y
-sudo apt install gh -y
-sudo apt install git -y
-sudo apt install gnome-tweaks -y
-sudo apt install gnome-tweaks -y
-sudo apt install helix -y
-sudo apt install htop -y
-sudo apt install libfuse2 -y
-sudo apt install lm-sensors -y
-sudo apt install nodejs -y
-sudo apt install npm -y
-sudo apt install qbittorrent -y
-sudo apt install ripgrep -y
-sudo apt install tldr -y
-sudo apt install vim -y
-sudo apt install vlc -y
-sudo apt install yarn -y
-sudo apt install zoxide -y
-sudo apt install zsh -y
-sudo apt install neofetch -y
-
-# snap packages
-snap install code --classic 
+sudo pacman -S build-essential -y
+sudo pacman -S curl -y
+sudo pacman -S emacs -y
+sudo pacman -S fish -y
+sudo pacman -S fonts-cascadia-code -y
+sudo pacman -S fonts-firacode -y
+sudo pacman -S fonts-jetbrains-mono -y
+sudo pacman -S gh -y
+sudo pacman -S git -y
+sudo pacman -S gnome-tweaks -y
+sudo pacman -S gnome-tweaks -y
+sudo pacman -S helix -y
+sudo pacman -S htop -y
+sudo pacman -S libfuse2 -y
+sudo pacman -S lm-sensors -y
+sudo pacman -S nodejs -y
+sudo pacman -S npm -y
+sudo pacman -S qbittorrent -y
+sudo pacman -S ripgrep -y
+sudo pacman -S tldr -y
+sudo pacman -S vim -y
+sudo pacman -S vlc -y
+sudo pacman -S yarn -y
+sudo pacman -S zoxide -y
+sudo pacman -S zsh -y
+sudo pacman -S neofetch -y
+sudo pacman -S atuin -y
+sudo pacman -S lazygit -y
 
 # nordvpn
 sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
@@ -54,21 +53,8 @@ git config --global user.email "hermannkevin@gmail.com"
 # terminal setup 
 bash -c  "$(wget -qO- https://git.io/vQgMr)"
 
-# vim plug 
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 # change system editor to vim
 sudo update-alternatives --set editor /usr/bin/vim.basic
-
-# homebrew on linux
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# TUI git app
-brew install jesseduffield/lazygit/lazygit
-
-# atuin setup; improved shell history and cross device sync
-bash (curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh | psub)
 
 atuin login -u wintermute -e hermannkevin@gmail.com
 atuin import auto
