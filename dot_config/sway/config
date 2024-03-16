@@ -18,23 +18,23 @@ smart_borders on
 smart_gaps on
 gaps inner 5
 
-font pango: Iosevka Aile Medium 13 
+font pango: Iosevka Aile 13 
 
 ### Variables
 #
-# Logo key. Use Mod1 for Alt.
-set $mod Mod1
+# Logo key. Use Mod1 for Alt, Mod4 for super
+set $mod Mod4
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term kitty
+set $term alacritty
     # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu rofi -show run
 
 include /etc/sway/config-vars.d/*
 

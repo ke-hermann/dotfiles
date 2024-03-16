@@ -82,10 +82,16 @@ require("lazy").setup({
   -- theme
   {
     "nyoom-engineering/oxocarbon.nvim",
-    config = function() 
+    config = function()
       vim.opt.background = "dark" -- set this to dark or light
       vim.cmd.colorscheme "oxocarbon"
     end
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
   },
   -- UX helpers
   "folke/which-key.nvim",
@@ -133,15 +139,20 @@ require("lazy").setup({
   "clojure-vim/vim-jack-in",
   'nvim-treesitter/nvim-treesitter',
 
-  {'williamboman/mason.nvim'},
-  {'williamboman/mason-lspconfig.nvim'},
+  { 'williamboman/mason.nvim' },
+  { 'williamboman/mason-lspconfig.nvim' },
 
-  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
-  {'neovim/nvim-lspconfig'},
-  {'hrsh7th/cmp-nvim-lsp'},
-  {'hrsh7th/nvim-cmp'},
-  {'L3MON4D3/LuaSnip'},
+  { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+  { 'neovim/nvim-lspconfig' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/nvim-cmp' },
+  { 'L3MON4D3/LuaSnip' },
 
+
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  }
 })
 
 
@@ -190,17 +201,35 @@ local lsp_zero = require('lsp-zero')
 lsp_zero.on_attach(function(client, bufnr)
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
-  lsp_zero.default_keymaps({buffer = bufnr})
+  lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
 -- to learn how to use mason.nvim with lsp-zero
 -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {"pyright", "lua_ls", "gopls"},
+  ensure_installed = { "pyright", "lua_ls", "gopls" },
   handlers = {
     lsp_zero.default_setup,
   },
+})
+
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- Use a sub-list to run only the first available formatter
+    javascript = { { "prettierd", "prettier" } },
+    go = { "goimports", "gofmt" },
+
+  },
+  format_on_save = {
+    -- These options will be passed to conform.format()
+    timeout_ms = 500,
+    lsp_fallback = true,
+  },
+
 })
 
 -- Keymaps
@@ -208,20 +237,3 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("t", "jk", [[<C-\><C-n>]]) -- normal mode mapping for term emulator
 vim.keymap.set('n', '<leader>ex', ":Ex %:p:h<CR>", { desc = "open file explorer" })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
-
--- Formatting Configs 
-local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
-
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = { "*.py" },
-  desc = "Auto-format Python files after saving",
-  callback = function()
-    local fileName = vim.api.nvim_buf_get_name(0)
-    vim.cmd(":silent !black --preview -q " .. fileName)
-    vim.cmd(":silent !isort --profile black --float-to-top -q " .. fileName)
-    vim.cmd(":silent !docformatter --in-place --black " .. fileName)
-  end,
-  group = autocmd_group,
-})
-

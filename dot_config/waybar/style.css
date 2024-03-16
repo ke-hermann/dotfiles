@@ -1,27 +1,44 @@
+
 * {
 	font-size: 15px;
-	font-family: Iosevka Aile;
-	font-weight: bold;
+	font-family: Inter Medium;
 }
 
 window#waybar {
-	background: #121212;
-	color: #fdf6e3;
+	background: #1a1a1a;
+	color: #292b2e;
+}
+
+#workspaces,
+#clock.1,
+#pulseaudio,
+#memory,
+#cpu,
+#battery,
+#disk,
+#tray {
+	background: #1a1a1a;
+	color: #1a1a1a;
+	background: #ffffff;
+	border-radius: 25px;
+	padding: 0px 10px 0px 10px;
+	margin: 5px 10px 5px 10px;
 }
 
 #workspaces button {
 	padding: 0 2px;
-	color: #fdf6e3;
+	color: #232323;
 }
 #workspaces button.focused {
-	color: #f47360;
+	color: #ff2222;
 }
 #workspaces button:hover {
 	box-shadow: inherit;
 	text-shadow: inherit;
 }
 #workspaces button:hover {
-	background: #1a1a1a;
-	border: #1a1a1a;
+	background: #E5E6E4;
+	border: #E5E6E4;
 	padding: 0 3px;
+
 }
