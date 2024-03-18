@@ -36,6 +36,9 @@ set $term alacritty
 # on the original workspace that the command was run on.
 set $menu rofi -show run
 
+# graphical file manager
+bindsym $mod+q exec nautilus
+
 include /etc/sway/config-vars.d/*
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)

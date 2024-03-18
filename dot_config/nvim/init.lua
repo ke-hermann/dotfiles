@@ -44,6 +44,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- 24 bit colors
 vim.opt.termguicolors = true
 
+
+
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
@@ -82,8 +84,6 @@ require("lazy").setup({
 	{
 		"nyoom-engineering/oxocarbon.nvim",
 		config = function()
-			vim.opt.background = "dark" -- set this to dark or light
-			vim.cmd.colorscheme("oxocarbon")
 		end,
 	},
 	{
@@ -152,6 +152,10 @@ require("lazy").setup({
 		opts = {},
 	},
 })
+
+
+vim.opt.background = "dark" -- set this to dark or light
+vim.cmd.colorscheme("oxocarbon")
 
 --  Telescope config
 local builtin = require("telescope.builtin")

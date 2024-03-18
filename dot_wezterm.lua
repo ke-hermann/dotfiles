@@ -4,7 +4,7 @@ local config = {}
 config.window_close_confirmation = "NeverPrompt"
 config.warn_about_missing_glyphs = false
 
-config.font = wezterm.font("Inconsolata Medium")
+config.font = wezterm.font("JetBrains Mono")
 config.color_scheme = "tokyonight_night"
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
@@ -14,7 +14,7 @@ if package.config:sub(1, 1) == "\\" then
 	config.default_prog = { "powershell" }
 	config.font_size = 13
 else
-	config.font_size = 14
+	config.font_size = 12
 end
 
 config.keys = {

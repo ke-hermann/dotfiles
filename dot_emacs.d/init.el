@@ -49,10 +49,6 @@
 (defvar use-package-always-ensure)
 (setq use-package-always-ensure t)
 
-(if os-windows?
-    (set-frame-font "Cascadia Code 13")
-  (set-frame-font "PragmataPro 14"))
-
 (load-theme 'ef-bio t)
 
 ;; Packages

@@ -1,7 +1,7 @@
-import = ["/home/kevinh/.config/alacritty/oxocarbon-dark.toml"]
+import = ["/home/kevinh/.config/alacritty/themes/oxocarbon-dark.toml"]
 
 [font]
-size = 13
+size = 12
 
 [font.bold]
 family = "JetBrains Mono"
