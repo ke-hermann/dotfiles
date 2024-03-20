@@ -3,37 +3,6 @@
 # run system update first
 # sudo apt update && sudo apt upgrade
 
-# package installs
-
-sudo pacman -S build-essential -y
-sudo pacman -S curl -y
-sudo pacman -S emacs -y
-sudo pacman -S fish -y
-sudo pacman -S fonts-cascadia-code -y
-sudo pacman -S fonts-firacode -y
-sudo pacman -S fonts-jetbrains-mono -y
-sudo pacman -S gh -y
-sudo pacman -S git -y
-sudo pacman -S gnome-tweaks -y
-sudo pacman -S gnome-tweaks -y
-sudo pacman -S helix -y
-sudo pacman -S htop -y
-sudo pacman -S libfuse2 -y
-sudo pacman -S lm-sensors -y
-sudo pacman -S nodejs -y
-sudo pacman -S npm -y
-sudo pacman -S qbittorrent -y
-sudo pacman -S ripgrep -y
-sudo pacman -S tldr -y
-sudo pacman -S vim -y
-sudo pacman -S vlc -y
-sudo pacman -S yarn -y
-sudo pacman -S zoxide -y
-sudo pacman -S zsh -y
-sudo pacman -S neofetch -y
-sudo pacman -S atuin -y
-sudo pacman -S lazygit -y
-
 # nordvpn
 sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 # starship shell
@@ -55,6 +24,8 @@ bash -c  "$(wget -qO- https://git.io/vQgMr)"
 
 # change system editor to vim
 sudo update-alternatives --set editor /usr/bin/vim.basic
+
+/bin/bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)"
 
 atuin login -u wintermute -e hermannkevin@gmail.com
 atuin import auto

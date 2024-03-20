@@ -79,7 +79,7 @@ require("lazy").setup({
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
 
-	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+	{ "VonHeikemen/lsp-zero.nvim",        branch = "v3.x" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
@@ -89,4 +89,21 @@ require("lazy").setup({
 		"stevearc/conform.nvim",
 		opts = {},
 	},
+
+	-- lazy.nvim
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		}
+	}
 })
