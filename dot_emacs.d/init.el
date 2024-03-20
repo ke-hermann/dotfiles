@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;; figure out what OS we're on
+;; which operating system are we using?
 (defvar os-windows? (string= system-type "windows-nt"))
 
 ;; MELPA setup
@@ -10,18 +10,18 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; always treat themes as safe, load before custom file
+;; always treat themes as safe.
 (setq custom-safe-themes t)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;; custom file
+
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load-file custom-file))
 
-;; no backup or custom file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq vc-follow-symlinks t)
+
 ;; shut the annoying alarm sound up
 (setq ring-bell-function 'ignore)
 (electric-pair-mode +1)
@@ -29,7 +29,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-;; (global-hl-line-mode +1)
+
 (defvar display-line-numbers-type)
 
 (setq display-line-numbers-type 'relative)
@@ -178,6 +178,7 @@
   :ensure t
   :config
   (require 'dap-python)
+  (defvar dap-python-debugger)
   (setq dap-python-debugger 'debugpy))
 
 ;; formatting
