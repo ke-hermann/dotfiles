@@ -1,7 +1,8 @@
 # pacman abbreviations
-abbr -a 'pci' 'sudo pacman -S'
-abbr -a 'pcu' 'sudo pacman -Syu'
-abbr -a 'pcs' 'sudo pacman -Ss'
+abbr -a 'pacin' 'sudo pacman -S'
+abbr -a 'pacup' 'sudo pacman -Syu'
+abbr -a 'pacfd' 'sudo pacman -Ss'
+abbr -a 'pacrm' 'sudo pacman -Rs'
 
 # apt  abbreviations
 abbr -a 'agi' 'sudo apt install -y'
