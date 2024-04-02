@@ -1,25 +1,52 @@
-autoload -Uz compinit
-compinit
-
-# default editor 
-export VISUAL="vim"
-export EDITOR="$VISUAL"
-
-# path additions
+# Variables 
+export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:/home/kevin/.dotnet/tools
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
-# source antidote
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+# zoxide setup 
+eval "$(zoxide init --cmd cd zsh)"
 
-# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
-antidote load
+# oh my zsh plugins
+plugins=(
+	git 
+	dnf 
+	emacs 
+	colored-man-pages
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	zsh-completions
+	zsh-abbr
+)
 
+source $ZSH/oh-my-zsh.sh
+
+# starship prompt
 eval "$(starship init zsh)"
 
-[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
+ 
 
-eval "$(atuin init zsh)"
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

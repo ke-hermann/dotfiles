@@ -12,8 +12,14 @@ curl -sS https://starship.rs/install.sh | sh
 flatpak install flathub org.wezfurlong.wezterm
 flatpak install flathub com.github.geigi.cozy
 
-# antidote, zsh plugin manager 
-git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+# zsh setup 
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+
+git clone https://github.com/olets/zsh-abbr ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-abbr
 
 # git identity setup
 git config --global user.name "Kevin Hermann"
@@ -30,3 +36,7 @@ sudo update-alternatives --set editor /usr/bin/vim.basic
 atuin login -u wintermute -e hermannkevin@gmail.com
 atuin import auto
 atuin sync
+
+# Lazygit
+sudo dnf copr enable atim/lazygit -y
+sudo dnf install lazygit

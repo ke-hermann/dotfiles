@@ -1,4 +1,4 @@
-import = ["/home/kevinh/.config/alacritty/themes/oxocarbon-dark.toml"]
+import = ["/home/wintermute/.config/alacritty/themes/oxocarbon-dark.toml"]
 
 [font]
 size = 13
