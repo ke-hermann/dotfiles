@@ -35,6 +35,7 @@ require("lazy").setup({
 	},
 
 	{ "tjdevries/colorbuddy.nvim" },
+	{ 'projekt0n/github-nvim-theme' },
 
 	-- UX helpers
 	"folke/which-key.nvim",
