@@ -32,14 +32,10 @@ require("lazy").setup({
 		"maxmx03/solarized.nvim",
 		lazy = false,
 		priority = 1000,
-		config = function()
-			vim.o.background = "dark" -- or 'light'
-
-			vim.cmd.colorscheme("solarized")
-		end,
 	},
 
-	{ "base16-nvim" },
+	{ "tjdevries/colorbuddy.nvim" },
+
 	-- UX helpers
 	"folke/which-key.nvim",
 	-- File Navigation
@@ -56,7 +52,7 @@ require("lazy").setup({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "solarized_light",
+					theme = "auto",
 					component_separators = { left = " ", right = " " },
 					section_separators = { left = " ", right = " " },
 				},
@@ -89,7 +85,7 @@ require("lazy").setup({
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
 
-	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+	{ "VonHeikemen/lsp-zero.nvim",        branch = "v3.x" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
