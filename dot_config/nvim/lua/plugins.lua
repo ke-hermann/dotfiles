@@ -28,6 +28,16 @@ require("lazy").setup({
 		priority = 1000,
 		opts = {},
 	},
+	{
+		"maxmx03/solarized.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.o.background = "dark" -- or 'light'
+
+			vim.cmd.colorscheme("solarized")
+		end,
+	},
 
 	{ "base16-nvim" },
 	-- UX helpers
@@ -46,7 +56,7 @@ require("lazy").setup({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "auto",
+					theme = "solarized_light",
 					component_separators = { left = " ", right = " " },
 					section_separators = { left = " ", right = " " },
 				},
@@ -79,7 +89,7 @@ require("lazy").setup({
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
 
-	{ "VonHeikemen/lsp-zero.nvim",        branch = "v3.x" },
+	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
@@ -90,7 +100,7 @@ require("lazy").setup({
 		opts = {},
 	},
 
-	-- lazy.nvim
+	-- nicer status messages
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -104,6 +114,8 @@ require("lazy").setup({
 			--   `nvim-notify` is only needed, if you want to use the notification view.
 			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
-		}
-	}
+		},
+	},
+
+	{ "tomasky/bookmarks.nvim" },
 })

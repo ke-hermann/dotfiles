@@ -44,5 +44,5 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- 24 bit colors
 vim.opt.termguicolors = true
 
-vim.opt.background = "dark" -- set this to dark or light
-vim.cmd.colorscheme("oxocarbon")
+vim.opt.background = "light" -- set this to dark or light
+vim.cmd.colorscheme("solarized")
