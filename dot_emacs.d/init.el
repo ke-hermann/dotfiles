@@ -50,6 +50,7 @@
 (setq use-package-always-ensure t)
 
 (load-theme 'ef-bio t)
+(set-frame-font "Ubuntu Mono 15")
 
 ;; Packages
 
