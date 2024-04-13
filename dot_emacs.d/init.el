@@ -50,7 +50,7 @@
 (setq use-package-always-ensure t)
 
 (load-theme 'ef-bio t)
-(set-frame-font "Fira Code Medium 13")
+(set-frame-font "Cascadia Code 13")
 
 ;; Packages
 
@@ -62,7 +62,7 @@
   :config
   (diminish 'eldoc-mode))
 
-;; This package implements suppor for mapping a pair of simultaneously pressed keys .
+;; This package implements support for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
   :ensure t
   :config (key-chord-mode 1))
