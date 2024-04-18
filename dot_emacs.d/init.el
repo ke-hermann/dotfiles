@@ -51,7 +51,6 @@
 
 (load-theme 'ef-bio t)
 (set-frame-font "Cascadia Code 13")
-
 ;; Packages
 
 (use-package emacs
@@ -162,7 +161,8 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook ((go-mode . lsp)
 	 (python-mode . lsp)
-         ;; if you want which-key integration
+	 (lua-mode . lsp)
+         ;; want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 ;; optionally
