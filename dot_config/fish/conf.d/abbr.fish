@@ -19,3 +19,6 @@ abbr -a 'dnfu' 'sudo dnf upgrade'
 abbr -a 'dnfs' 'dnf search'
 
 abbr -a 'vim' 'nvim'
+
+# modern tmux alternative 
+abbr -a 'zcomp' 'zellij --layout compact'
