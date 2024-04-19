@@ -49,9 +49,11 @@
 (defvar use-package-always-ensure)
 (setq use-package-always-ensure t)
 
-(load-theme 'ef-bio t)
 (set-frame-font "Cascadia Code 13")
 ;; Packages
+
+(use-package ef-themes
+  :config (load-theme 'ef-bio t))
 
 (use-package emacs
   :bind (("C-x m" . menu-bar-mode)))
@@ -191,6 +193,12 @@
   (tree-sitter-require 'rust)
   (global-tree-sitter-mode))
 
+(use-package elfeed
+  :config
+  (setq elfeed-feeds
+	'("https://krebsonsecurity.com/feed/"
+	  "https://www.twz.com/feed")))
+
 ;; COMPLETION
 (load-file "~/.emacs.d/elisp/completion-config.el")
 
@@ -198,14 +206,15 @@
 ;; (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'doom-gruvbox-light)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'doom-gruvbox)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-kassio)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-bio)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-f") 'forward-to-word)
 (global-set-key (kbd "C-x C-n") 'company-complete)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
+(global-set-key [remap list-buffers] 'ibuffer)
 
 (provide 'init)
 ;;; init.el ends here
