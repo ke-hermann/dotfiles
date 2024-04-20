@@ -200,6 +200,9 @@
 
 (load-file "~/.emacs.d/elisp/utils.el")
 
+;; machine specific settings
+(load-file "~/.emacs.d/elisp/local.el")
+
 ;; COMPLETION
 (load-file "~/.emacs.d/elisp/completion-config.el")
 

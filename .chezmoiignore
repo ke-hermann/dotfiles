@@ -19,4 +19,4 @@ Documents
 
 .config/doom
 .config/kitty/custom.conf
-.emacs.d/local.el
+.emacs.d/elisp/local.el
