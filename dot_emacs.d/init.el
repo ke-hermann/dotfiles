@@ -49,7 +49,6 @@
 (defvar use-package-always-ensure)
 (setq use-package-always-ensure t)
 
-(set-frame-font "Cascadia Code 13")
 ;; Packages
 
 (use-package ef-themes
@@ -198,6 +197,8 @@
   (setq elfeed-feeds
 	'("https://krebsonsecurity.com/feed/"
 	  "https://www.twz.com/feed")))
+
+(load-file "~/.emacs.d/elisp/utils.el")
 
 ;; COMPLETION
 (load-file "~/.emacs.d/elisp/completion-config.el")

@@ -18,3 +18,5 @@ Documents
 {{- end }}
 
 .config/doom
+.config/kitty/custom.conf
+.emacs.d/local.el
