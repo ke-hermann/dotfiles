@@ -51,8 +51,7 @@
 
 ;; Packages
 
-(use-package ef-themes
-  :config (load-theme 'ef-bio t))
+(use-package ef-themes)
 
 (use-package emacs
   :bind (("C-x m" . menu-bar-mode)))
@@ -136,6 +135,7 @@
 (use-package ef-themes
   :ensure t)
 (use-package solarized-theme
+  :config (load-theme 'solarized-dark t)
   :ensure t)
 
 (use-package projectile
