@@ -1,0 +1,7 @@
+theme = "solarized_light"
+
+[keys.insert.j]
+k = "normal_mode" # Maps `jk` to exit insert mode
+
+[keys.normal]
+0 = "goto_line_start"
