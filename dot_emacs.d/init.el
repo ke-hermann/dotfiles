@@ -132,11 +132,13 @@
 
 (use-package doom-themes
   :ensure t)
+
 (use-package ef-themes
   :ensure t)
-(use-package solarized-theme
-  :config (load-theme 'solarized-dark t)
-  :ensure t)
+
+(use-package solarized-theme)
+
+(use-package tao-theme)
 
 (use-package projectile
   :ensure t
@@ -210,8 +212,8 @@
 (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-kassio)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-bio)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'tao-yin)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'tao-yang)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
