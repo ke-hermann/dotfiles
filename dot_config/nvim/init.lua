@@ -53,7 +53,7 @@ require("lazy").setup({
             require("lualine").setup({
                 options = {
                     icons_enabled = true,
-                    theme = "solarized",
+                    theme = "auto",
                     component_separators = { left = " ", right = " " },
                     section_separators = { left = " ", right = " " },
                 },
@@ -146,7 +146,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.opt.termguicolors = true
 
 vim.opt.background = "dark"
-vim.cmd.colorscheme("solarized")
+vim.cmd.colorscheme("oxocarbon")
 
 
 -- Diagnostic keymaps
