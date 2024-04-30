@@ -22,3 +22,7 @@ abbr -a 'vim' 'nvim'
 
 # modern tmux alternative 
 abbr -a 'zcomp' 'zellij --layout compact'
+
+# ls alternative 
+abbr -a "ls" "exa --long --header --git"
+
