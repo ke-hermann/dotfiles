@@ -50,14 +50,6 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
         config = function()
-            require("lualine").setup({
-                options = {
-                    icons_enabled = true,
-                    theme = "auto",
-                    component_separators = { left = " ", right = " " },
-                    section_separators = { left = " ", right = " " },
-                },
-            })
         end,
     },
     -- File Explorer with vim keybindings
@@ -146,7 +138,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.opt.termguicolors = true
 
 vim.opt.background = "dark"
-vim.cmd.colorscheme("oxocarbon")
+vim.cmd.colorscheme("github_dark_default")
 
 
 -- Diagnostic keymaps
@@ -240,5 +232,15 @@ require("conform").setup({
         -- These options will be passed to conform.format()
         timeout_ms = 500,
         lsp_fallback = true,
+    },
+})
+
+
+require("lualine").setup({
+    options = {
+        icons_enabled = true,
+        theme = "auto",
+        component_separators = { left = " ", right = " " },
+        section_separators = { left = " ", right = " " },
     },
 })
