@@ -198,7 +198,8 @@
   :config
   (setq elfeed-feeds
 	'("https://krebsonsecurity.com/feed/"
-	  "https://www.twz.com/feed")))
+	  "https://www.twz.com/feed"
+	  "http://feeds.nightvalepresents.com/welcometonightvalepodcast")))
 
 (load-file "~/.emacs.d/elisp/utils.el")
 
@@ -212,8 +213,8 @@
 (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'tao-yin)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'tao-yang)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-bio)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-kassio)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)

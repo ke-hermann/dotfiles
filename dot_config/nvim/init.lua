@@ -33,7 +33,7 @@ require("lazy").setup({
 		lazy = false,
 		priority = 1000,
 	},
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "catppuccin/nvim",            name = "catppuccin", priority = 1000 },
 
 	{ "tjdevries/colorbuddy.nvim" },
 	{ "projekt0n/github-nvim-theme" },
@@ -54,7 +54,7 @@ require("lazy").setup({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "catppuccin",
+					theme = "auto",
 					component_separators = { left = " ", right = " " },
 					section_separators = { left = " ", right = " " },
 				},
@@ -87,7 +87,7 @@ require("lazy").setup({
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
 
-	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" },
+	{ "VonHeikemen/lsp-zero.nvim",        branch = "v3.x" },
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/nvim-cmp" },
@@ -147,7 +147,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.opt.termguicolors = true
 
 vim.opt.background = "dark"
-vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("oxocarbon")
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })

@@ -4,8 +4,8 @@ local config = {}
 config.window_close_confirmation = "NeverPrompt"
 config.warn_about_missing_glyphs = false
 
-config.font = wezterm.font("JetBrains Mono")
-config.color_scheme = 'GitHub Dark'
+config.font = wezterm.font("Fira Code")
+config.color_scheme = 'Default (dark) (terminal.sexy)'
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.font_size = 13
