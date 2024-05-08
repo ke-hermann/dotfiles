@@ -27,6 +27,10 @@ require("lazy").setup({
 		lazy = false,
 		priority = 1000,
 		opts = {},
+		config = function()
+			vim.opt.background = "dark"
+			vim.cmd.colorscheme("tokyonight-night")
+		end
 	},
 	{
 		"maxmx03/solarized.nvim",
@@ -54,7 +58,7 @@ require("lazy").setup({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "auto",
+					theme = "tokyonight",
 					component_separators = { left = " ", right = " " },
 					section_separators = { left = " ", right = " " },
 				},
@@ -146,8 +150,6 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- 24 bit colors
 vim.opt.termguicolors = true
 
-vim.opt.background = "dark"
-vim.cmd.colorscheme("oxocarbon")
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
