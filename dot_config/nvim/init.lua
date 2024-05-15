@@ -29,7 +29,7 @@ require("lazy").setup({
 		opts = {},
 		config = function()
 			vim.opt.background = "dark"
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("oxocarbon")
 		end
 	},
 	{
@@ -60,7 +60,7 @@ require("lazy").setup({
 			require("lualine").setup({
 				options = {
 					icons_enabled = true,
-					theme = "tokyonight",
+					theme = "auto",
 					component_separators = { left = " ", right = " " },
 					section_separators = { left = " ", right = " " },
 				},
