@@ -3,28 +3,38 @@
 (require '[babashka.process :refer [shell process exec]])
 
 (def packages
-  ["fonts-inter"
-   "leiningen"
-   "fonts-firacode"
-   "flatpak"
-   "black"
-   "cloc"
-   "tokei"
-   "golang-1.22-go"
-   "python3-pylsp"
-   "transmission-gtk"
-   "build-essential" 
-   "curl"
-   "brave-browser"
-   "go"
-   "fonts-jetbrains-mono"
-   "vim"
-   "flatpak"
-   "curl"
-   "chezmoi"
-   "curl"
-   "flatpak"
-   "vim"])
+  ["build-essential",
+   "curl",
+   "emacs",
+   "fish",
+   "fonts-cascadia-code",
+   "fonts-firacode",
+   "fonts-jetbrains-mono",
+   "gh",
+   "git",
+   "gnome-tweaks",
+   "htop",
+   "libfuse2",
+   "lm-sensors",
+   "nodejs",
+   "npm",
+   "qbittorrent",
+   "ripgrep",
+   "tldr",
+   "vim",
+   "vlc",
+   "yarn",
+   "zoxide",
+   "zsh",
+   "neofetch",
+   "alacritty",
+   "blueman",
+   "firefox",
+   "kitty",
+   "neovim",
+   "tmux",
+   "snapd",
+   "flatpak"])
 
 (defn install-packages []
   (doseq [p packages]
