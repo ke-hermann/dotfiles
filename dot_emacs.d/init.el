@@ -46,10 +46,16 @@
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
 
-(defvar use-package-always-ensure)
+(require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
 ;; Packages
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
 
 (use-package ef-themes)
 
@@ -57,106 +63,82 @@
   :bind (("C-x m" . menu-bar-mode)))
 
 (use-package diminish
-  :ensure t
   :config
   (diminish 'eldoc-mode))
 
 ;; This package implements support for mapping a pair of simultaneously pressed keys .
 (use-package key-chord
-  :ensure t
   :config (key-chord-mode 1))
 
 ;; super-save auto-saves your buffers
 (use-package super-save
-  :ensure t
   :diminish super-save-mode
   :config
   (super-save-mode +1))
 
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(use-package magit
-  :ensure t)
+(use-package magit)
 
 (use-package whole-line-or-region
-  :ensure t
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
 
 (use-package company
-  :ensure t
   :diminish company-mode
   :config (global-company-mode +1))
 
 
 (use-package flycheck
-  :ensure t
   :config (global-flycheck-mode))
 
 (use-package which-key
-  :ensure t
   :diminish which-key-mode
   :config (which-key-mode +1))
 
 (use-package ace-window
-  :ensure t
   :bind (("M-o" . ace-window)))
 
 (use-package cider
-  :ensure t
   :config
   (add-hook 'cider-repl-mode-hook (lambda () (display-line-numbers-mode -1)))
   (add-hook 'cider-repl-mode-hook #'enable-paredit-mode))
 
 (use-package paredit
-  :ensure t
   :diminish paredit-mode
   :config
   (add-hook 'clojure-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
 
-(use-package nerd-icons
-  :ensure t)
+(use-package nerd-icons)
 
 (use-package doom-modeline
-  :ensure t
   :after (nerd-icons)
   :config
   (setq column-number-mode +1)
   (setq doom-modeline-icon nil)
   (doom-modeline-mode +1))
 
-(use-package doom-themes
-  :ensure t)
-
-(use-package ef-themes
-  :ensure t)
-
+(use-package doom-themes)
+(use-package ef-themes)
 (use-package solarized-theme)
-
 (use-package tao-theme)
 
 (use-package projectile
-  :ensure t
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package pyvenv
-  :ensure t)
+(use-package pyvenv)
 
-(use-package rust-mode
-  :ensure t)
+(use-package rust-mode)
 
-(use-package lua-mode
-  :ensure t)
+(use-package lua-mode)
 
-(use-package go-mode
-  :ensure t)
+(use-package go-mode)
 
 (use-package lsp-mode
   :init
@@ -172,7 +154,6 @@
 (use-package lsp-ui :commands lsp-ui-mode)
 
 (use-package dap-mode
-  :ensure t
   :config
   (require 'dap-python)
   (defvar dap-python-debugger)
@@ -180,13 +161,11 @@
 
 ;; formatting
 (use-package format-all
-  :ensure t
   :config
   (add-hook 'prog-mode-hook 'format-all-mode)
   (add-hook 'prog-mode-hook 'format-all-ensure-formatter))
 
 (use-package tree-sitter-langs
-  :ensure t
   :config
   (tree-sitter-require 'python)
   (tree-sitter-require 'clojure)
