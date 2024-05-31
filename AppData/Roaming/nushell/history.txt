@@ -1,0 +1,212 @@
+ls
+sensors
+ls
+sensors
+nu config
+config nu
+ls
+cd src\
+ls
+gh repo clone ke-hermann/advent-of-code
+ls
+cd advent-of-code\
+ls
+python
+chezmoi.exe update
+z
+zoxide
+chezmoi.exe --version
+chezmoi.exe init ke-hermann
+ls
+ls\
+ls
+curl wttr.in
+chezmoi.exe update
+go --version
+choco search go 
+choco install go 
+choco install ffmpeg 
+choco install gimp
+ls
+nvim
+ls
+curl wttr.in
+rg
+choco install ripgrep 
+tldrrg
+ls
+cd Downloads\
+ls
+ls 
+cd ..\Documents\
+ls
+cd ..\Downloads\
+ls
+rg "star wars music" `[9-21-23] CDawgVA - BACK IN JAPAN LETS GAME. - Chat.txt.lnk`
+rg star wars `[9-21-23] CDawgVA - BACK IN JAPAN LETS GAME. - Chat.txt.lnk`
+rg 'star wars'
+ls
+rm `[9-21-23] CDawgVA - BACK IN JAPAN LETS GAME. - Chat.txt.lnk`
+ls
+rg star wars `[9-21-23] CDawgVA - BACK IN JAPAN LETS GAME. - Chat.txt`
+rg "star wars" `[9-21-23] CDawgVA - BACK IN JAPAN LETS GAME. - Chat.txt`
+chezmoi.exe update
+ls
+ls\
+wsl
+nordvpn
+choco search treesize
+choco install treesize 
+choco uninstall treesize
+ls
+cd Downloads\
+ls
+hash md5 Berkeley-Mono-1008.zip
+ls
+open Berkeley-Mono-1008-FONToMASS.zip | hash md5
+open Berkeley-Mono-1008.zip | hash md5
+ln -h
+ls
+sensors
+ls
+exit
+s
+ls
+s
+ls
+cd code\advent-of-code\
+ls
+exit
+ls
+sensors
+ls
+cd Downloads\
+ls
+cd
+ls
+sensors
+cd Downloads\
+ls
+nvim
+ls
+$nu.env-path
+code C:\Users\herma\AppData\Roaming\nushell\env.nu
+$nu.config-path
+code C:\Users\herma\AppData\Roaming\nushell\config.nu
+config nu
+starship
+ls
+nu
+ls
+exit
+config.nu
+config nu
+$nu.config-path
+config load
+nu config
+config nu
+$nu.config-path
+code C:\Users\herma\AppData\Roaming\nushell\config.nu
+refreshenv
+exit
+nvim .wezterm.lua
+nvim .config
+nvim .config\nvim\init.lua
+nvim 
+exit
+nu
+exit
+ls
+sensors
+ls
+code C:\Users\herma\AppData\Roaming\nushell\env.nu
+ls
+sensors
+ls
+dir
+ls
+config nu
+ls
+cd advent-of-code\
+ls
+cd code\advent-of-code\
+ls
+lazygit.exe 
+cd code\advent-of-code\
+ls
+cd python\2023\
+nvim day23.py
+exit
+rustup --version
+rustup update
+cd code\adv
+cd code\advent-of-code\
+ls
+cargo new rust_solutions --bin
+cd rust_solutions\
+ls
+cargo add petgraph
+ls
+nvim cargo.toml
+cargo run
+code .
+ls
+cargo run
+cd code\advent-of-code\
+ls
+cd python\
+ls
+cd 2023\
+ls
+code .
+python day23.py
++
+python day23.py
+ls
+cd code\advent-of-code\
+ls
+git pull 
+code .
+mkdir ~/.local/share/atuin/
+atuin init nu | save ~/.local/share/atuin/init.nu
+winget search atuin
+choco search atuin
+cd code\
+ls
+gh repo clone atuinsh/atuin
+cd atuin\
+ls
+code .
+ls
+hash sha256 openSUSE-Tumbleweed-DVD-x86_64-Snapshot20240524-Media.iso
+open openSUSE-Tumbleweed-DVD-x86_64-Snapshot20240524-Media.iso | hash sha256 
+cat openSUSE-Tumbleweed-DVD-x86_64-Snapshot20240524-Media.iso.sha256
+ls
+cd Downloads\
+ls
+cd sensors
+cd
+config 
+config nu
+$nu.config-path
+nvim C:\Users\herma\AppData\Roaming\nushell\config.nu
+exit
+config nu
+exit
+ls
+sensors
+ls
+config nu
+nvim C:\Users\herma\AppData\Roaming\nushell\config.nu
+exit
+ls
+config nu
+nvim C:\Users\herma\AppData\Roaming\nushell\config.nu
+exit
+config nu
+nvim C:\Users\herma\AppData\Roaming\nushell\config.nu
+exit
+config nu
+ls
+config nu
+ls

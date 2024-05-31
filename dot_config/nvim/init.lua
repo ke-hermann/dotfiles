@@ -23,4 +23,4 @@ require("lazy").setup({ { import = "plugins" } })
 require("globalsettings")
 require("keymaps")
 
-vim.cmd("colorscheme iceberg")
+vim.cmd("colorscheme tokyonight-night")
