@@ -189,11 +189,11 @@
 (load-file "~/.emacs.d/elisp/completion-config.el")
 
 ;; Evil Setup
-(load-file "~/.emacs.d/elisp/evil-config.el")
+;; (load-file "~/.emacs.d/elisp/evil-config.el")
 
 ;; KEYMAPS
-(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'ef-bio)))
-(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'ef-kassio)))
+(global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)

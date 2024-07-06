@@ -5,7 +5,7 @@ config.window_close_confirmation = "NeverPrompt"
 config.warn_about_missing_glyphs = false
 
 config.font = wezterm.font("JetBrains Mono")
-config.color_scheme = 'tokyonight'
+config.color_scheme = 'Solarized Light (Gogh)'
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.font_size = 13
