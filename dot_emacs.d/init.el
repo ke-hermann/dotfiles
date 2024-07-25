@@ -57,8 +57,6 @@
   (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
-(use-package ef-themes)
-
 (use-package emacs
   :bind (("C-x m" . menu-bar-mode)))
 
@@ -86,11 +84,6 @@
 (use-package whole-line-or-region
   :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
   :config (whole-line-or-region-global-mode +1))
-
-(use-package company
-  :diminish company-mode
-  :config (global-company-mode +1))
-
 
 (use-package flycheck
   :config (global-flycheck-mode))
@@ -140,19 +133,6 @@
 
 (use-package go-mode)
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook ((go-mode . lsp)
-	 (python-mode . lsp)
-	 (lua-mode . lsp)
-         ;; want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-;; optionally
-(use-package lsp-ui :commands lsp-ui-mode)
-
 (use-package dap-mode
   :config
   (require 'dap-python)
@@ -201,6 +181,7 @@
 (global-set-key (kbd "C-x C-n") 'company-complete)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
+
 
 (provide 'init)
 ;;; init.el ends here
