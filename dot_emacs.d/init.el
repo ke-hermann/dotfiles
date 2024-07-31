@@ -1,27 +1,65 @@
-;;; package --- personal emacs configuration files
-;;; Commentary:
-;;; Code:
+;;;;;;;;;;;;;;;;;;
+;; ELPACA SETUP ;;
+;;;;;;;;;;;;;;;;;;
 
-;; which operating system are we using?
-(defvar os-windows? (string= system-type "windows-nt"))
+(defvar elpaca-installer-version 0.7)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1
+                              : (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                 ,@(when-let ((depth (plist-get order :depth)))
+                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                 ,(plist-get order :repo) ,repo))))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-;; MELPA setup
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+;; Uncomment for systems which cannot create symlinks:
+(elpaca-no-symlink-mode)
 
-;; always treat themes as safe.
-(setq custom-safe-themes t)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(setq custom-file "~/.emacs.d/custom.el")
-(when (file-exists-p custom-file)
-  (load-file custom-file))
 
+;; Install use-package support
+(elpaca elpaca-use-package
+	;; Enable use-package :ensure support for Elpaca.
+	(elpaca-use-package-mode))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GENERAL EMACS CONFIG ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq ring-bell-function #'ignore)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq vc-follow-symlinks t)
-
 ;; shut the annoying alarm sound up
 (setq ring-bell-function 'ignore)
 (electric-pair-mode +1)
@@ -29,149 +67,272 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-
 (defvar display-line-numbers-type)
 
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 ;; enable history
 (recentf-mode 1)
-
 ;; automatically load changed files
 (defvar global-auto-revert-non-file-buffers)
 (defvar auto-revert-verbose)
-
 (global-auto-revert-mode +1)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
 
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+(set-frame-font "Cascadia Code 13")
 
-;; Packages
+;;;;;;;;;;;;;;
+;; PACKAGES ;;
+;;;;;;;;;;;;;;
 
-(use-package auto-package-update
+(use-package solarized-theme
+  :ensure t
+  :config (load-theme 'solarized-dark t))
+
+(use-package evil
+  :ensure t
+  :custom
+  (evil-undo-system 'undo-redo)
+  (evil-want-keybinding nil)
+  (evil-want-C-u-scroll 1)
+  :config (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe))
+  (evil-collection-init))
 
-(use-package emacs
-  :bind (("C-x m" . menu-bar-mode)))
+(use-package doom-themes :ensure t)
 
-(use-package diminish
-  :config
-  (diminish 'eldoc-mode))
+(use-package ef-themes :ensure t)
 
-;; This package implements support for mapping a pair of simultaneously pressed keys .
-(use-package key-chord
-  :config (key-chord-mode 1))
-
-;; super-save auto-saves your buffers
-(use-package super-save
-  :diminish super-save-mode
-  :config
-  (super-save-mode +1))
-
-(use-package exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
-
-(use-package magit)
-
-(use-package whole-line-or-region
-  :diminish (whole-line-or-region-global-mode whole-line-or-region-local-mode)
-  :config (whole-line-or-region-global-mode +1))
-
-(use-package flycheck
-  :config (global-flycheck-mode))
-
-(use-package which-key
-  :diminish which-key-mode
-  :config (which-key-mode +1))
-
-(use-package ace-window
-  :bind (("M-o" . ace-window)))
-
-(use-package cider
-  :config
-  (add-hook 'cider-repl-mode-hook (lambda () (display-line-numbers-mode -1)))
-  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode))
-
-(use-package paredit
-  :diminish paredit-mode
-  :config
-  (add-hook 'clojure-mode-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
-
-(use-package nerd-icons)
+(use-package nerd-icons
+  :ensure t)
 
 (use-package doom-modeline
+  :ensure t
   :after (nerd-icons)
-  :config
-  (setq column-number-mode +1)
-  (setq doom-modeline-icon nil)
-  (doom-modeline-mode +1))
+  :init (doom-modeline-mode 1))
 
-(use-package doom-themes)
-(use-package ef-themes)
-(use-package solarized-theme)
-(use-package tao-theme)
+(use-package which-key
+  :ensure t
+  :init (which-key-mode 1))
+
+(use-package ace-window
+  :ensure t
+  :init (global-set-key (kbd "M-o") 'ace-window))
+;; Enable vertico
+(use-package vertico
+  :ensure t
+  :custom
+  (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  (enable-recursive-minibuffers t)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  :init
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  (vertico-mode +1))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  :ensure t
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init (marginalia-mode))
+
+(use-package magit :ensure t)
+
+;; Example configuration for Consult
+(use-package consult
+  :ensure t
+  ;; Replace bindings. Lazily loaded by `use-package'.
+  :bind (;; C-c bindings in `mode-specific-map'
+         ("C-c M-x" . consult-mode-command)
+         ("C-c h" . consult-history)
+         ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
+         ;; C-x bindings in `ctl-x-map'
+         ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
+         ("C-x t b" . consult-buffer-other-tab)	;; orig. switch-to-buffer-other-tab
+         ("C-x r b" . consult-bookmark)		;; orig. bookmark-jump
+         ("C-x p b" . consult-project-buffer) ;; orig. project-switch-to-buffer
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store) ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop) ;; orig. yank-pop
+         ;; M-g bindings in `goto-map'
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake) ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)	 ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line) ;; orig. goto-line
+         ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings in `search-map'
+         ("M-s d" . consult-find) ;; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
+         ("M-s l" . consult-line) ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)	;; needed by consult-line to detect isearch
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history) ;; orig. next-matching-history-element
+         ("M-r" . consult-history)) ;; orig. previous-matching-history-element
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  ;; The :init configuration is always executed (Not lazy)
+  :init
+
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Configure other variables and modes in the :config section,
+  ;; after lazily loading the package.
+  :config
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   ;; :preview-key "M-."
+   :preview-key '(:debounce 0.4 any))
+  (setq consult-narrow-key "<"))
+
+(use-package embark
+  :ensure t
+  :bind
+  (("C-," . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t ; only need to install it, embark loads it after consult if found
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+
+(use-package corfu
+  :ensure t
+  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
+  (tab-always-indent 'complete)
+  (text-mode-ispell-word-completion nil)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  :init
+  (global-corfu-mode))
+
+(use-package paredit
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook #'enable-paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+(use-package cider
+  :ensure t)
+
+(use-package evil-paredit
+  :ensure t
+  :init (add-hook 'paredit-mode-hook #'evil-paredit-mode))
 
 (use-package projectile
+  :ensure t
   :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-(use-package pyvenv)
-
-(use-package rust-mode)
-
-(use-package lua-mode)
-
-(use-package go-mode)
-
-(use-package dap-mode
+;; automatic virtualenv setup for python
+(use-package auto-virtualenv
+  :ensure t
+  :init
+  (use-package pyvenv
+    :ensure t)
   :config
-  (require 'dap-python)
-  (defvar dap-python-debugger)
-  (setq dap-python-debugger 'debugpy))
+  (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+  (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv) ;; If using projectile
+  )
 
-;; formatting
-(use-package format-all
-  :config
-  (add-hook 'prog-mode-hook 'format-all-mode)
-  (add-hook 'prog-mode-hook 'format-all-ensure-formatter))
+;;;;;;;;;;;;;
+;; KEYMAPS ;;
+;;;;;;;;;;;;;
 
-(use-package tree-sitter-langs
-  :config
-  (tree-sitter-require 'python)
-  (tree-sitter-require 'clojure)
-  (tree-sitter-require 'elisp)
-  (tree-sitter-require 'rust)
-  (global-tree-sitter-mode))
-
-(use-package elfeed
-  :config
-  (setq elfeed-feeds
-	'("https://krebsonsecurity.com/feed/"
-	  "https://www.twz.com/feed"
-	  "http://feeds.nightvalepresents.com/welcometonightvalepodcast")))
-
-(load-file "~/.emacs.d/elisp/utils.el")
-
-;; machine specific settings
-(load-file "~/.emacs.d/elisp/local.el")
-
-;; COMPLETION
-(load-file "~/.emacs.d/elisp/completion-config.el")
-
-;; Evil Setup
-;; (load-file "~/.emacs.d/elisp/evil-config.el")
-
-;; KEYMAPS
 (global-set-key (kbd "<f6>") (lambda () (interactive) (consult-theme 'solarized-light)))
 (global-set-key (kbd "<f7>") (lambda () (interactive) (consult-theme 'solarized-dark)))
 (global-set-key (kbd "<f2>") 'menu-bar-mode)
@@ -181,7 +342,8 @@
 (global-set-key (kbd "C-x C-n") 'company-complete)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
-
+(global-set-key (kbd "C-x m") 'menu-bar-mode)
+(global-set-key (kbd "C-x C-r") 'consult-recent-file)
 
 (provide 'init)
 ;;; init.el ends here
