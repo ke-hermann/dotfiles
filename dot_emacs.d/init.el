@@ -78,7 +78,9 @@
 (setq auto-revert-verbose nil)
 (show-paren-mode +1)
 
-(set-frame-font "Cascadia Code 13")
+(setq custom-file "~/.emacs.d/emacs-custom.el")
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;;;;;;;;;;;;;;
 ;; PACKAGES ;;
@@ -86,8 +88,7 @@
 
 (use-package solarized-theme :ensure t )
 
-(use-package catppuccin-theme
-  :ensure t)
+(use-package catppuccin-theme :ensure t)
 
 (use-package doom-themes
   :ensure t

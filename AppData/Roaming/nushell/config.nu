@@ -208,3 +208,4 @@ export def --env night () {
 
 night
 use ~/.cache/starship/init.nu
+zoxide init nushell | save -f ~/.zoxide.nu
