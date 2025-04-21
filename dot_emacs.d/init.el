@@ -86,7 +86,7 @@
 
 ;; set typeface
 ;; (add-to-list 'default-frame-alist '(font . "Cascadia Code 14"))
-(add-to-list 'default-frame-alist '(font . "JetBrains Mono 13"))
+(add-to-list 'default-frame-alist '(font . "Iosevka 14"))
 
 ;;;;;;;;;;;;;;
 ;; PACKAGES ;;
@@ -229,6 +229,7 @@
          (c++-mode . lsp)
          (java-mode . lsp)
 	 (lua-mode . lsp)
+	 (zig-mode . lsp)
          ;; Add more major modes as needed
          (lsp-mode . lsp-enable-which-key-integration))
   :custom

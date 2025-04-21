@@ -4,7 +4,6 @@ end
 
 # abbreviations
 # apt / debian / ubuntu
-abbr -a ls 'eza --long --header --icons --git'
 abbr -a aguu 'sudo apt update  && sudo apt upgrade'
 abbr -a agr 'sudo apt remove'
 abbr -a agi 'sudo apt install -y'
@@ -23,8 +22,12 @@ abbr -a pacin 'sudo pacman -S'
 abbr -a pacrm 'sudo pacman -Rs'
 abbr -a pacup 'sudo pacman -Syu'
 abbr -a pacfd 'sudo pacman -Ss'
+
 # git 
 abbr -a gitscd 'git config credential.helper store'
+
+# aliases 
+alias ls='eza --long --header --icons --git'
 
 # customized prompt
 # oh-my-posh init fish --config ~/.ohmyposh.json | source
