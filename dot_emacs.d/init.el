@@ -65,14 +65,14 @@
 (use-package company
   :hook (after-init . global-company-mode)
   :init
-  (setq company-minimum-prefix-length 1      ; Show completions after 1 character
-        company-idle-delay 0.0               ; Show suggestions immediately
-        company-tooltip-align-annotations t  ; Align annotations to the right tooltip border
-        company-show-numbers t               ; Show numbers for quick selection
-        company-selection-wrap-around t      ; Wrap around when navigating candidates
-        company-tooltip-limit 20             ; Maximum number of candidates
-        company-dabbrev-downcase nil         ; Don't downcase completions
-        company-dabbrev-ignore-case t)       ; Ignore case when completing
+  (setq company-minimum-prefix-length 1	; Show completions after 1 character
+        company-idle-delay 0.0		; Show suggestions immediately
+        company-tooltip-align-annotations t ; Align annotations to the right tooltip border
+        company-show-numbers t	    ; Show numbers for quick selection
+        company-selection-wrap-around t	; Wrap around when navigating candidates
+        company-tooltip-limit 20	; Maximum number of candidates
+        company-dabbrev-downcase nil	; Don't downcase completions
+        company-dabbrev-ignore-case t)	; Ignore case when completing
 
   :config
   (global-company-mode 1)
@@ -83,7 +83,10 @@
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd "M-.") 'company-show-location))
+  (define-key company-active-map (kbd "M-.") 'company-show-location)
+  (global-set-key (kbd "C-x C-n") 'company-complete))
+
+
 
 
 (use-package eglot
@@ -92,7 +95,7 @@
   (setq eglot-autoshutdown t)
   ;; Optional: if you want to specify servers manually
   ;; (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
-)
+  )
 
 (use-package python
   :ensure nil ;; built-in
@@ -130,12 +133,6 @@
 (use-package flycheck
   :diminish flycheck-mode
   :hook (eglot . flycheck-mode))
-
-(use-package embark
-  :bind
-  (("C-," . embark-act)
-   ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings)))
 
 ;; completion stack: vertico; consult; embark etc
 (load "~/.emacs.d/elisp/completion.el")

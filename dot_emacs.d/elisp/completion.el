@@ -66,26 +66,12 @@
 ;; The `embark' package lets you target the thing or context at point
 ;; and select an action to perform on it.  Use the `embark-act'
 ;; command while over something to find relevant commands.
-;;
-;; When inside the minibuffer, `embark' can collect/export the
-;; contents to a fully fledged Emacs buffer.  The `embark-collect'
-;; command retains the original behaviour of the minibuffer, meaning
-;; that if you navigate over the candidate at hit RET, it will do what
-;; the minibuffer would have done.  In contrast, the `embark-export'
-;; command reads the metadata to figure out what category this is and
-;; places them in a buffer whose major mode is specialised for that
-;; type of content.  For example, when we are completing against
-;; files, the export will take us to a `dired-mode' buffer; when we
-;; preview the results of a grep, the export will put us in a
-;; `grep-mode' buffer.
-;;
-;; Further reading: https://protesilaos.com/emacs/dotemacs#h:61863da4-8739-42ae-a30f-6e9d686e1995
+
 (use-package embark
-  :ensure t
-  :bind (("C-." . embark-act)
-         :map minibuffer-local-map
-         ("C-c C-c" . embark-collect)
-         ("C-c C-e" . embark-export)))
+  :bind
+  (("C-," . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings)))
 
 ;; The `embark-consult' package is glue code to tie together `embark'
 ;; and `consult'.
@@ -112,10 +98,3 @@
 ;; Further reading: https://protesilaos.com/emacs/dotemacs#h:25765797-27a5-431e-8aa4-cc890a6a913a
 (savehist-mode 1)
 
-;; The built-in `recentf-mode' keeps track of recently visited files.
-;; You can then access those through the `consult-buffer' interface or
-;; with `recentf-open'/`recentf-open-files'.
-;;
-;; I do not use this facility, because the files I care about are
-;; either in projects or are bookmarked.
-(recentf-mode 1)
