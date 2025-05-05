@@ -54,40 +54,116 @@
 ;; set typeface
 ;; (add-to-list 'default-frame-alist '(font . "Cascadia Code 14"))
 (set-frame-font "JetBrains Mono 13" nil t)
+(setq use-package-always-ensure t)
 
 ;;;;;;;;;;;;;;
 ;; PACKAGES ;;
 ;;;;;;;;;;;;;;
 
-(setq use-package-always-ensure t)
-
-;; Company-mode basic configuration
-(use-package company
-  :hook (after-init . global-company-mode)
-  :init
-  (setq company-minimum-prefix-length 1	; Show completions after 1 character
-        company-idle-delay 0.0		; Show suggestions immediately
-        company-tooltip-align-annotations t ; Align annotations to the right tooltip border
-        company-show-numbers t	    ; Show numbers for quick selection
-        company-selection-wrap-around t	; Wrap around when navigating candidates
-        company-tooltip-limit 20	; Maximum number of candidates
-        company-dabbrev-downcase nil	; Don't downcase completions
-        company-dabbrev-ignore-case t)	; Ignore case when completing
-
+;; Install and configure Corfu
+(use-package corfu
+  :ensure t
+  :hook (after-init . global-corfu-mode)
+  :bind (:map corfu-map
+	      ("C-x C-n" . corfu-complete)
+	      ("C-n" . corfu-next)
+	      ("C-p" . corfu-previous))
   :config
-  (global-company-mode 1)
+  (setq corfu-auto t)
+  (setq tab-always-indent 'complete)
+  (setq corfu-preview-current nil)
+  (setq corfu-min-width 20)
 
-  ;; Optional keybindings for company
-  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd "M-.") 'company-show-location)
-  (global-set-key (kbd "C-x C-n") 'company-complete))
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
+
+  ;; Sort by input history (no need to modify `corfu-sort-function').
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history)))
+
+;; Optional: Corfu-terminal for terminal support
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :config
+  (corfu-terminal-mode +1))
+
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides nil))
+
+;; Optional: Cape for enhanced completion at point
+(use-package cape
+  :init
+  ;; Add useful defaults completion sources from Cape
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+;; Optional: kind-icon for fancy icons in completion UI
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+(use-package nerd-icons
+  :ensure t)
+
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+;; Optional: Make corfu popup come up in terminal overlay
+(use-package popon
+  :if (not (display-graphic-p)))
+
+;; Save history for better suggestions
+(use-package savehist
+  :init
+  (savehist-mode))
 
 
+(use-package dired
+  :ensure nil
+  :commands (dired)
+  :hook
+  ((dired-mode . dired-hide-details-mode)
+   (dired-mode . hl-line-mode))
+  :config
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
+  (setq delete-by-moving-to-trash t)
+  (setq dired-dwim-target t))
 
+(use-package dired-subtree
+  :ensure t
+  :after dired
+  :bind
+  ( :map dired-mode-map
+    ("<tab>" . dired-subtree-toggle)
+    ("TAB" . dired-subtree-toggle)
+    ("<backtab>" . dired-subtree-remove)
+    ("S-TAB" . dired-subtree-remove))
+  :config
+  (setq dired-subtree-use-backgrounds nil))
 
 (use-package eglot
   :hook ((python-mode go-mode) . eglot-ensure)
@@ -122,10 +198,12 @@
   :commands (magit-status magit-get-current-branch)
   :bind ("C-x g" . magit-status))
 
-(use-package doom-themes)
+(use-package ef-themes)
 
 (use-package ef-themes
-  :config (load-theme 'ef-bio t))
+  :ensure t
+  :config
+  (load-theme 'ef-bio :no-confirm-loading))
 
 (use-package nov)
 
@@ -134,8 +212,67 @@
   :diminish flycheck-mode
   :hook (eglot . flycheck-mode))
 
-;; completion stack: vertico; consult; embark etc
-(load "~/.emacs.d/elisp/completion.el")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Completion and Navigation ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Enable vertico
+(use-package vertico
+  :custom
+  (enable-recursive-minibuffers t)
+  (vertico-resize t)
+  (vertico-cycle t)
+  :init
+  (vertico-mode +1))
+
+(use-package marginalia
+  :ensure t
+  :hook (after-init . marginalia-mode))
+
+
+;; Example configuration for Consult
+(use-package consult
+  :bind (("C-c M-x" . consult-mode-command)
+	 ("C-c h" . consult-history)
+         ("C-x C-r" . consult-recent-file)
+         ([remap Info-search] . consult-info)
+         ("C-x b" . consult-buffer)
+         ("C-x r b" . consult-bookmark)
+         ("C-x p b" . consult-project-buffer)
+	 ("C-x t c" . consult-theme)
+         ("M-y" . consult-yank-pop)
+         ("M-g M-g" . consult-goto-line)
+         ("M-s d" . consult-find)
+         ("M-s c" . consult-locate)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history)
+         ("M-r" . consult-history))
+
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :config
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key '(:debounce 0.4 any))
+  (setq consult-narrow-key "<"))
+
+(use-package embark
+  :bind
+  (("C-," . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings)))
+
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 
 ;; additional global keybindings
 
