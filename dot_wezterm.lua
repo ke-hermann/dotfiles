@@ -12,7 +12,7 @@ config.color_scheme = "carbonfox"
 config.hide_tab_bar_if_only_one_tab = true
 config.font_size = 13
 
-config.leader = { key = "x", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 1000 }
 
 -- Spawn powershell on windows
 if package.config:sub(1, 1) == "\\" then

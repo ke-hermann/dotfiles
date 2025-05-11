@@ -28,13 +28,10 @@ abbr -a gitscd 'git config credential.helper store'
 
 # aliases 
 alias ls='eza --long --header --icons --git'
+alias temacs='emacs -nw'
 
 # customized prompt
 # oh-my-posh init fish --config ~/.ohmyposh.json | source
 starship init fish | source
 # smarter cd
 zoxide init fish | source
-# auto correction of borked commands
-thefuck --alias | source
-# better shell history
-atuin init fish | source
