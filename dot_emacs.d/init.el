@@ -168,10 +168,11 @@
 (use-package eglot
   :hook ((python-mode go-mode) . eglot-ensure)
   :config
-  (setq eglot-autoshutdown t)
-  ;; Optional: if you want to specify servers manually
-  ;; (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
-  )
+  (setq eglot-autoshutdown t))
+
+(use-package which-key-mode
+  :ensure nil
+  :config (which-key-mode +1))
 
 (use-package python
   :ensure nil ;; built-in
@@ -197,13 +198,6 @@
 (use-package magit
   :commands (magit-status magit-get-current-branch)
   :bind ("C-x g" . magit-status))
-
-(use-package ef-themes)
-
-(use-package ef-themes
-  :ensure t
-  :config
-  (load-theme 'ef-bio :no-confirm-loading))
 
 (use-package nov)
 
@@ -265,7 +259,7 @@
 
 (use-package embark
   :bind
-  (("C-," . embark-act)
+  (("C-." . embark-act)
    ("C-;" . embark-dwim)
    ("C-h B" . embark-bindings)))
 
