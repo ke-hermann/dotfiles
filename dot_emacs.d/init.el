@@ -1,9 +1,5 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/pa
-;;ckages/") t)
 (package-initialize)
 
 (add-to-list 'display-buffer-alist
@@ -60,15 +56,30 @@
 ;; PACKAGES ;;
 ;;;;;;;;;;;;;;
 
+(use-package modus-themes)
+(use-package ef-themes)
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-tokyo-night :no-confirm-loading))
+
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x m") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
 ;; Install and configure Corfu
 (use-package corfu
   :ensure t
   :hook (after-init . global-corfu-mode)
   :bind (:map corfu-map
-	      ("C-x C-n" . corfu-complete)
 	      ("C-n" . corfu-next)
 	      ("C-p" . corfu-previous))
   :config
+  ("C-x C-n" . corfu-complete)
   (setq corfu-auto t)
   (setq tab-always-indent 'complete)
   (setq corfu-preview-current nil)
@@ -170,9 +181,10 @@
   :config
   (setq eglot-autoshutdown t))
 
-(use-package which-key-mode
-  :ensure nil
-  :config (which-key-mode +1))
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode +1))
 
 (use-package python
   :ensure nil ;; built-in
@@ -224,7 +236,6 @@
   :ensure t
   :hook (after-init . marginalia-mode))
 
-
 ;; Example configuration for Consult
 (use-package consult
   :bind (("C-c M-x" . consult-mode-command)
@@ -267,6 +278,10 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
 
 ;; additional global keybindings
 
@@ -284,3 +299,5 @@
 
 (global-set-key (kbd "M-n") 'scroll-up-command)
 (global-set-key (kbd "M-p") 'scroll-down-command)
+
+(global-set-key (kbd "C-x q") #'query-replace)
