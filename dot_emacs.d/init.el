@@ -69,35 +69,8 @@
   (global-set-key (kbd "C-x m") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+  (global-set-key (kbd "C-x e") 'mc/mark-all-like-this))
 
-;; Install and configure Corfu
-(use-package corfu
-  :ensure t
-  :hook (after-init . global-corfu-mode)
-  :bind (:map corfu-map
-	      ("C-n" . corfu-next)
-	      ("C-p" . corfu-previous))
-  :config
-  ("C-x C-n" . corfu-complete)
-  (setq corfu-auto t)
-  (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil)
-  (setq corfu-min-width 20)
-
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
-
-  ;; Sort by input history (no need to modify `corfu-sort-function').
-  (with-eval-after-load 'savehist
-    (corfu-history-mode 1)
-    (add-to-list 'savehist-additional-variables 'corfu-history)))
-
-;; Optional: Corfu-terminal for terminal support
-(use-package corfu-terminal
-  :if (not (display-graphic-p))
-  :config
-  (corfu-terminal-mode +1))
 
 (use-package orderless
   :ensure t
@@ -114,13 +87,6 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
 
-;; Optional: kind-icon for fancy icons in completion UI
-(use-package kind-icon
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package nerd-icons
   :ensure t)
@@ -131,26 +97,16 @@
   :config
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-(use-package nerd-icons-corfu
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package nerd-icons-dired
   :ensure t
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
-;; Optional: Make corfu popup come up in terminal overlay
-(use-package popon
-  :if (not (display-graphic-p)))
-
 ;; Save history for better suggestions
 (use-package savehist
   :init
   (savehist-mode))
-
 
 (use-package dired
   :ensure nil
@@ -176,11 +132,6 @@
   :config
   (setq dired-subtree-use-backgrounds nil))
 
-(use-package eglot
-  :hook ((python-mode go-mode) . eglot-ensure)
-  :config
-  (setq eglot-autoshutdown t))
-
 (use-package which-key
   :ensure t
   :config
@@ -202,8 +153,7 @@
 
 (use-package go-mode
   :mode "\\.go\\'"
-  :hook ((go-mode . eglot-ensure)
-         (before-save . gofmt-before-save))
+  :hook ((before-save . gofmt-before-save))
   :config
   (setq gofmt-command "goimports")) ;; Automatically fix imports too
 
@@ -215,13 +165,12 @@
 
 ;; For better error/warning visualization
 (use-package flycheck
-  :diminish flycheck-mode
-  :hook (eglot . flycheck-mode))
+  :diminish flycheck-mode)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion and Navigation ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;; Enable vertico
 (use-package vertico
@@ -282,6 +231,61 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+
+(use-package multiple-cursors
+  :ensure t
+  :disabled t ;; unnecessar in evil mode
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+;; Company Mode Configuration
+(use-package company
+  :ensure t
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-idle-delay 0.2          ;; Time delay before suggestions pop up
+        company-minimum-prefix-length 1 ;; Start completing after a single character
+        company-tooltip-align-annotations t
+        company-selection-wrap-around t) ;; Allows wrapping around suggestions
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
+
+;; Optional: company-box for icons and nicer UI
+(use-package company-box
+  :hook (company-mode . company-box-mode)
+  :ensure t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; evil configuration ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Install and configure Evil
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)      ; important for evil-collection
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode 1)
+
+  ;; Custom "jk" to escape insert mode
+  (define-key evil-insert-state-map (kbd "j") 
+	      (lambda () (interactive)
+		(let ((next-key (read-event "j")))
+		  (if (and (characterp next-key) (char-equal next-key ?k))
+		      (evil-normal-state)
+		    (insert "j")
+		    (setq unread-command-events (list next-key)))))))
+
+;; Evil Collection for better integration with other modes
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 ;; additional global keybindings
 
