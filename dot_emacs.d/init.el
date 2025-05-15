@@ -57,11 +57,9 @@
 ;;;;;;;;;;;;;;
 
 (use-package modus-themes)
-(use-package ef-themes)
-(use-package doom-themes
-  :ensure t
-  :config
-  (load-theme 'doom-tokyo-night :no-confirm-loading))
+(use-package doom-themes)
+(use-package ef-themes
+  :config (load-theme 'ef-bio :no-confirm-loading))
 
 (use-package multiple-cursors
   :ensure t

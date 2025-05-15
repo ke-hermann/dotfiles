@@ -4,8 +4,8 @@ font-family = JetBrains Mono
 font-size = 13
 
 # create new splits
-keybind = ctrl+q>v=new_split:right
-keybind = ctrl+q>h=new_split:down
+keybind = ctrl+;>v=new_split:right
+keybind = ctrl+;>h=new_split:down
 # split movement
 keybind = alt+h=goto_split:left
 keybind = alt+l=goto_split:right
