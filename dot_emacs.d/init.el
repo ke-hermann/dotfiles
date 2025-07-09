@@ -47,19 +47,22 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; set typeface
-;; (add-to-list 'default-frame-alist '(font . "Cascadia Code 14"))
-(set-frame-font "JetBrains Mono 13" nil t)
-(setq use-package-always-ensure t)
+(let ((mono-spaced-font "Ubuntu Sans Mono Medium")
+      (proportionately-spaced-font "Inter"))
+  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
 ;;;;;;;;;;;;;;
 ;; PACKAGES ;;
 ;;;;;;;;;;;;;;
 
 (use-package modus-themes)
-(use-package doom-themes)
-(use-package ef-themes
-  :config (load-theme 'ef-bio :no-confirm-loading))
+(use-package ef-themes)
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-solarized-dark :no-confirm-loading))
 
 (use-package multiple-cursors
   :ensure t
@@ -187,18 +190,16 @@
 (use-package consult
   :bind (("C-c M-x" . consult-mode-command)
 	 ("C-c h" . consult-history)
-         ("C-x C-r" . consult-recent-file)
+         ("C-x C-j" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ("C-x b" . consult-buffer)
          ("C-x r b" . consult-bookmark)
          ("C-x p b" . consult-project-buffer)
 	 ("C-x t c" . consult-theme)
          ("M-y" . consult-yank-pop)
-         ("M-g M-g" . consult-goto-line)
-         ("M-s d" . consult-find)
-         ("M-s c" . consult-locate)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
+         ("C-c f f" . consult-fd)
+         ("C-c f g" . consult-ripgrep)
+         ("C-c f l" . consult-locate)
          ;; Minibuffer history
          :map minibuffer-local-map
          ("M-s" . consult-history)
@@ -217,7 +218,7 @@
 
 (use-package embark
   :bind
-  (("C-." . embark-act)
+  (("C-," . embark-act)
    ("C-;" . embark-dwim)
    ("C-h B" . embark-bindings)))
 
@@ -232,7 +233,6 @@
 
 (use-package multiple-cursors
   :ensure t
-  :disabled t ;; unnecessar in evil mode
   :config
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -278,12 +278,41 @@
 		      (evil-normal-state)
 		    (insert "j")
 		    (setq unread-command-events (list next-key)))))))
+ 
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
 
 ;; Evil Collection for better integration with other modes
 (use-package evil-collection
   :after evil
   :config
   (evil-collection-init))
+
+(use-package org-journal
+  :ensure t
+  :custom
+  (org-journal-dir (file-truename "~/org/journals"))
+  (org-journal-file-format "%Y-%m-%d.org"))
+
+(use-package org-modern
+  :ensure t
+  :disabled t
+  :custom
+  (org-auto-align-tags nil)
+  (org-tags-column 0)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-special-ctrl-a/e t)
+  (org-insert-heading-respect-content t)
+  (org-hide-emphasis-markers t)
+  (org-pretty-entities t)
+  (org-agenda-tags-column 0)
+  (org-ellipsis "…")
+  :config
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+
 
 ;; additional global keybindings
 
