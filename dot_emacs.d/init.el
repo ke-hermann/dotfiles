@@ -47,9 +47,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "Ubuntu Sans Mono Medium")
+(let ((mono-spaced-font "UbuntuSansMono NFM Medium")
       (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
+  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
@@ -62,7 +62,7 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-solarized-dark :no-confirm-loading))
+  (load-theme 'modus-operandi-tinted :no-confirm-loading))
 
 (use-package multiple-cursors
   :ensure t
@@ -193,7 +193,7 @@
          ("C-x C-j" . consult-recent-file)
          ([remap Info-search] . consult-info)
          ("C-x b" . consult-buffer)
-         ("C-x r b" . consult-bookmark)
+         ("C-c b" . consult-bookmark)
          ("C-x p b" . consult-project-buffer)
 	 ("C-x t c" . consult-theme)
          ("M-y" . consult-yank-pop)
@@ -233,29 +233,28 @@
 
 (use-package multiple-cursors
   :ensure t
+  :disabled t
   :config
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
-;; Company Mode Configuration
-(use-package company
+(use-package corfu
   :ensure t
-  :hook (after-init . global-company-mode)
+  :init
+  (global-corfu-mode)
   :config
-  (setq company-idle-delay 0.2          ;; Time delay before suggestions pop up
-        company-minimum-prefix-length 1 ;; Start completing after a single character
-        company-tooltip-align-annotations t
-        company-selection-wrap-around t) ;; Allows wrapping around suggestions
-  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
-
-;; Optional: company-box for icons and nicer UI
-(use-package company-box
-  :hook (company-mode . company-box-mode)
-  :ensure t)
-
+  (use-package corfu-popupinfo
+    :ensure nil ; corfu-popupinfo is included with corfu
+    :init
+    (corfu-popupinfo-mode))
+  :custom
+  (corfu-popupinfo-delay '(0.5 . 0.2)) ; Show popup after 0.5s,; update after 0.2s
+  (corfu-auto t)		    ;; Enable auto-completion
+  (corfu-cycle t)		    ;; Enable cycling for completions
+  (corfu-preselect 'prompt)	    ;; Preselect the prompt
+  (corfu-quit-no-match 'separator)) ;; Quit if no match after separator
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; evil configuration ;;
@@ -290,32 +289,33 @@
   :config
   (evil-collection-init))
 
+(use-package org
+  :ensure nil ;; builtin
+  :config
+  ;; Basic settings
+  (setq org-startup-indented t)                ;; Enable indent mode for cleaner visuals
+  (setq org-startup-folded t)                  ;; Start with folded headings
+  (setq org-log-done 'time)                    ;; Log time when tasks are marked DONE
+  (setq org-hide-emphasis-markers t)           ;; Hide markup markers (e.g., *bold* -> bold)
+  (setq org-pretty-entities t)                 ;; Display entities like \alpha as symbols
+
+  ;; Default directory for Org files
+  (setq org-directory "~/org/")
+  (setq org-default-notes-file "~/org/notes.org")
+
+  ;; Agenda settings
+  (setq org-agenda-files (list "~/org/"))
+  (setq org-agenda-span 'week)                ;; Show a week in agenda view
+  (setq org-agenda-start-with-log-mode t)     ;; Show log mode by default in agenda
+  )
+
 (use-package org-journal
   :ensure t
   :custom
   (org-journal-dir (file-truename "~/org/journals"))
   (org-journal-file-format "%Y-%m-%d.org"))
 
-(use-package org-modern
-  :ensure t
-  :disabled t
-  :custom
-  (org-auto-align-tags nil)
-  (org-tags-column 0)
-  (org-catch-invisible-edits 'show-and-error)
-  (org-special-ctrl-a/e t)
-  (org-insert-heading-respect-content t)
-  (org-hide-emphasis-markers t)
-  (org-pretty-entities t)
-  (org-agenda-tags-column 0)
-  (org-ellipsis "…")
-  :config
-  (add-hook 'org-mode-hook #'org-modern-mode)
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
-
-
 ;; additional global keybindings
-
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
 (global-set-key (kbd "M-i") 'imenu)
