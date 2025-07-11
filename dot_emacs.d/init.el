@@ -47,9 +47,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "UbuntuSansMono NFM Medium")
+(let ((mono-spaced-font "Cascadia Code")
       (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
+  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
