@@ -1,4 +1,9 @@
+;;; package -- Personal Emacs Configuration
+;;; Commentary:
+
+;;; Code:
 (require 'package)
+
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
@@ -6,6 +11,14 @@
              '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
                (display-buffer-no-window)
                (allow-no-window . t)))
+
+
+;; make custom elisp code available
+(add-to-list 'load-path "~/.emacs.d/elisp")
+(require 'utilities)
+
+;; variables to toggle various groups of packages
+(defvar enable-evil t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GENERAL EMACS CONFIG ;;
@@ -47,7 +60,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "Cascadia Code")
+(let ((mono-spaced-font "JetBrains Mono")
       (proportionately-spaced-font "Inter"))
   (set-face-attribute 'default nil :family mono-spaced-font :height 130)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
@@ -62,7 +75,7 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'modus-operandi-tinted :no-confirm-loading))
+  (load-theme 'ef-bio :no-confirm-loading))
 
 (use-package multiple-cursors
   :ensure t
@@ -166,8 +179,10 @@
 
 ;; For better error/warning visualization
 (use-package flycheck
-  :diminish flycheck-mode)
-
+  :ensure t
+  :custom (flycheck-emacs-lisp-load-path 'inherit)
+  :diminish flycheck-mode
+  :config (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Completion and Navigation ;;
@@ -270,7 +285,7 @@
   (evil-mode 1)
 
   ;; Custom "jk" to escape insert mode
-  (define-key evil-insert-state-map (kbd "j") 
+  (define-key evil-insert-state-map (kbd "j")
 	      (lambda () (interactive)
 		(let ((next-key (read-event "j")))
 		  (if (and (characterp next-key) (char-equal next-key ?k))
@@ -291,6 +306,9 @@
 
 (use-package org
   :ensure nil ;; builtin
+  :bind (("C-c a" . org-agenda)
+	 ("C-c i l" . org-insert-formatted-link)
+	 ("C-c t l" . org-insert-file-task-list))
   :config
   ;; Basic settings
   (setq org-startup-indented t)                ;; Enable indent mode for cleaner visuals
@@ -304,8 +322,7 @@
   (setq org-default-notes-file "~/org/notes.org")
 
   ;; Agenda settings
-  (setq org-agenda-files (list "~/org/"))
-  (setq org-agenda-span 'week)                ;; Show a week in agenda view
+  (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
   (setq org-agenda-start-with-log-mode t)     ;; Show log mode by default in agenda
   )
 
@@ -332,3 +349,6 @@
 (global-set-key (kbd "M-p") 'scroll-down-command)
 
 (global-set-key (kbd "C-x q") #'query-replace)
+
+(provide 'init)
+;;; init.el ends here
