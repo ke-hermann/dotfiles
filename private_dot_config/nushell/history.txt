@@ -1,0 +1,30 @@
+rm history.txt
+config nu
+nvim config.nu
+exit
+nvi 
+nvim
+cd Downloads\
+ls
+cd
+cd .config\nushell\
+ls
+nvim config.nu
+ls
+cd Downloads\
+ls
+z 
+cd
+nvim .config\nvim\init.lua
+cd .config\nushell\
+ls
+nvim config.nu
+ls
+cd Dowls
+ls
+cd Downloads\
+ls
+cd Downloads\
+ls
+cd
+git add .config\nushell\
