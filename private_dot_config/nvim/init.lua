@@ -8,13 +8,12 @@ vim.o.swapfile = false
 vim.g.mapleader = " "
 vim.o.winborder = "rounded"
 vim.o.clipboard = "unnamedplus"
+vim.o.ignorecase = true
 
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
-
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
+vim.keymap.set('i', 'jk', '<Esc>')
 
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
@@ -23,6 +22,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
+	{ src = "https://github.com/mason-org/mason.nvim" },
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -40,14 +40,33 @@ require "nvim-treesitter.configs".setup({
 	ensure_installed = { "lua", "python", "clojure", "rust", "haskell", "cpp" },
 	highlight = { enable = true }
 })
+
 require "oil".setup()
 
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>b', ":Pick buffers<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
+vim.keymap.set('n', '<leader>g', ":Pick grep_live<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 vim.lsp.enable({ "lua_ls", "biome", "tinymist", "emmetls" })
 
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
+
+-- Enable LSP omni completion on buffer attach
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local bufnr = args.buf
+    -- Set omnifunc to use Neovim's built-in LSP completion
+    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  end,
+})
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
+-- LSP config
+vim.lsp.enable('pyright')
+vim.lsp.enable('lua-language-server')
+vim.lsp.enable('nushell')
+
+require("mason").setup()
