@@ -23,6 +23,7 @@ vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/OXY2DEV/markview.nvim" }
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -56,13 +57,13 @@ vim.cmd("colorscheme vague")
 
 -- Enable LSP omni completion on buffer attach
 vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local bufnr = args.buf
-    -- Set omnifunc to use Neovim's built-in LSP completion
-    vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
-  end,
+	callback = function(args)
+		local bufnr = args.buf
+		-- Set omnifunc to use Neovim's built-in LSP completion
+		vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+	end,
 })
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 -- LSP config
 vim.lsp.enable('pyright')

@@ -18,7 +18,7 @@
 (require 'utilities)
 
 ;; variables to toggle various groups of packages
-(defvar enable-evil t)
+(defvar evil-t -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GENERAL EMACS CONFIG ;;
@@ -72,10 +72,9 @@
 
 (use-package modus-themes)
 (use-package ef-themes)
-(use-package doom-themes
+(use-package doric-themes
   :ensure t
-  :config
-  (load-theme 'ef-bio :no-confirm-loading))
+  :config (load-theme 'doric-obsidian t))
 
 (use-package multiple-cursors
   :ensure t
@@ -282,7 +281,7 @@
   (setq evil-want-keybinding nil)      ; important for evil-collection
   (setq evil-want-C-u-scroll t)
   :config
-  (evil-mode 1)
+  (evil-mode evil-t)
 
   ;; Custom "jk" to escape insert mode
   (define-key evil-insert-state-map (kbd "j")
@@ -296,13 +295,13 @@
 (use-package evil-surround
   :ensure t
   :config
-  (global-evil-surround-mode 1))
+  (global-evil-surround-mode evil-t))
 
 ;; Evil Collection for better integration with other modes
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (when (> 0 evil-t) (evil-collection-init)))
 
 (use-package org
   :ensure nil ;; builtin
@@ -322,9 +321,7 @@
   (setq org-default-notes-file "~/org/notes.org")
 
   ;; Agenda settings
-  (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
-  (setq org-agenda-start-with-log-mode t)     ;; Show log mode by default in agenda
-  )
+  (setq org-agenda-files (directory-files-recursively "~/org/agenda" "\\.org$")))
 
 (use-package org-journal
   :ensure t
@@ -349,6 +346,7 @@
 (global-set-key (kbd "M-p") 'scroll-down-command)
 
 (global-set-key (kbd "C-x q") #'query-replace)
+(global-set-key (kbd "<f7>") #'menu-bar-mode)
 
 (provide 'init)
 ;;; init.el ends here

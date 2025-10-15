@@ -22,4 +22,12 @@
     (let ((dom (libxml-parse-html-region (point-min) (point-max))))
       (dom-text (dom-by-tag dom 'title)))))
 
+(defun org-insert-code-block ()
+  "Prompt for a programming LANGUAGE and insert an empty org-mode source code block."
+  (interactive)
+  (let ((lang (read-string "what language is the code written in? ")))
+    (insert (format "#+BEGIN_SRC %s\n\n#+END_SRC" lang)))
+  (forward-line 2))
+
+
 (provide 'utilities)
