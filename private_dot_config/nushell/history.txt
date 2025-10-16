@@ -499,3 +499,61 @@ nvim $nu.config-path
 config nu
 ls
 chezmoi.exe status
+chezmoi.exe re-add
+chezmoi.exe status
+cd .local\share\chezmoi\
+git status
+git add .
+git commit -m "some new updates"
+git push
+cd .emacs.d\
+zed init.el
+ls
+cd elpa\pdf-tools-20240429.407\
+ls
+cat README
+nvim README
+emacs -nw README
+LS
+EMACS -NW
+z server
+cd elpa\pdf-tools-20240429.407\
+cd .emacs.d\
+cd elpa\pdf-tools-20240429.407\
+ls
+cat README
+nvim README
+cd C:\bin
+ls
+.\epdfinfo.exe
+choco search poppler
+choco install poppler
+cd bin
+ls
+cd
+cd ~\bin
+ls
+cd C:/bin
+ls
+.\epdfinfo.exe
+cd C:/bin
+ls
+.\epdfinfo.exe
+cd tmp
+ls
+rm -rf helium\
+rm `Hollow Knight Silksong.7z`
+ls
+rm index.html@id=UBnn38urO
+ls
+nvim convert.py
+python convert.py
+ls
+ls notes\
+count
+length 
+ls notes | length
+python convert.py
+z chez
+ls
+git status

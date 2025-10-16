@@ -2,6 +2,15 @@
 ;;; Commentary:
 
 ;;; Code:
+
+███████╗███████╗████████╗██╗   ██╗██████╗ 
+██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗
+███████╗█████╗     ██║   ██║   ██║██████╔╝
+╚════██║██╔══╝     ██║   ██║   ██║██╔═══╝ 
+███████║███████╗   ██║   ╚██████╔╝██║     
+╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝     
+                                          
+
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -18,11 +27,15 @@
 (require 'utilities)
 
 ;; variables to toggle various groups of packages
-(defvar evil-t -1)
+(defvar evil-t +1)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GENERAL EMACS CONFIG ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+██████╗  █████╗ ███████╗██╗ ██████╗███████╗
+██╔══██╗██╔══██╗██╔════╝██║██╔════╝██╔════╝
+██████╔╝███████║███████╗██║██║     ███████╗
+██╔══██╗██╔══██║╚════██║██║██║     ╚════██║
+██████╔╝██║  ██║███████║██║╚██████╗███████║
+╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝╚══════╝
+                                           
 
 ;; hide unecessary warnings when compiling packages
 (add-to-list 'display-buffer-alist
@@ -66,18 +79,22 @@
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
-;;;;;;;;;;;;;;
-;; PACKAGES ;;
-;;;;;;;;;;;;;;
+██████╗  █████╗  ██████╗██╗  ██╗ █████╗  ██████╗ ███████╗███████╗
+██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔══██╗██╔════╝ ██╔════╝██╔════╝
+██████╔╝███████║██║     █████╔╝ ███████║██║  ███╗█████╗  ███████╗
+██╔═══╝ ██╔══██║██║     ██╔═██╗ ██╔══██║██║   ██║██╔══╝  ╚════██║
+██║     ██║  ██║╚██████╗██║  ██╗██║  ██║╚██████╔╝███████╗███████║
+╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝
+                                                                 
 
-(use-package modus-themes)
-(use-package ef-themes)
 (use-package doric-themes
   :ensure t
   :config (load-theme 'doric-obsidian t))
 
 (use-package multiple-cursors
   :ensure t
+  ;; not needed in vim mode
+  :disabled t
   :config
   (global-set-key (kbd "C-x m") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -183,9 +200,13 @@
   :diminish flycheck-mode
   :config (add-hook 'after-init-hook #'global-flycheck-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Completion and Navigation ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+██████╗ ██████╗ ███╗   ███╗██████╗ ██╗     ███████╗████████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║     ██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+██║     ██║   ██║██╔████╔██║██████╔╝██║     █████╗     ██║   ██║██║   ██║██╔██╗ ██║
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║     ██╔══╝     ██║   ██║██║   ██║██║╚██╗██║
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ███████╗███████╗   ██║   ██║╚██████╔╝██║ ╚████║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+                                                                                   
 
 ;; Enable vertico
 (use-package vertico
@@ -244,16 +265,6 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
-
-(use-package multiple-cursors
-  :ensure t
-  :disabled t
-  :config
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
-
 (use-package corfu
   :ensure t
   :init
@@ -270,9 +281,14 @@
   (corfu-preselect 'prompt)	    ;; Preselect the prompt
   (corfu-quit-no-match 'separator)) ;; Quit if no match after separator
 
-;;;;;;;;;;;;;;;;;;;;;;;;
-;; evil configuration ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
+
+███████╗██╗   ██╗██╗██╗     
+██╔════╝██║   ██║██║██║     
+█████╗  ██║   ██║██║██║     
+██╔══╝  ╚██╗ ██╔╝██║██║     
+███████╗ ╚████╔╝ ██║███████╗
+╚══════╝  ╚═══╝  ╚═╝╚══════╝
+                            
 
 ;; Install and configure Evil
 (use-package evil
@@ -301,33 +317,58 @@
 (use-package evil-collection
   :after evil
   :config
-  (when (> 0 evil-t) (evil-collection-init)))
+  (when (> evil-t 0) (evil-collection-init)))
+
+
+ ██████╗ ██████╗  ██████╗       ███╗   ███╗ ██████╗ ██████╗ ███████╗
+██╔═══██╗██╔══██╗██╔════╝       ████╗ ████║██╔═══██╗██╔══██╗██╔════╝
+██║   ██║██████╔╝██║  ███╗█████╗██╔████╔██║██║   ██║██║  ██║█████╗  
+██║   ██║██╔══██╗██║   ██║╚════╝██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  
+╚██████╔╝██║  ██║╚██████╔╝      ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗
+ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝       ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════
 
 (use-package org
   :ensure nil ;; builtin
   :bind (("C-c a" . org-agenda)
+	 ("C-c c". org-capture)
 	 ("C-c i l" . org-insert-formatted-link)
 	 ("C-c t l" . org-insert-file-task-list))
   :config
   ;; Basic settings
-  (setq org-startup-indented t)                ;; Enable indent mode for cleaner visuals
-  (setq org-startup-folded t)                  ;; Start with folded headings
-  (setq org-log-done 'time)                    ;; Log time when tasks are marked DONE
-  (setq org-hide-emphasis-markers t)           ;; Hide markup markers (e.g., *bold* -> bold)
-  (setq org-pretty-entities t)                 ;; Display entities like \alpha as symbols
+  (setq org-startup-indented t)	;; Enable indent mode for cleaner visuals
+  (setq org-startup-folded t)	;; Start with folded headings
+  (setq org-log-done 'time)	;; Log time when tasks are marked DONE
+  (setq org-hide-emphasis-markers t) ;; Hide markup markers (e.g., *bold* -> bold)
+  (setq org-pretty-entities t) ;; Display entities like \alpha as symbols
 
   ;; Default directory for Org files
   (setq org-directory "~/org/")
   (setq org-default-notes-file "~/org/notes.org")
+  ;; Org Capture Templates
+  (setq org-capture-templates
+	'(("t" "Todo" entry
+           (file+headline "~/org/todo.org" "Tasks")
+           "* TODO %?\n  %U\n  %a")
+          ("n" "Note" entry
+           (file+headline "~/org/atoms.org" "Notes")
+           "* %? :note:\n  %U\n  %a")
+          ("j" "Journal" entry
+           (file+datetree "~/org/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")))
 
   ;; Agenda settings
-  (setq org-agenda-files (directory-files-recursively "~/org/agenda" "\\.org$")))
+  (setq org-agenda-files '("~/org/agenda.org")))
 
-(use-package org-journal
+  (use-package org-journal
+    :ensure t
+    :custom
+    (org-journal-dir (file-truename "~/org/journals"))
+    (org-journal-file-format "%Y-%m-%d.org"))
+
+(use-package pdf-tools
   :ensure t
-  :custom
-  (org-journal-dir (file-truename "~/org/journals"))
-  (org-journal-file-format "%Y-%m-%d.org"))
+  :config
+  (setq pdf-info-epdfinfo-program "C:/bin/epdfinfo.exe"))
 
 ;; additional global keybindings
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
