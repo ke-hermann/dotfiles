@@ -557,3 +557,45 @@ python convert.py
 z chez
 ls
 git status
+chezmoi.exe re-add
+git status
+git add .
+zed .emacs.d\init.el
+ls
+sensors
+ls
+cd Downloads\
+ls
+cd
+ls
+rm vault-0.7z
+ls
+ls 
+cd Downloads\
+ls
+pandoc `Ambient music recommendations.md`-o `Ambient music recommendations.org`
+pandoc `Ambient music recommendations.md` -t `Ambient music recommendations.org`
+ls
+cd
+emacs -nw .config\nushell\env.nu
+cd
+cd Dow
+cd Downloads\
+ls
+pandoc `Ambient music recommendations.md` -o `Ambient music recommendations.org`
+ls
+mv `Ambient music recommendations.org` ~\org\notes\
+ls
+mv C:\bin\epdfinfo.exe ~\.emacs.d\elpa\pdf-tools-20240429.407\
+cd .emacs.d\elpa\pdf-tools-20240429.407\
+ls
+.\epdfinfo.exe
+choco list 
+choco list | grep zig
+choco list | rg zig
+choco list | rg mpc
+choco search mpc-hc
+choco install mpc-hc-clsid2
+cp ~\Downloads\openwith.el ~\.emacs.d\elisp\
+chezmoi.exe add ~\.emacs.d\elisp\
+chezmoi.exe status
