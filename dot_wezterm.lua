@@ -6,13 +6,13 @@ config.window_close_confirmation = "NeverPrompt"
 config.warn_about_missing_glyphs = false
 config.enable_wayland = false
 
-config.font = wezterm.font("JetBrains Mono")
+config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.color_scheme = "carbonfox"
 -- config.color_scheme = "Oxocarbon Dark (Gogh)"
 config.hide_tab_bar_if_only_one_tab = true
 config.font_size = 13
 
-config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = ";", mods = "CTRL", timeout_milliseconds = 1000 }
 
 -- Spawn powershell on windows
 if package.config:sub(1, 1) == "\\" then

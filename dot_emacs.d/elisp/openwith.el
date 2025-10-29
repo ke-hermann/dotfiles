@@ -26,9 +26,8 @@
         (openwith-open-file file)
       (message "No file at point"))))
 
-;;; Keybinding suggestion (uncomment to enable):
-;; (with-eval-after-load 'dired
-;;   (define-key dired-mode-map (kbd "C-c o") 'dired-openwith))
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c o") 'dired-openwith))
 
 (provide 'openwith)
 
