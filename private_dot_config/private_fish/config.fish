@@ -27,7 +27,7 @@ abbr -a pacfd 'sudo pacman -Ss'
 abbr -a gitscd 'git config credential.helper store'
 
 # aliases 
-alias ls='eza --long --header --icons --git'
+alias ls='lsd'
 alias temacs='emacs -nw'
 
 # customized prompt

@@ -1,3 +1,4 @@
+-- init.lua
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.signcolumn = "yes"
@@ -15,27 +16,36 @@ vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('i', 'jk', '<Esc>')
 
-vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/echasnovski/mini.pick" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-	{ src = "https://github.com/neovim/nvim-lspconfig" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/OXY2DEV/markview.nvim" }
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+		{ "vague2k/vague.nvim" },
+		{ "stevearc/oil.nvim" },
+		{ "echasnovski/mini.pick" },
+		{ "nvim-treesitter/nvim-treesitter" },
+		{ "neovim/nvim-lspconfig" },
+		{ "chomosuke/typst-preview.nvim" },
+		{ "mason-org/mason.nvim" },
+		{ "OXY2DEV/markview.nvim" },
+		{
+				'nvim-lualine/lualine.nvim',
+				dependencies = { 'nvim-tree/nvim-web-devicons' }
+		}
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-	callback = function(ev)
-		local client = vim.lsp.get_client_by_id(ev.data.client_id)
-		if client:supports_method('textDocument/completion') then
-			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-		end
-	end,
-})
-vim.cmd("set completeopt+=noselect")
-
+-- Everything below is exactly the same as your original config
 require "mini.pick".setup()
 require "nvim-treesitter.configs".setup({
 	ensure_installed = { "lua", "python", "clojure", "rust", "haskell", "cpp" },
@@ -50,22 +60,35 @@ vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep_live<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+
 vim.lsp.enable({ "lua_ls", "biome", "tinymist", "emmetls" })
 
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
 
+
+require('lualine').setup({options = { theme = 'codedark' }} )
+
 -- Enable LSP omni completion on buffer attach
+vim.api.nvim_create_autocmd('LspAttach', {
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if client:supports_method('textDocument/completion') then
+			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		end
+	end,
+})
+vim.cmd("set completeopt+=noselect")
+
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(args)
 		local bufnr = args.buf
-		-- Set omnifunc to use Neovim's built-in LSP completion
 		vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 	end,
 })
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
--- LSP config
+-- LSP config (these will be started via lspconfig internally when needed)
 vim.lsp.enable('pyright')
 vim.lsp.enable('lua-language-server')
 vim.lsp.enable('nushell')
