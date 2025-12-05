@@ -128,12 +128,6 @@
 (use-package nerd-icons
   :ensure t)
 
-(use-package nerd-icons-completion
-  :ensure t
-  :after marginalia
-  :config
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
 
 (use-package nerd-icons-dired
   :ensure t
@@ -185,9 +179,6 @@
   :config
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
-(use-package paredit
-  :hook ((emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode clojure-mode) . paredit-mode))
-
 (use-package go-mode
   :mode "\\.go\\'"
   :hook ((before-save . gofmt-before-save))
@@ -217,6 +208,7 @@
 
 ;; Enable vertico
 (use-package vertico
+  :ensure t
   :custom
   (enable-recursive-minibuffers t)
   (vertico-resize t)
@@ -224,12 +216,9 @@
   :init
   (vertico-mode +1))
 
-(use-package marginalia
-  :ensure t
-  :hook (after-init . marginalia-mode))
-
 ;; Example configuration for Consult
 (use-package consult
+  :ensure t
   :bind (("C-c M-x" . consult-mode-command)
 	 ("C-c h" . consult-history)
          ("C-x C-j" . consult-recent-file)
@@ -259,18 +248,28 @@
   (setq consult-narrow-key "<"))
 
 (use-package embark
+  :ensure t
   :bind
   (("C-," . embark-act)
    ("C-;" . embark-dwim)
    ("C-h B" . embark-bindings)))
 
 (use-package embark-consult
+  :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  :ensure t
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  ;; The :init section is always executed.
+  :init (marginalia-mode))
 
 (use-package corfu
   :ensure t
