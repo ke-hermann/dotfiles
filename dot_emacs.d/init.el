@@ -77,7 +77,7 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "JetBrains Mono")
+(let ((mono-spaced-font "Cascadia Code")
       (proportionately-spaced-font "Inter"))
   (set-face-attribute 'default nil :family mono-spaced-font :height 130)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
@@ -185,11 +185,19 @@
   :config
   (setq gofmt-command "goimports")) ;; Automatically fix imports too
 
+(use-package cider :ensure t)
+
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode #'paredit-mode))
+
 (use-package magit
   :commands (magit-status magit-get-current-branch)
   :bind ("C-x g" . magit-status))
 
-(use-package nov)
+(use-package nov
+  :ensure t)
 
 ;; For better error/warning visualization
 (use-package flycheck
@@ -298,21 +306,23 @@
 
 ;; Install and configure Evil
 (use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)      ; important for evil-collection
-  (setq evil-want-C-u-scroll t)
-  :config
-  (evil-mode evil-t)
+:ensure t
+:init
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)      ; important for evil-collection
+(setq evil-want-C-u-scroll t)
+(setq evil-undo-system 'undo-redo)
+:config
+(evil-mode evil-t)
 
-  ;; Custom "jk" to escape insert mode
-  (define-key evil-insert-state-map (kbd "j")
-	      (lambda () (interactive)
-		(let ((next-key (read-event "j")))
-		  (if (and (characterp next-key) (char-equal next-key ?k))
-		      (evil-normal-state)
-		    (insert "j")
-		    (setq unread-command-events (list next-key)))))))
+;; Custom "jk" to escape insert mode
+(define-key evil-insert-state-map (kbd "j")
+	    (lambda () (interactive)
+	      (let ((next-key (read-event "j")))
+		(if (and (characterp next-key) (char-equal next-key ?k))
+		    (evil-normal-state)
+		  (insert "j")
+		  (setq unread-command-events (list next-key)))))))
 
 (use-package evil-surround
   :ensure t
@@ -321,6 +331,7 @@
 
 ;; Evil Collection for better integration with other modes
 (use-package evil-collection
+  :ensure t
   :after evil
   :config
   (when (> evil-t 0) (evil-collection-init)))
