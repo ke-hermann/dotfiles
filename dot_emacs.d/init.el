@@ -24,6 +24,7 @@
 
 ;; make custom elisp code available
 (add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/themes")
 (require 'utilities)
 (require 'openwith)
 
@@ -95,8 +96,11 @@
 
 
 (use-package doric-themes
+  :ensure t)
+
+(use-package gruvbox
   :ensure t
-  :config (load-theme 'doric-obsidian t))
+  :config (load-theme 'gruvbox-light-soft t))
 
 (use-package multiple-cursors
   :ensure t

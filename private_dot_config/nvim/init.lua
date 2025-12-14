@@ -86,11 +86,7 @@ require("lazy").setup({
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		opts = {},
 		keys = {
 			{
 				"<leader>?",
@@ -101,15 +97,12 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, opts = ..., },
-	{ "folke/neodev.nvim",        opts = {} }
+	{ "folke/neodev.nvim",        opts = {} },
+	{ "nyoom-engineering/oxocarbon.nvim" }
 })
 
-vim.o.background = "light"
-require("gruvbox").setup({
-	contrast = "soft", -- can be "hard", "soft" or empty string
-})
-vim.cmd("colorscheme gruvbox")
+vim.opt.background = "dark" -- set this to dark or light
+vim.cmd.colorscheme "oxocarbon"
 
 -- Everything below is exactly the same as your original config
 require "mini.pick".setup()
@@ -118,18 +111,21 @@ require "nvim-treesitter.configs".setup({
 	highlight = { enable = true }
 })
 
-require "oil".setup()
-
+-- Pick keybindings
+vim.keymap.set('n', '<leader><leader>', ":Pick buffers<CR>")
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
-vim.keymap.set('n', '<leader>b', ":Pick buffers<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 vim.keymap.set('n', '<leader>g', ":Pick grep_live<CR>")
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 
+-- LSP settings
 vim.lsp.enable({ "lua_ls", "pyright" })
 
-require('lualine').setup({ options = { theme = 'gruvbox' } })
+require('lualine').setup({ options = { theme = 'oxocarbon' } })
+
+-- File Manager with a vim flair
+require "oil".setup()
 
 -- Enable LSP omni completion on buffer attach
 vim.api.nvim_create_autocmd('LspAttach', {
