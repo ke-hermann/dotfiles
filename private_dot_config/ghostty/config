@@ -1,0 +1,12 @@
+theme = TokyoNight Night
+font-family = Cascadia Code
+font-size = 13
+
+# create new splits
+keybind = ctrl+q>v=new_split:right
+keybind = ctrl+q>h=new_split:down
+# split movement
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = alt+j=goto_split:bottom
+keybind = alt+k=goto_split:top
