@@ -97,12 +97,21 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ "folke/neodev.nvim",        opts = {} },
-	{ "nyoom-engineering/oxocarbon.nvim" }
+	{ "folke/neodev.nvim",               opts = {} },
+	{ "nyoom-engineering/oxocarbon.nvim" },
+	{ "EdenEast/nightfox.nvim" },
+	  {
+      'sainnhe/everforest',
+      lazy = false,
+      priority = 1000,
+      config = function()
+        -- Optionally configure and load the colorscheme
+        -- directly inside the plugin declaration.
+        vim.g.everforest_enable_italic = true
+        vim.cmd.colorscheme('everforest')
+      end
+    },
 })
-
-vim.opt.background = "dark" -- set this to dark or light
-vim.cmd.colorscheme "oxocarbon"
 
 -- Everything below is exactly the same as your original config
 require "mini.pick".setup()
