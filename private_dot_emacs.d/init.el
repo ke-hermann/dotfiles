@@ -37,24 +37,30 @@
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
 ;; Packages
-(use-package doric-themes :ensure t)
-(use-package modus-themes :ensure t)
-(use-package ef-themes :ensure t)
+(use-package doric-themes)
 
-(load-theme 'ef-bio t)
+(use-package ef-themes
+  :ensure t
+  :config (load-theme 'ef-dark t))
 
 (use-package whole-line-or-region
   :ensure t
   :config (whole-line-or-region-global-mode +1))
 
+(use-package nov
+  :ensure t)
+
+;; helpful completion suggestions
+(which-key-mode +1)
+
 ;; code from /lisp dir
 (load-file "~/.emacs.d/lisp/completion.el") ;; completion: VOMCECC
 (load-file "~/.emacs.d/lisp/lisp-stack.el") ;; lisp editing
-(load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
+;; (load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
 
 ;; Keybindings
 ;; additional global keybindings
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
+; (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
 (global-set-key (kbd "M-i") 'imenu)
 (global-set-key (kbd "M-o") 'other-window)
