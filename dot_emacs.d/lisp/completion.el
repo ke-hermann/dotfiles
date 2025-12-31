@@ -40,9 +40,17 @@
 
 (use-package consult
   :ensure t
-  :bind (("C-s"   . consult-line)
-         ("C-x b" . consult-buffer)
-         ("M-y"   . consult-yank-pop)))
+  :bind
+  (
+    ("M-s l"   . consult-line)
+    ("C-x b" . consult-buffer)
+    ("C-x r b" . consult-bookmark) ;; orig. bookmark-jump
+    ("M-y"   . consult-yank-pop)
+    ("C-c i" . consult-info)
+    ("C-c f" . consult-fd)
+    ("C-c g" . consult-ripgrep)
+    ("C-c l" . consult-locate)
+    ))
 
 ;;; --------------------
 ;;; Embark
@@ -51,8 +59,8 @@
 (use-package embark
   :ensure t
   :bind (("C-."   . embark-act)
-         ("C-;"   . embark-dwim)
-         ("C-h B" . embark-bindings))
+          ("C-;"   . embark-dwim)
+          ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command))
 

@@ -48,11 +48,11 @@
 ;; code from /lisp dir
 (load-file "~/.emacs.d/lisp/completion.el") ;; completion: VOMCECC
 (load-file "~/.emacs.d/lisp/lisp-stack.el") ;; lisp editing
-(load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
+;; (load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
 
 ;; Keybindings
 ;; additional global keybindings
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
+; (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
 (global-set-key (kbd "M-i") 'imenu)
 (global-set-key (kbd "M-o") 'other-window)
