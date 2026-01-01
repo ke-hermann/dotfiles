@@ -26,22 +26,15 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-(setq custom-file (make-temp-file "emacs-custom"))
+(setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "Cascadia Code")
-      (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
-  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
 
 ;; Packages
 (use-package doric-themes)
 
-(use-package ef-themes
-  :ensure t
-  :config (load-theme 'ef-dark t))
+(use-package ef-themes)
 
 (use-package whole-line-or-region
   :ensure t
@@ -78,15 +71,3 @@
 (global-set-key (kbd "C-x q") #'query-replace)
 (global-set-key (kbd "<f7>") #'menu-bar-mode)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(company company-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
