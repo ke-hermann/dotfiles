@@ -1,0 +1,53 @@
+# Alacritty configuration
+# Save to ~/.config/alacritty/alacritty.toml
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "Bold Italic"
+
+# Oxocarbon theme
+[colors.primary]
+background = "#161616"
+foreground = "#f2f4f8"
+
+[colors.normal]
+black = "#262626"
+red = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffab91"
+blue = "#33b1ff"
+magenta = "#ee5396"
+cyan = "#3ddbd9"
+white = "#dde1e6"
+
+[colors.bright]
+black = "#393939"
+red = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffab91"
+blue = "#33b1ff"
+magenta = "#ee5396"
+cyan = "#3ddbd9"
+white = "#ffffff"
+
+[window]
+opacity = 0.95
+padding = { x = 5, y = 5 }
+
+[cursor]
+style = "Block"
