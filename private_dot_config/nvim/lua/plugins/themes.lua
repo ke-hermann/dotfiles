@@ -4,11 +4,12 @@ return {
 
 	},
 	{
-		"nyoom-engineering/oxocarbon.nvim" ,
 
+		"rose-pine/neovim",
+		name = "rose-pine",
 		config = function()
 			vim.opt.background = "dark" -- set this to dark or light
-			vim.cmd[[colorscheme oxocarbon]]
+			vim.cmd("colorscheme rose-pine")
 			-- Make Neovim background transparent
 			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
