@@ -46,7 +46,7 @@ cyan = "#3ddbd9"
 white = "#ffffff"
 
 [window]
-opacity = 0.95
+opacity = 0.97
 padding = { x = 5, y = 5 }
 
 [cursor]

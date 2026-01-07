@@ -49,7 +49,7 @@
 ;; code from /lisp dir
 (load-file "~/.emacs.d/lisp/completion.el") ;; completion: VOMCECC
 (load-file "~/.emacs.d/lisp/lisp-stack.el") ;; lisp editing
-(load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
+;; (load-file "~/.emacs.d/lisp/vim-stack.el") ;; vim support
 
 ;; Keybindings
 ;; additional global keybindings
