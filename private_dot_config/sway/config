@@ -114,19 +114,24 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
+
+## classic bar, for now obsolete as long as waybar is installed
 # Status Bar
-bar {
-    position top
-    status_command while date +'%Y-%m-%d'; do sleep 1; done
+# bar {
+#     position top
+#     status_command while date +'%Y-%m-%d'; do sleep 1; done
     
-    colors {
-	statusline #ffffff
-	background #181818
-	inactive_workspace #181818 #181818 #888888
-	active_workspace #181818 #d4b896 #181818
-	focused_workspace #181818 #d4b896 #181818   
-    }
-}
+#     colors {
+# 	statusline #ffffff
+# 	background #181818
+# 	inactive_workspace #181818 #181818 #888888
+# 	active_workspace #181818 #d4b896 #181818
+# 	focused_workspace #181818 #d4b896 #181818   
+#     }
+# }
+
+exec waybar
 
 # friendlier colours at night
 exec wlsunset -s 06:00 -S 17:00

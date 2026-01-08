@@ -1,0 +1,70 @@
+* {
+    /* Global settings */
+    border: none;
+    border-radius: 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    padding: 0 6px;
+    margin: 1px 1px;
+}
+
+window#waybar {
+    background: rgba(25, 23, 36, 1); /* Dark navy-gray with transparency */
+    color: #cdd6f4; /* Soft light text */
+    transition: background 0.3s;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    background: transparent;
+    color: #cdd6f4;
+}
+
+#workspaces button.focused {
+    background: #89b4fa; /* Soft blue accent */
+    color: #1e1e2e;
+    border-radius: 12px;
+}
+
+#workspaces button.urgent {
+    background: #f38ba8; /* Pinkish red for urgency */
+    color: #1e1e2e;
+}
+
+#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #tray, #mode, #custom-power {
+    background: rgba(49, 50, 68, 0.6); /* Slightly lighter module background */
+    color: #cdd6f4;
+    border-radius: 12px;
+    padding: 0 5px;
+    margin: 2px 3px;
+}
+
+#battery.warning {
+    background: #f9e2af;
+    color: #1e1e2e;
+}
+
+#battery.critical {
+    background: #f38ba8;
+    color: #1e1e2e;
+}
+
+#network.disconnected {
+    background: #eba0ac;
+    color: #1e1e2e;
+}
+
+#pulseaudio.muted {
+    background: #94e2d5;
+    color: #1e1e2e;
+}
+
+#tray {
+    padding: 0 12px;
+}
+
+tooltip {
+    background: #1e1e2e;
+    border: 1px solid #89b4fa;
+    border-radius: 12px;
+}

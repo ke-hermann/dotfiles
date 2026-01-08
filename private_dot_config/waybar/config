@@ -1,0 +1,36 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["sway/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "battery",
+    "custom/tray"
+  ],
+
+  "tray": {
+    "max-icon-size": 20
+  },
+
+  "network": {
+    "interface": "wlan0",     // adjust for your wireless interface
+    "format-connected": " {essid} ({signalStrength}%)",
+    "format-disconnected": ""
+  },
+
+  "pulseaudio": {
+    "format-volume": " {volume}%",
+    "format-muted": " muted"
+  },
+
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": " {capacity}%"
+  },
+
+  "clock": {
+    "format": " {:%Y:%m:%d}"
+  }
+}
