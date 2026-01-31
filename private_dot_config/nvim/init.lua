@@ -1,4 +1,4 @@
 require("base")
 require("config.lazy")
 
-vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme "oxocarbon"
