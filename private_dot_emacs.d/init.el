@@ -27,12 +27,6 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "Source Code Pro Medium")
-      (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
-  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
-
 ;; helpful completion suggestions
 (which-key-mode +1)
 
@@ -51,6 +45,9 @@
   :config (whole-line-or-region-global-mode +1))
 
 (use-package nov
+  :ensure t)
+
+(use-package magit
   :ensure t)
 
 ;; Vertico: minibuffer completion UI
@@ -172,6 +169,31 @@
 (with-eval-after-load 'evil
   (define-key evil-insert-state-map (kbd "j k") 'evil-normal-state))
 
+;; Programming Configuration
+(use-package paredit
+  :ensure t
+  :commands paredit-mode
+  :hook
+  (emacs-lisp-mode . paredit-mode))
+
+(use-package enhanced-evil-paredit
+  :ensure t
+  :commands enhanced-evil-paredit-mode
+  :hook (paredit-mode . enhanced-evil-paredit-mode))
+
+(use-package python-mode
+  :ensure t)
+
+(use-package zig-mode
+  :mode "\\.zig\\'")
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(zig-mode . ("zls"))))
+
+(use-package eglot
+  :ensure nil
+  :hook ((python-mode zig-mode) . eglot-ensure))
 
 ;; Keybindings
 ;; additional global keybindings
