@@ -77,7 +77,15 @@
   :ensure t
   :bind (("C-x b" . consult-buffer)
          ("M-y"   . consult-yank-pop)
-         ("C-s"   . consult-line)))
+	 ("C-c h" . consult-history)
+	 ("C-c m" . consult-man)
+	 ("C-c i" . consult-info)
+	 ([remap Info-search] . consult-info)
+	 ("C-x r b" . consult-bookmark)
+	 ("M-s r" . consult-ripgrep)
+	 ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+	 ("C-x p b" . consult-project-buffer)))
 
 ;; Corfu: completion popup
 (use-package corfu
@@ -158,6 +166,7 @@
 
 (use-package evil
   :ensure t
+  :disabled t
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -168,6 +177,7 @@
 
 (use-package evil-collection
   :ensure t
+  :disabled t
   :after evil
   :config
   (evil-collection-init))
@@ -197,6 +207,7 @@
 (use-package eglot
   :ensure nil
   :hook ((python-mode zig-mode) . eglot-ensure))
+
 
 ;; Keybindings
 ;; additional global keybindings
