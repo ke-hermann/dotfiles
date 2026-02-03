@@ -37,9 +37,8 @@
 ;; Packages
 (use-package doric-themes  :ensure t)
 (use-package ef-themes :ensure t)
-(use-package modus-themes
-  :ensure t
-  :config (load-theme 'modus-vivendi t))
+(use-package modus-themes :ensure t)
+(use-package solarized-theme :ensure t)
 
 (use-package whole-line-or-region
   :ensure t
@@ -185,6 +184,7 @@
 ;; Programming Configuration
 (use-package paredit
   :ensure t
+  :disabled t
   :commands paredit-mode
   :hook
   (emacs-lisp-mode . paredit-mode))
