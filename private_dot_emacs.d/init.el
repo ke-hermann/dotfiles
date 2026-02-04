@@ -2,43 +2,83 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; general UX settings
-(setq ring-bell-function #'ignore)
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq vc-follow-symlinks t)
-
-(electric-pair-mode +1)
-
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-
-(setq display-line-numbers-type 'relative)
-;; history
-(recentf-mode 1)
-
-;; automatically update buffers
-(global-auto-revert-mode +1)
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; helpful completion suggestions
-(which-key-mode +1)
-
 ;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;; (load-theme 'oxocarbon t)
 
 ;; Packages
+(use-package emacs
+  :custom
+  ;; Still needed for terminals
+  (menu-bar-mode nil)         ;; Disable the menu bar
+  (scroll-bar-mode nil)       ;; Disable the scroll bar
+  (tool-bar-mode nil)         ;; Disable the tool bar
+
+  ;;(inhibit-startup-screen t)  ;; Disable welcome screen
+
+  (delete-selection-mode t)   ;; Select text and delete it by typing.
+  (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
+  (electric-pair-mode t)      ;; Turns on automatic parens pairing
+
+  (blink-cursor-mode nil)     ;; Don't blink cursor
+  (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
+  ;; (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
+
+  ;;(dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
+  ;;(recentf-mode t) ;; Enable recent file mode
+
+  ;;(global-visual-line-mode t)           ;; Enable line wrapping (NOTE: breaks vundo)
+  (global-display-line-numbers-mode t)  ;; Display line numbers
+  ;;(display-line-numbers-type 'relative) ;; Relative line numbers
+  (global-hl-line-mode t)               ;; Highlight current line
+
+  (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
+  (warning-minimum-level :error) ;; Only show errors in warnings buffer
+
+  (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
+  (scroll-conservatively 10) ;; Smooth scrolling
+  (scroll-margin 8)
+
+  ;; (pixel-scroll-precision-mode t) ;; Precise pixel scrolling. i.e. smooth scrolling (GUI only)
+  ;; (pixel-scroll-precision-use-momentum nil)
+
+  (indent-tabs-mode nil) ;; Only use spaces for indentation
+  (tab-width 4)
+  (sgml-basic-offset 4) ;; Set Html mode indentation to 4
+  (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
+  (go-ts-mode-indent-offset 4) ;; Fix weird indentation in go-ts
+
+  ;; (display-fill-column-indicator-column 80) ;; Set line length indicator to 80 characters
+  (whitespace-style '(face tabs tab-mark trailing))
+
+  (make-backup-files nil) ;; Stop creating ~ backup files
+  (auto-save-default nil) ;; Stop creating # auto save files
+  (delete-by-moving-to-trash t)
+  :hook
+  (prog-mode . hs-minor-mode) ;; Enable folding hide/show globally
+  ;; (prog-mode . display-fill-column-indicator-mode) ;; Display line length indicator
+  (prog-mode . whitespace-mode)
+  :config
+  ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
+  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+  (load custom-file 'noerror 'nomessage)
+  :bind (
+         ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
+         ;; Zooming In/Out
+         ("C-+" . text-scale-increase)
+         ("C--" . text-scale-decrease)
+         ("<C-wheel-up>" . text-scale-increase)
+         ("<C-wheel-down>" . text-scale-decrease)
+         ))
+
 (use-package doric-themes  :ensure t)
 (use-package ef-themes :ensure t)
-(use-package modus-themes :ensure t)
-(use-package solarized-theme :ensure t)
+(use-package modus-themes
+  :ensure t)
 
 (use-package whole-line-or-region
   :ensure t
@@ -79,6 +119,7 @@
 	 ("C-c h" . consult-history)
 	 ("C-c m" . consult-man)
 	 ("C-c i" . consult-info)
+	 ("C-c f" . consult-fd)
 	 ([remap Info-search] . consult-info)
 	 ("C-x r b" . consult-bookmark)
 	 ("M-s r" . consult-ripgrep)
@@ -184,7 +225,6 @@
 ;; Programming Configuration
 (use-package paredit
   :ensure t
-  :disabled t
   :commands paredit-mode
   :hook
   (emacs-lisp-mode . paredit-mode))
@@ -208,6 +248,24 @@
   :ensure nil
   :hook ((python-mode zig-mode) . eglot-ensure))
 
+(use-package empv
+  :ensure t
+  :config
+  (setq empv-video-dir "D:/Videos"))
+
+(use-package which-key
+  :ensure nil ;; Don't install which-key because it's now built-in
+  :hook (after-init . which-key-mode)
+  :diminish
+  :custom
+  (which-key-side-window-location 'bottom)
+  (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
+  (which-key-sort-uppercase-first nil)
+  (which-key-add-column-padding 1) ;; Number of spaces to add to the left of each column
+  (which-key-min-display-lines 6)  ;; Increase the minimum lines to display because the default is only 1
+  (which-key-idle-delay 0.8)       ;; Set the time delay (in seconds) for the which-key popup to appear
+  (which-key-max-description-length 25)
+  (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
 
 ;; Keybindings
 ;; additional global keybindings
@@ -220,7 +278,6 @@
 (global-set-key (kbd "M-[") 'tab-bar-history-back)
 (global-set-key (kbd "M-]") 'tab-bar-history-forward)
 
-(global-set-key (kbd "M-S-z") 'zap-up-to-char)
 (global-set-key (kbd "C-x C-r") 'recentf)
 
 (global-set-key (kbd "M-n") 'scroll-up-command)
