@@ -75,6 +75,20 @@
          ("<C-wheel-down>" . text-scale-decrease)
          ))
 
+(use-package doom-modeline
+  :ensure t
+  :custom
+  (doom-modeline-height 25) ;; Set modeline height
+  :hook (after-init . doom-modeline-mode))
+
+(use-package nerd-icons :defer)
+
+(use-package nerd-icons-dired
+  :hook (dired-mode . nerd-icons-dired-mode))
+
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
 (use-package doric-themes  :ensure t)
 (use-package ef-themes :ensure t)
 (use-package modus-themes
@@ -116,16 +130,16 @@
   :ensure t
   :bind (("C-x b" . consult-buffer)
          ("M-y"   . consult-yank-pop)
-	 ("C-c h" . consult-history)
-	 ("C-c m" . consult-man)
-	 ("C-c i" . consult-info)
-	 ("C-c f" . consult-fd)
-	 ([remap Info-search] . consult-info)
-	 ("C-x r b" . consult-bookmark)
-	 ("M-s r" . consult-ripgrep)
-	 ("M-s l" . consult-line)
+         ("C-c h" . consult-history)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ("C-c f" . consult-fd)
+         ([remap Info-search] . consult-info)
+         ("C-x r b" . consult-bookmark)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi)
-	 ("C-x p b" . consult-project-buffer)))
+         ("C-x p b" . consult-project-buffer)))
 
 ;; Corfu: completion popup
 (use-package corfu
