@@ -1,14 +1,36 @@
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
 
+(let ((mono-spaced-font "Cascadia Code")
+      (proportionately-spaced-font "Inter"))
+  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
+
+
 ;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Packages
 (use-package emacs
@@ -18,7 +40,9 @@
   (scroll-bar-mode nil)       ;; Disable the scroll bar
   (tool-bar-mode nil)         ;; Disable the tool bar
 
-  ;;(inhibit-startup-screen t)  ;; Disable welcome screen
+  (ring-bell-function 'ignore) ;; turn the obnoxious bell off
+
+  (inhibit-startup-screen t)  ;; Disable welcome screen
 
   (delete-selection-mode t)   ;; Select text and delete it by typing.
   (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
@@ -89,10 +113,12 @@
 (use-package nerd-icons-ibuffer
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
-(use-package doric-themes  :ensure t)
 (use-package ef-themes :ensure t)
-(use-package modus-themes
-  :ensure t)
+(use-package doric-themes :ensure t)
+
+(use-package solarized-theme
+  :ensure t
+  :config (load-theme 'solarized-dark t))
 
 (use-package whole-line-or-region
   :ensure t
@@ -177,13 +203,17 @@
   (setq prefix-help-command #'embark-prefix-help-command))
 
 
-(setq denote-directory (expand-file-name "~/Documents/notes/"))
+(setq denote-directory (expand-file-name "~/Documents/notes"))
 ;; helper function to search notes with consult given that
 ;; the denote builtin grep command does not work on windows
 ;; due to `xargs' dependencies
 (defun denote-ripgrep ()
   (interactive)
   (consult-ripgrep denote-directory))
+;; same for `denote-dired'
+(defun denote-fd ()
+  (interactive)
+  (consult-fd denote-directory))
 
 (use-package denote
   :ensure t
@@ -194,7 +224,8 @@
    ("C-c n l" . denote-link)
    ("C-c n b" . denote-backlinks)
    ("C-c n d" . denote-dired)
-   ("C-c n g" . denote-ripgrep))
+   ("C-c n g" . denote-ripgrep)
+   ("C-c n f" . denote-fd))
   :config
   ;; Automatically shorten Denote buffers names
   (denote-rename-buffer-mode 1))
@@ -220,18 +251,17 @@
 
 (use-package evil
   :ensure t
-  :disabled t
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
+  :custom
+  (evil-want-integration t)
+  (evil-want-keybinding nil)
+  (evil-want-C-u-scroll t)
+  (evil-want-C-i-jump nil)
+  (evil-undo-system 'undo-redo)
   :config
   (evil-mode 1))
 
 (use-package evil-collection
   :ensure t
-  :disabled t
   :after evil
   :config
   (evil-collection-init))
@@ -242,6 +272,13 @@
   :commands paredit-mode
   :hook
   (emacs-lisp-mode . paredit-mode))
+
+(use-package magit
+  :defer
+  :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
+  :config
+  (setopt magit-format-file-function #'magit-format-file-nerd-icons) ;; Magit nerd icons
+  )
 
 (use-package enhanced-evil-paredit
   :ensure t
@@ -285,12 +322,8 @@
 ;; additional global keybindings
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
-(global-set-key (kbd "M-i") 'imenu)
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key [remap cycle-spacing] 'just-one-space)
-
-(global-set-key (kbd "M-[") 'tab-bar-history-back)
-(global-set-key (kbd "M-]") 'tab-bar-history-forward)
 
 (global-set-key (kbd "C-x C-r") 'recentf)
 
