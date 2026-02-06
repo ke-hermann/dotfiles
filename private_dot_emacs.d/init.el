@@ -99,6 +99,11 @@
          ("<C-wheel-down>" . text-scale-decrease)
          ))
 
+(use-package org-modern
+  :ensure t
+  :config
+  (global-org-modern-mode))
+
 (use-package doom-modeline
   :ensure t
   :custom
