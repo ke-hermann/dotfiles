@@ -25,7 +25,7 @@ end
 
 -- Use CTRL+W as a "leader" key, similar to Vim
 config.leader = {
-  key = 'w',
+  key = 'x',
   mods = 'CTRL',
   timeout_milliseconds = 1000,
 }
@@ -36,8 +36,8 @@ local function map(mods, key, action)
 end
 
 -- splits
-map('LEADER', 'v', act.SplitHorizontal { domain = 'CurrentPaneDomain' })
-map('LEADER', 's', act.SplitVertical { domain = 'CurrentPaneDomain' })
+map('LEADER', '3', act.SplitHorizontal { domain = 'CurrentPaneDomain' })
+map('LEADER', '2', act.SplitVertical { domain = 'CurrentPaneDomain' })
 -- Vim-style pane navigation with Alt+h/j/k/l
 map('ALT', 'h', act.ActivatePaneDirection 'Left')
 map('ALT', 'j', act.ActivatePaneDirection 'Down')

@@ -18,11 +18,6 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-;; custom file setup
-(setq custom-file "~/.emacs.d/custom.el")
-(when (file-exists-p custom-file)
-  (load custom-file))
-
 ;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -56,37 +51,27 @@
   (inhibit-startup-screen t)  ;; Disable welcome screen
 
   (delete-selection-mode t)   ;; Select text and delete it by typing.
-  (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
+  (electric-indent-mode t)  ;; Turn off the weird indenting that Emacs does by default.
   (electric-pair-mode t)      ;; Turns on automatic parens pairing
 
   (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
-  ;; (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
+  (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
 
-  ;;(dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
-  ;;(recentf-mode t) ;; Enable recent file mode
+  (recentf-mode t) ;; Enable recent file mode
 
-  ;;(global-visual-line-mode t)           ;; Enable line wrapping (NOTE: breaks vundo)
   (global-display-line-numbers-mode t)  ;; Display line numbers
-  ;;(display-line-numbers-type 'relative) ;; Relative line numbers
   (global-hl-line-mode t)               ;; Highlight current line
 
   (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
   (warning-minimum-level :error) ;; Only show errors in warnings buffer
 
-  (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
   (scroll-conservatively 10) ;; Smooth scrolling
   (scroll-margin 8)
 
-  ;; (pixel-scroll-precision-mode t) ;; Precise pixel scrolling. i.e. smooth scrolling (GUI only)
-  ;; (pixel-scroll-precision-use-momentum nil)
 
   (indent-tabs-mode nil) ;; Only use spaces for indentation
   (tab-width 4)
-  (sgml-basic-offset 4) ;; Set Html mode indentation to 4
-  (c-ts-mode-indent-offset 4) ;; Fix weird indentation in c-ts (C, C++)
-  (go-ts-mode-indent-offset 4) ;; Fix weird indentation in go-ts
 
-  ;; (display-fill-column-indicator-column 80) ;; Set line length indicator to 80 characters
   (whitespace-style '(face tabs tab-mark trailing))
 
   (make-backup-files nil) ;; Stop creating ~ backup files
