@@ -14,23 +14,34 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; integrate straight.el and use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
+;; custom file setup
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
 
-(let ((mono-spaced-font "Cascadia Code")
-      (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 130)
-  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
-
-
 ;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+;; custom configuration variables and settings
+(defvar my-theme-idx 0)
+
+(defcustom my-theme-candidates
+  '(doric-wind doric-water doric-obsidian)
+  "selection of themes to cycle through")
+
+(defvar config-evil-enabled nil)
+
+;; font settings
+(let ((mono-spaced-font "CaskaydiaCove NF")
+      (proportionately-spaced-font "Inter"))
+  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
+
 
 ;; Packages
 (use-package emacs
@@ -48,7 +59,6 @@
   (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
   (electric-pair-mode t)      ;; Turns on automatic parens pairing
 
-  (blink-cursor-mode nil)     ;; Don't blink cursor
   (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
   ;; (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
 
@@ -118,12 +128,27 @@
 (use-package nerd-icons-ibuffer
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
-(use-package ef-themes :ensure t)
-(use-package doric-themes :ensure t)
-
 (use-package solarized-theme
+  :ensure t)
+
+(use-package doric-themes
+  :ensure t)
+
+(use-package ef-themes
   :ensure t
-  :config (load-theme 'solarized-dark t))
+  :config (load-theme 'ef-spring t))
+
+(use-package pulsar
+  :ensure t
+  :bind
+  ( :map global-map
+    ("C-x l" . pulsar-pulse-line) ; overrides `count-lines-page'
+    ("C-x L" . pulsar-highlight-permanently-dwim)) ; or use `pulsar-highlight-temporarily-dwim'
+  :init
+  (pulsar-global-mode 1)
+  :config
+  (setq pulsar-delay 0.055)
+  (setq pulsar-iterations 5))
 
 (use-package whole-line-or-region
   :ensure t
@@ -256,6 +281,7 @@
 
 (use-package evil
   :ensure t
+  :if config-evil-enabled
   :custom
   (evil-want-integration t)
   (evil-want-keybinding nil)
@@ -267,6 +293,7 @@
 
 (use-package evil-collection
   :ensure t
+  :if config-evil-enabled
   :after evil
   :config
   (evil-collection-init))
@@ -287,10 +314,14 @@
 
 (use-package enhanced-evil-paredit
   :ensure t
+  :if config-evil-enabled
   :commands enhanced-evil-paredit-mode
   :hook (paredit-mode . enhanced-evil-paredit-mode))
 
 (use-package python-mode
+  :ensure t)
+
+(use-package lua-mode
   :ensure t)
 
 (use-package zig-mode
@@ -323,6 +354,13 @@
   (which-key-max-description-length 25)
   (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
 
+;; theme switching
+
+(defun cycle-theme-selection ()
+  (interactive)
+  (consult-theme (nth my-theme-idx my-theme-candidates))
+  (setq my-theme-idx (mod (+ 1 my-theme-idx) (length my-theme-candidates))))
+
 ;; Keybindings
 ;; additional global keybindings
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
@@ -337,3 +375,5 @@
 
 (global-set-key (kbd "C-x q") #'query-replace)
 (global-set-key (kbd "<f7>") #'menu-bar-mode)
+(global-set-key (kbd "<f9>") #'cycle-theme-selection)
+
