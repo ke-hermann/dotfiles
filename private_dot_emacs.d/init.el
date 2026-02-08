@@ -1,22 +1,7 @@
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(require 'package)
+(package-initialize)
 
-;; integrate straight.el and use-package
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; custom themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -25,7 +10,7 @@
 (defvar my-theme-idx 0)
 
 (defcustom my-theme-candidates
-  '(doric-wind doric-water doric-obsidian)
+  '(doric-wind doric-water ef-spring solarized-dark solarized-light)
   "selection of themes to cycle through")
 
 (defvar config-evil-enabled nil)
@@ -65,10 +50,6 @@
   (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
   (warning-minimum-level :error) ;; Only show errors in warnings buffer
 
-  (scroll-conservatively 10) ;; Smooth scrolling
-  (scroll-margin 8)
-
-
   (indent-tabs-mode nil) ;; Only use spaces for indentation
   (tab-width 4)
 
@@ -94,6 +75,11 @@
          ("<C-wheel-down>" . text-scale-decrease)
          ))
 
+;; themes
+(use-package solarized-theme :ensure t)
+(use-package doric-themes :ensure t)
+(use-package ef-themes :ensure t)
+
 (use-package org-modern
   :ensure t
   :config
@@ -105,23 +91,15 @@
   (doom-modeline-height 25) ;; Set modeline height
   :hook (after-init . doom-modeline-mode))
 
-(use-package nerd-icons :defer)
+(use-package nerd-icons :ensure t)
 
 (use-package nerd-icons-dired
+  :ensure t
   :hook (dired-mode . nerd-icons-dired-mode))
 
 (use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
-
-(use-package solarized-theme
-  :ensure t)
-
-(use-package doric-themes
-  :ensure t)
-
-(use-package ef-themes
   :ensure t
-  :config (load-theme 'ef-spring t))
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
 (use-package pulsar
   :ensure t
@@ -216,6 +194,8 @@
   :init
   ;; Replace the default help with Embark
   (setq prefix-help-command #'embark-prefix-help-command))
+
+
 
 
 (setq denote-directory (expand-file-name "~/Documents/notes"))
@@ -338,6 +318,15 @@
   (which-key-idle-delay 0.8)       ;; Set the time delay (in seconds) for the which-key popup to appear
   (which-key-max-description-length 25)
   (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
+
+(use-package ultra-scroll
+  ;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
+  :ensure t
+  :init
+  (setq scroll-conservatively 3 ; or whatever value you prefer, since v0.4
+        scroll-margin 0)        ; important: scroll-margin>0 not yet supported
+  :config
+  (ultra-scroll-mode 1))
 
 ;; theme switching
 
