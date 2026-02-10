@@ -9,19 +9,17 @@
 ;; custom configuration variables and settings
 (defvar my-theme-idx 0)
 
-(defcustom my-theme-candidates
-  '(doric-wind doric-water ef-spring solarized-dark solarized-light)
-  "selection of themes to cycle through")
-
-(defvar config-evil-enabled nil)
-
+(defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
+(defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
+(defcustom config-font-mono"Cascadia Code" "monospaced font")
+(defcustom config-font-mono-height 130 "monospaced font size")
+(defcustom config-font-ui "Inter" "font used for the UI")
 ;; font settings
-(let ((mono-spaced-font "CaskaydiaCove NF")
-      (proportionately-spaced-font "Inter"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
+(let ((mono-spaced-font config-font-mono)
+      (proportionately-spaced-font config-font-ui))
+  (set-face-attribute 'default nil :family mono-spaced-font :height config-font-mono-height)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
-
 
 ;; Packages
 (use-package emacs
@@ -66,14 +64,8 @@
   ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
   (load custom-file 'noerror 'nomessage)
-  :bind (
-         ([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts (Minibuffer Escape)
-         ;; Zooming In/Out
-         ("C-+" . text-scale-increase)
-         ("C--" . text-scale-decrease)
-         ("<C-wheel-up>" . text-scale-increase)
-         ("<C-wheel-down>" . text-scale-decrease)
-         ))
+  :bind (([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts
+))
 
 ;; themes
 (use-package solarized-theme :ensure t)
@@ -165,6 +157,7 @@
   :ensure t
   :init
   (global-corfu-mode)
+  (corfu-popupinfo-mode)
   :custom
   (corfu-auto t)        ;; auto completion
   (corfu-cycle t))      ;; cycle candidates
@@ -188,15 +181,12 @@
 (use-package embark
   :ensure t
   :bind
-  (("C-." . embark-act)         ;; pick an action
+  (("C-," . embark-act)         ;; pick an action
    ("C-;" . embark-dwim)        ;; do what I mean
    ("C-h B" . embark-bindings)) ;; show keybindings
   :init
   ;; Replace the default help with Embark
   (setq prefix-help-command #'embark-prefix-help-command))
-
-
-
 
 (setq denote-directory (expand-file-name "~/Documents/notes"))
 ;; helper function to search notes with consult given that
@@ -283,9 +273,6 @@
   :commands enhanced-evil-paredit-mode
   :hook (paredit-mode . enhanced-evil-paredit-mode))
 
-(use-package python-mode
-  :ensure t)
-
 (use-package lua-mode
   :ensure t)
 
@@ -300,8 +287,12 @@
   :ensure nil
   :hook ((python-mode zig-mode) . eglot-ensure))
 
-(use-package empv
+(use-package apheleia
   :ensure t
+  :config (apheleia-global-mode +1))
+
+(use-package empv
+  :ensure nil
   :config
   (setq empv-video-dir "D:/Videos"))
 
