@@ -7,10 +7,6 @@ local config = wezterm.config_builder()
 
 local is_windows = wezterm.target_triple == 'x86_64-pc-windows-msvc'
 
--- default geometry
-config.initial_cols = 120
-config.initial_rows = 28
-
 -- or, changing the font size and color scheme.
 config.font = wezterm.font "CaskaydiaCove NF"
 config.font_size = 13
@@ -24,7 +20,7 @@ end
 
 -- Use CTRL+W as a "leader" key, similar to Vim
 config.leader = {
-  key = 'x',
+  key = 'q',
   mods = 'CTRL',
   timeout_milliseconds = 1000,
 }
@@ -35,8 +31,8 @@ local function map(mods, key, action)
 end
 
 -- splits
-map('LEADER', '3', act.SplitHorizontal { domain = 'CurrentPaneDomain' })
-map('LEADER', '2', act.SplitVertical { domain = 'CurrentPaneDomain' })
+map('LEADER', 'v', act.SplitHorizontal { domain = 'CurrentPaneDomain' })
+map('LEADER', 'h', act.SplitVertical { domain = 'CurrentPaneDomain' })
 -- Vim-style pane navigation with Alt+h/j/k/l
 map('ALT', 'h', act.ActivatePaneDirection 'Left')
 map('ALT', 'j', act.ActivatePaneDirection 'Down')

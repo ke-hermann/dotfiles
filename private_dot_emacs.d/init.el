@@ -7,8 +7,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 ;; custom configuration variables and settings
-(defvar my-theme-idx 0)
-
 (defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
 (defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
 (defcustom config-font-mono"Cascadia Code" "monospaced font")
@@ -65,7 +63,7 @@
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
   (load custom-file 'noerror 'nomessage)
   :bind (([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts
-))
+         ))
 
 ;; themes
 (use-package solarized-theme :ensure t)
@@ -311,7 +309,7 @@
   (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
 
 (use-package ultra-scroll
-  ;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
+                                        ;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
   :ensure t
   :init
   (setq scroll-conservatively 3 ; or whatever value you prefer, since v0.4
@@ -323,8 +321,8 @@
 
 (defun cycle-theme-selection ()
   (interactive)
-  (consult-theme (nth my-theme-idx my-theme-candidates))
-  (setq my-theme-idx (mod (+ 1 my-theme-idx) (length my-theme-candidates))))
+  (setq my-theme-candidates (-rotate 1 my-theme-candidates))
+  (consult-theme (nth 0 my-theme-candidates)))
 
 ;; Keybindings
 ;; additional global keybindings
