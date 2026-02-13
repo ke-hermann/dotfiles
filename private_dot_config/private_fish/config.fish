@@ -17,7 +17,11 @@ abbr -a gitscd 'git config credential.helper store'
 alias ls='lsd'
 alias temacs='emacs -nw'
 
-starship init fish | source
 
 # smarter cd
 zoxide init fish | source
+
+# starship init fish | source
+oh-my-posh init fish --config ~/.config/ohmyposh/pure.omp.json | source
+
+

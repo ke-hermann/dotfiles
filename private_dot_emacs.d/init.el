@@ -9,16 +9,8 @@
 ;; custom configuration variables and settings
 (defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
 (defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
-(defcustom config-font-mono"Cascadia Code" "monospaced font")
+(defcustom config-font-mono "Cascadia Code" "monospaced font")
 (defcustom config-font-mono-height 130 "monospaced font size")
-(defcustom config-font-ui "Inter" "font used for the UI")
-;; font settings
-(let ((mono-spaced-font config-font-mono)
-      (proportionately-spaced-font config-font-ui))
-  (set-face-attribute 'default nil :family mono-spaced-font :height config-font-mono-height)
-  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0))
-
 ;; Packages
 (use-package emacs
   :custom
@@ -65,6 +57,14 @@
   :bind (([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts
          ))
 
+
+;; font settings
+(when (display-graphic-p)
+  (set-face-attribute 'default nil
+                      :font config-font-mono
+                      :height config-font-mono-height))
+
+
 ;; themes
 (use-package solarized-theme :ensure t)
 (use-package doric-themes :ensure t)
@@ -109,6 +109,13 @@
 
 (use-package nov
   :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :bind (:map markdown-mode-map
+              ("C-c C-e" . markdown-do)))
 
 (use-package magit
   :ensure t)
