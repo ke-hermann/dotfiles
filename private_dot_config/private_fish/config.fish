@@ -8,6 +8,11 @@ abbr -a aguu 'sudo apt update  && sudo apt upgrade'
 abbr -a agr 'sudo apt remove'
 abbr -a agi 'sudo apt install -y'
 
+# dnf / fedora 
+abbr -a dnfu 'sudo dnf upgrade'
+abbr -a dnfi 'sudo dnf install'
+abbr -a dnfr 'sudo dnf remove'
+
 
 # git 
 abbr -a gitscd 'git config credential.helper store'
