@@ -1,27 +1,29 @@
-# Alacritty configuration
-# Save to ~/.config/alacritty/alacritty.toml
-
-
 [general]
-import = ["./themes/rose-pine.toml"]
+working_directory = "c:/users/herma"
+import = [
+"~/.config/alacritty/themes/rose-pine.toml",
+]
+
+[terminal]
+shell = "nu"
 
 [font]
 size = 13.0
 
 [font.normal]
-family = "JetBrains Mono"
+family = "Cascadia Code"
 style = "Regular"
 
 [font.bold]
-family = "JetBrains Mono"
+family = "Cascadia Code"
 style = "Bold"
 
 [font.italic]
-family = "JetBrains Mono"
+family = "Cascadia Code"
 style = "Italic"
 
 [font.bold_italic]
-family = "JetBrains Mono"
+family = "Cascadia Code"
 style = "Bold Italic"
 
 [window]
@@ -30,3 +32,4 @@ padding = { x = 5, y = 5 }
 
 [cursor]
 style = "Block"
+
