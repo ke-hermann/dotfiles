@@ -155,7 +155,7 @@ require("lazy").setup({
         require("lualine").setup({
           options = {
             icons_enabled = true,
-            theme = "solarized",
+            theme = "auto",
           },
         })
       end,
@@ -216,7 +216,14 @@ require("lazy").setup({
       { "catppuccin/nvim" },
       { "folke/tokyonight.nvim" },
       { "nyoom-engineering/oxocarbon.nvim" },
-      { "maxmx03/solarized.nvim" },
+      {
+        "maxmx03/solarized.nvim",
+        config = function()
+          vim.o.termguicolors = true
+          vim.o.background = "dark"
+          vim.cmd.colorscheme("solarized")
+        end,
+      },
       { "rose-pine/neovim", name = "rose-pine" },
     },
     {
