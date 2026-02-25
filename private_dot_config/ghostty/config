@@ -1,5 +1,5 @@
 theme = Builtin Solarized Dark
-font-family = Cascadia Code
+font-family = JetBrains Mono
 font-size = 13
 
 # create new splits

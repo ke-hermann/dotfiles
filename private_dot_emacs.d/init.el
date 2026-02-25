@@ -9,7 +9,7 @@
 ;; custom configuration variables and settings
 (defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
 (defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
-(defcustom config-font-mono "Cascadia Code" "monospaced font")
+(defcustom config-font-mono "JetBrains Mono" "monospaced font")
 (defcustom config-font-mono-height 130 "monospaced font size")
 ;; Packages
 (use-package emacs
@@ -257,6 +257,21 @@
   :after evil
   :config
   (evil-collection-init))
+
+;; SBCl / common lisp config
+(use-package sly
+  :ensure t
+  :init
+  (setq inferior-lisp-program "sbcl")
+  :config
+  ;; Enable useful SLY modules
+  (setq sly-contribs '(sly-fancy))
+  ;; nicer REPL history
+  (setq sly-history-file "~/.emacs.d/sly-history.eld"))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Programming Configuration
 (use-package paredit
