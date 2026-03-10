@@ -64,7 +64,6 @@
                       :font config-font-mono
                       :height config-font-mono-height))
 
-
 ;; themes
 (use-package solarized-theme :ensure t)
 (use-package doric-themes :ensure t)
@@ -278,7 +277,8 @@
   :ensure t
   :commands paredit-mode
   :hook
-  (emacs-lisp-mode . paredit-mode))
+  (emacs-lisp-mode . paredit-mode)
+  (lisp-mode . paredit-mode))
 
 (use-package magit
   :defer

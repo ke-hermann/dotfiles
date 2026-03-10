@@ -12,4 +12,4 @@ keybind = alt+j=goto_split:bottom
 keybind = alt+k=goto_split:top
 
 # shell on startup
-command = /usr/bin/nu
+# command = /usr/bin/nu

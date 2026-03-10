@@ -26,7 +26,7 @@ alias temacs='emacs -nw'
 # smarter cd
 zoxide init fish | source
 
-# starship init fish | source
-oh-my-posh init fish --config ~/.config/ohmyposh/pure.omp.json | source
+starship init fish | source
+# oh-my-posh init fish --config ~/.config/ohmyposh/pure.omp.json | source
 
 

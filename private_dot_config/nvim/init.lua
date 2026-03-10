@@ -281,6 +281,13 @@ require("lazy").setup({
         },
       },
     },
+    {
+      "MeanderingProgrammer/render-markdown.nvim",
+      dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+      ---@module 'render-markdown'
+      ---@type render.md.UserConfig
+      opts = {},
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
