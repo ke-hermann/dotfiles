@@ -1,94 +1,137 @@
 (require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+(package-refresh-contents)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-;; custom themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(setq inhibit-startup-screen t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1) ; Optional
 
-;; custom configuration variables and settings
-(defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
-(defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
-(defcustom config-font-mono "JetBrains Mono" "monospaced font")
-(defcustom config-font-mono-height 130 "monospaced font size")
-;; Packages
-(use-package emacs
-  :custom
-  ;; Still needed for terminals
-  (menu-bar-mode nil)         ;; Disable the menu bar
-  (scroll-bar-mode nil)       ;; Disable the scroll bar
-  (tool-bar-mode nil)         ;; Disable the tool bar
+(setq ring-bell-function 'ignore)
+(recentf-mode 1)
 
-  (ring-bell-function 'ignore) ;; turn the obnoxious bell off
+;; automatically refresh files
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
 
-  (inhibit-startup-screen t)  ;; Disable welcome screen
+;; history and place in file
+(savehist-mode 1)
+(save-place-mode 1)
 
-  (delete-selection-mode t)   ;; Select text and delete it by typing.
-  (electric-indent-mode t)  ;; Turn off the weird indenting that Emacs does by default.
-  (electric-pair-mode t)      ;; Turns on automatic parens pairing
+(setq gc-cons-threshold 100000000) ; 100mb
 
-  (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
-  (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
 
-  (recentf-mode t) ;; Enable recent file mode
+(set-face-attribute 'default nil :family "Iosevka" :height 150)
+(set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :height 1.0)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 1.0)
 
-  (global-display-line-numbers-mode t)  ;; Display line numbers
-  (global-hl-line-mode t)               ;; Highlight current line
+(setq custom-safe-themes t)
+(setq use-short-answers t)
+(setq read-answer-short t)
+(setq help-window-select t) ; also check `display-buffer-alist' below
+(setq help-window-keep-selected t) ; Emacs 29
+(setq find-library-include-other-files nil) ; Emacs 29
+(setq window-combination-resize t)
+(setq save-interprogram-paste-before-kill t)
 
-  (native-comp-async-report-warnings-errors 'silent) ;; Don't show native comp errors
-  (warning-minimum-level :error) ;; Only show errors in warnings buffer
+(use-package solarized-theme
+  :ensure t)
 
-  (indent-tabs-mode nil) ;; Only use spaces for indentation
-  (tab-width 4)
+(use-package ef-themes
+  :ensure t
+  :config (load-theme 'ef-dream t))
 
-  (whitespace-style '(face tabs tab-mark trailing))
-
-  (make-backup-files nil) ;; Stop creating ~ backup files
-  (auto-save-default nil) ;; Stop creating # auto save files
-  (delete-by-moving-to-trash t)
-  :hook
-  (prog-mode . hs-minor-mode) ;; Enable folding hide/show globally
-  ;; (prog-mode . display-fill-column-indicator-mode) ;; Display line length indicator
-  (prog-mode . whitespace-mode)
+(use-package dired
+  :ensure nil
   :config
-  ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
-  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-  (load custom-file 'noerror 'nomessage)
-  :bind (([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts
-         ))
+  ;; Most people I have talked to prefer a single Dired buffer.
+  ;; Personally I like the many Dired buffers, but I understand why
+  ;; this feels overwhelming.
+  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-auto-revert-buffer #'dired-directory-changed-p) ; also see `dired-do-revert-buffer'
+  (setq dired-clean-up-buffers-too t)
+  (setq dired-clean-confirm-killing-deleted-buffers t)
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
+  (setq delete-by-moving-to-trash t)
+  (setq dired-create-destination-dirs 'ask)
+  (setq dired-create-destination-dirs-on-trailing-dirsep t) ; Emacs 29
+  (setq wdired-create-parent-directories t))
 
 
-;; font settings
-(when (display-graphic-p)
-  (set-face-attribute 'default nil
-                      :font config-font-mono
-                      :height config-font-mono-height))
-
-;; themes
-(use-package solarized-theme :ensure t)
-(use-package doric-themes :ensure t)
-(use-package ef-themes :ensure t)
-
-(use-package org-modern
+;;;; Completion Setup
+(use-package vertico
   :ensure t
   :config
-  (global-org-modern-mode))
+  (vertico-mode 1))
 
-(use-package doom-modeline
+(use-package marginalia
   :ensure t
-  :custom
-  (doom-modeline-height 25) ;; Set modeline height
-  :hook (after-init . doom-modeline-mode))
+  :config
+  (marginalia-mode 1))
 
-(use-package nerd-icons :ensure t)
-
-(use-package nerd-icons-dired
+;;;; VERY USEFUL but not essential packages
+(use-package orderless
   :ensure t
-  :hook (dired-mode . nerd-icons-dired-mode))
+  :config
+  (setq completion-styles '(orderless basic)))
 
-(use-package nerd-icons-ibuffer
+(use-package consult
   :ensure t
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+  ;; All commands have their utility, but those are commonly needed.
+  :commands (consult-buffer consult-line consult-outline consult-find consult-grep))
+
+(use-package embark
+  :ensure t
+  :bind
+  ( :map minibuffer-local-map
+    ("C-c C-c" . embark-collect)
+    ("C-c C-e" . embark-export))
+  :config
+  ;; Needed for correct exporting while using Embark with Consult commands.
+  (use-package embark-consult
+    :ensure t
+    :after consult))
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode +1))
+
+(use-package ace-window
+  :ensure t
+  :config (global-set-key (kbd "M-o") 'ace-window))
+
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode
+          lisp-mode
+          lisp-interaction-mode
+          scheme-mode
+          clojure-mode) . paredit-mode))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package pulsar
   :ensure t
@@ -100,265 +143,7 @@
   (pulsar-global-mode 1)
   :config
   (setq pulsar-delay 0.055)
-  (setq pulsar-iterations 5))
-
-(use-package whole-line-or-region
-  :ensure t
-  :config (whole-line-or-region-global-mode +1))
-
-(use-package nov
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown")
-  :bind (:map markdown-mode-map
-              ("C-c C-e" . markdown-do)))
-
-(use-package magit
-  :ensure t)
-
-;; Vertico: minibuffer completion UI
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode))
-
-;; Orderless: flexible matching
-(use-package orderless
-  :ensure t
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides
-        '((file (styles basic partial-completion)))))
-
-;; Marginalia: annotations in minibuffer
-(use-package marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
-
-;; Consult: powerful completion commands
-(use-package consult
-  :ensure t
-  :bind (("C-x b" . consult-buffer)
-         ("M-y"   . consult-yank-pop)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-man)
-         ("C-c i" . consult-info)
-         ("C-c f" . consult-fd)
-         ([remap Info-search] . consult-info)
-         ("C-x r b" . consult-bookmark)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("C-x p b" . consult-project-buffer)))
-
-;; Corfu: completion popup
-(use-package corfu
-  :ensure t
-  :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
-  :custom
-  (corfu-auto t)        ;; auto completion
-  (corfu-cycle t))      ;; cycle candidates
-
-;; Cape: completion sources
-(use-package cape
-  :ensure t
-  :init
-  ;; Add useful completion sources
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-
-;; TAB for completion everywhere
-(setq tab-always-indent 'complete)
-
-;; Enable completion in the minibuffer
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
-
-;; Embark: contextual actions
-(use-package embark
-  :ensure t
-  :bind
-  (("C-," . embark-act)         ;; pick an action
-   ("C-;" . embark-dwim)        ;; do what I mean
-   ("C-h B" . embark-bindings)) ;; show keybindings
-  :init
-  ;; Replace the default help with Embark
-  (setq prefix-help-command #'embark-prefix-help-command))
-
-(setq denote-directory (expand-file-name "~/Documents/notes"))
-;; helper function to search notes with consult given that
-;; the denote builtin grep command does not work on windows
-;; due to `xargs' dependencies
-(defun denote-ripgrep ()
-  (interactive)
-  (consult-ripgrep denote-directory))
-;; same for `denote-dired'
-(defun denote-fd ()
-  (interactive)
-  (consult-fd denote-directory))
-
-(use-package denote
-  :ensure t
-  :hook (dired-mode . denote-dired-mode)
-  :bind
-  (("C-c n n" . denote)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n l" . denote-link)
-   ("C-c n b" . denote-backlinks)
-   ("C-c n d" . denote-dired)
-   ("C-c n g" . denote-ripgrep)
-   ("C-c n f" . denote-fd))
-  :config
-  ;; Automatically shorten Denote buffers names
-  (denote-rename-buffer-mode 1))
-
-
-(use-package denote-journal
-  :ensure t
-  ;; Bind those to some key for your convenience.
-  :commands ( denote-journal-new-entry
-              denote-journal-new-or-existing-entry
-              denote-journal-link-or-create-entry )
-  :hook (calendar-mode . denote-journal-calendar-mode)
-  :config
-  ;; Use the "journal" subdirectory of the `denote-directory'.  Set this
-  ;; to nil to use the `denote-directory' instead.
-  (setq denote-journal-directory
-        (expand-file-name "journal" denote-directory))
-  ;; Default keyword for new journal entries. It can also be a list of
-  ;; strings.
-  (setq denote-journal-keyword "journal")
-  ;; Read the doc string of `denote-journal-title-format'.
-  (setq denote-journal-title-format 'day-date-month-year))
-
-(use-package evil
-  :ensure t
-  :if config-evil-enabled
-  :custom
-  (evil-want-integration t)
-  (evil-want-keybinding nil)
-  (evil-want-C-u-scroll t)
-  (evil-want-C-i-jump nil)
-  (evil-undo-system 'undo-redo)
-  :config
-  (evil-mode 1))
-
-(use-package evil-collection
-  :ensure t
-  :if config-evil-enabled
-  :after evil
-  :config
-  (evil-collection-init))
-
-;; SBCl / common lisp config
-(use-package sly
-  :ensure t
-  :init
-  (setq inferior-lisp-program "sbcl")
-  :config
-  ;; Enable useful SLY modules
-  (setq sly-contribs '(sly-fancy))
-  ;; nicer REPL history
-  (setq sly-history-file "~/.emacs.d/sly-history.eld"))
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-;; Programming Configuration
-(use-package paredit
-  :ensure t
-  :commands paredit-mode
-  :hook
-  (emacs-lisp-mode . paredit-mode)
-  (lisp-mode . paredit-mode))
-
-(use-package magit
-  :defer
-  :custom (magit-diff-refine-hunk (quote all)) ;; Shows inline diff
-  :config
-  (setopt magit-format-file-function #'magit-format-file-nerd-icons) ;; Magit nerd icons
-  )
-
-(use-package enhanced-evil-paredit
-  :ensure t
-  :if config-evil-enabled
-  :commands enhanced-evil-paredit-mode
-  :hook (paredit-mode . enhanced-evil-paredit-mode))
-
-(use-package lua-mode
-  :ensure t)
-
-(use-package zig-mode
-  :mode "\\.zig\\'")
-
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '(zig-mode . ("zls"))))
-
-(use-package eglot
-  :ensure nil
-  :hook ((python-mode zig-mode) . eglot-ensure))
-
-(use-package apheleia
-  :ensure t
-  :config (apheleia-global-mode +1))
-
-(use-package empv
-  :ensure nil
-  :config
-  (setq empv-video-dir "D:/Videos"))
-
-(use-package which-key
-  :ensure nil ;; Don't install which-key because it's now built-in
-  :hook (after-init . which-key-mode)
-  :diminish
-  :custom
-  (which-key-side-window-location 'bottom)
-  (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
-  (which-key-sort-uppercase-first nil)
-  (which-key-add-column-padding 1) ;; Number of spaces to add to the left of each column
-  (which-key-min-display-lines 6)  ;; Increase the minimum lines to display because the default is only 1
-  (which-key-idle-delay 0.8)       ;; Set the time delay (in seconds) for the which-key popup to appear
-  (which-key-max-description-length 25)
-  (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
-
-(use-package ultra-scroll
-                                        ;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
-  :ensure t
-  :init
-  (setq scroll-conservatively 3 ; or whatever value you prefer, since v0.4
-        scroll-margin 0)        ; important: scroll-margin>0 not yet supported
-  :config
-  (ultra-scroll-mode 1))
-
-;; theme switching
-
-(defun cycle-theme-selection ()
-  (interactive)
-  (setq my-theme-candidates (-rotate 1 my-theme-candidates))
-  (consult-theme (nth 0 my-theme-candidates)))
-
-;; Keybindings
-;; additional global keybindings
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
-(global-set-key [remap list-buffers] 'ibuffer)
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key [remap cycle-spacing] 'just-one-space)
-
-(global-set-key (kbd "C-x C-r") 'recentf)
-
-(global-set-key (kbd "M-n") 'scroll-up-command)
-(global-set-key (kbd "M-p") 'scroll-down-command)
-
-(global-set-key (kbd "C-x q") #'query-replace)
-(global-set-key (kbd "<f7>") #'menu-bar-mode)
-(global-set-key (kbd "<f9>") #'cycle-theme-selection)
-
+  (setq pulsar-iterations 5)
+  (setq pulsar-face 'pulsar-magenta)
+  (setq pulsar-region-face 'pulsar-yellow)
+  (setq pulsar-highlight-face 'pulsar-magenta))
