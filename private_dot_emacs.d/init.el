@@ -268,9 +268,6 @@
   ;; nicer REPL history
   (setq sly-history-file "~/.emacs.d/sly-history.eld"))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Programming Configuration
 (use-package paredit
