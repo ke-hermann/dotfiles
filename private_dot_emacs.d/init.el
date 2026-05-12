@@ -25,9 +25,11 @@
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 
-(set-face-attribute 'default nil :family "Iosevka" :height 150)
+(set-face-attribute 'default nil :family "JetBrains Mono" :height 130)
 (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :height 1.0)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 1.0)
+(set-face-attribute 'variable-pitch nil :family "Inter" :height 1.0)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 (setq custom-safe-themes t)
 (setq use-short-answers t)
@@ -144,6 +146,6 @@
   :config
   (setq pulsar-delay 0.055)
   (setq pulsar-iterations 5)
-  (setq pulsar-face 'pulsar-magenta)
+  (setq pulsar-face 'pulsar-blue)
   (setq pulsar-region-face 'pulsar-yellow)
-  (setq pulsar-highlight-face 'pulsar-magenta))
+  (setq pulsar-highlight-face 'pulsar-blue))

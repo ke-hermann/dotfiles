@@ -1,6 +1,6 @@
-theme = TokyoNight Night
-font-family = Iosevka 
-font-size = 15
+theme = Oxocarbon
+font-family = JetBrains Mono 
+font-size = 13
 
 # create new splits
 keybind = ctrl+q>v=new_split:right
