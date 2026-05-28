@@ -1,0 +1,98 @@
+call plug#begin()
+
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" colorschemes
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'lifepillar/vim-solarized8'
+
+call plug#end()
+
+set number
+set ruler
+set wildmenu
+set showcmd
+set showmatch
+
+" encoding/format
+set encoding=utf-8
+set fileformats=unix,dos,mac
+
+" searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set smartindent 
+set expandtab
+set autoindent
+
+" indent
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set autoindent
+
+filetype plugin indent on
+syntax on
+
+let mapleader = " "
+
+set termguicolors
+set background=dark
+colorscheme catppuccin_mocha
+let g:airline_theme='catppuccin_mocha'
+
+" keybindings
+inoremap jk <Esc>
+
+" Clear search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+
+" ====================== coc.nvim (LSP) ======================
+
+" Use <Tab> and <S-Tab> for navigation in completion menu
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Confirm completion with Enter
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+" Key mappings for LSP features
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Show documentation on hover (K)
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Rename symbol
+nmap <leader>rn <Plug>(coc-rename)
+
+" Format current buffer
+nmap <leader>f  <Plug>(coc-format)
+
+" Useful commands
+nnoremap <leader>cr :CocRestart<CR>
+
+" Show signature help while typing
+autocmd CursorHoldI * silent! call CocActionAsync('showSignatureHelp')
+
+" Highlight symbol under cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')

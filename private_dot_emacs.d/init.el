@@ -18,9 +18,12 @@
   (scroll-bar-mode nil)       ;; Disable the scroll bar
   (tool-bar-mode nil)         ;; Disable the tool bar
 
-  (ring-bell-function 'ignore) ;; turn the obnoxious bell off
+(use-package solarized-theme
+  :ensure t)
 
-  (inhibit-startup-screen t)  ;; Disable welcome screen
+(use-package ef-themes
+  :ensure t
+  :config (load-theme 'ef-dream t))
 
   (electric-indent-mode t)  ;; Turn off the weird indenting that Emacs does by default.
   (electric-pair-mode t)      ;; Turns on automatic parens pairing
@@ -89,7 +92,7 @@
 (use-package org-modern
   :ensure t
   :config
-  (global-org-modern-mode))
+  (vertico-mode 1))
 
 ;;;; Bookmarks
 (use-package bookmark
