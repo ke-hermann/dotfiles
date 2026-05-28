@@ -1,16 +1,15 @@
-(require 'package)
-(package-initialize)
+(use-package package
+  :ensure nil
+  :config
+  (setq package-archives
+        '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
+          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+          ("melpa" . "https://melpa.org/packages/")))
+  (setq package-archive-priorities
+        '(("gnu-elpa" . 3)
+          ("nongnu" . 2)
+          ("melpa" . 1))))
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
-;; custom themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
-;; custom configuration variables and settings
-(defcustom my-theme-candidates '(solarized-dark solarized-light) "selection of themes to cycle through.")
-(defcustom config-evil-enabled nil "decide whether evil layer should be enabled.")
-(defcustom config-font-mono "JetBrains Mono" "monospaced font")
-(defcustom config-font-mono-height 130 "monospaced font size")
 ;; Packages
 (use-package emacs
   :custom
@@ -23,12 +22,14 @@
 
   (inhibit-startup-screen t)  ;; Disable welcome screen
 
-  (delete-selection-mode t)   ;; Select text and delete it by typing.
   (electric-indent-mode t)  ;; Turn off the weird indenting that Emacs does by default.
   (electric-pair-mode t)      ;; Turns on automatic parens pairing
 
   (global-auto-revert-mode t) ;; Automatically reload file and show changes if the file has changed
-  (use-short-answers t)   ;; Since Emacs 29, `yes-or-no-p' will use `y-or-n-p'
+
+  (custom-safe-themes t)
+  (use-short-answers t)
+  (read-answer-short t)
 
   (recentf-mode t) ;; Enable recent file mode
 
@@ -51,44 +52,51 @@
   ;; (prog-mode . display-fill-column-indicator-mode) ;; Display line length indicator
   (prog-mode . whitespace-mode)
   :config
+  (set-face-attribute 'default nil :family "PragmataPro" :height 140)
+  (set-face-attribute 'fixed-pitch nil :family "PragmataPro" :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family "Inter" :height 1.0)
   ;; Move customization variables to a separate file and load it, avoid filling up init.el with unnecessary variables
-  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-  (load custom-file 'noerror 'nomessage)
   :bind (([escape] . keyboard-escape-quit) ;; Makes Escape quit prompts
          ))
 
+;; Without the `custom-file', Emacs writes directly to the "init.el",
+;; which can be confusing.
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file :no-error-if-file-is-missing)
 
-;; font settings
-(when (display-graphic-p)
-  (set-face-attribute 'default nil
-                      :font config-font-mono
-                      :height config-font-mono-height))
+(use-package ef-themes
+  :ensure t
+  :config (load-theme 'ef-dream t))
 
-;; themes
-(use-package solarized-theme :ensure t)
-(use-package doric-themes :ensure t)
-(use-package ef-themes :ensure t)
+;;;; Save minibuffer histories
+(use-package savehist
+  :ensure nil
+  :config
+  (savehist-mode 1))
+
+;; simplified window switching
+(use-package ace-window
+  :ensure t
+  :config
+  (global-set-key (kbd "M-o") 'ace-window))
+
+;;;; Delete the selected text when inserting new text
+(use-package delsel
+  :ensure nil
+  :config
+  (delete-selection-mode 1))
 
 (use-package org-modern
   :ensure t
   :config
   (global-org-modern-mode))
 
-(use-package doom-modeline
-  :ensure t
-  :custom
-  (doom-modeline-height 25) ;; Set modeline height
-  :hook (after-init . doom-modeline-mode))
-
-(use-package nerd-icons :ensure t)
-
-(use-package nerd-icons-dired
-  :ensure t
-  :hook (dired-mode . nerd-icons-dired-mode))
-
-(use-package nerd-icons-ibuffer
-  :ensure t
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+;;;; Bookmarks
+(use-package bookmark
+  :ensure nil
+  :config
+  ;; Write changes to the file when modified.
+  (setq bookmark-save-flag 1))
 
 (use-package pulsar
   :ensure t
@@ -109,52 +117,49 @@
 (use-package nov
   :ensure t)
 
-(use-package markdown-mode
-  :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown")
-  :bind (:map markdown-mode-map
-              ("C-c C-e" . markdown-do)))
-
 (use-package magit
   :ensure t)
 
-;; Vertico: minibuffer completion UI
 (use-package vertico
   :ensure t
-  :init
-  (vertico-mode))
+  :config
+  (vertico-mode 1))
 
-;; Orderless: flexible matching
-(use-package orderless
-  :ensure t
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides
-        '((file (styles basic partial-completion)))))
-
-;; Marginalia: annotations in minibuffer
 (use-package marginalia
   :ensure t
-  :init
-  (marginalia-mode))
+  :config
+  (marginalia-mode 1))
 
-;; Consult: powerful completion commands
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic)))
+
 (use-package consult
   :ensure t
-  :bind (("C-x b" . consult-buffer)
-         ("M-y"   . consult-yank-pop)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-man)
-         ("C-c i" . consult-info)
-         ("C-c f" . consult-fd)
-         ([remap Info-search] . consult-info)
-         ("C-x r b" . consult-bookmark)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("C-x p b" . consult-project-buffer)))
+  ;; All commands have their utility, but those are commonly needed.
+  :commands (consult-buffer consult-line consult-outline consult-find consult-grep))
+
+(use-package embark
+  :ensure t
+  :bind
+  ;; Embark is helpful in every context, though there are other ways
+  ;; to do what it does.  Where it stands out is in its ability to
+  ;; deal with all the minibuffer results.  The equivalent of those
+  ;; two commands should be a core Emacs functionality.
+  ("C-," . embark-act)
+  ( :map minibuffer-local-map
+    ("C-c C-c" . embark-collect)
+    ("C-c C-e" . embark-export))
+  :config
+  ;; Needed for correct exporting while using Embark with Consult commands.
+  (use-package embark-consult
+    :ensure t
+    :after consult))
+
+;; Useful when combined with `delete-by-moving-to-trash'.
+(use-package trashed
+  :ensure t)
 
 ;; Corfu: completion popup
 (use-package corfu
@@ -163,7 +168,7 @@
   (global-corfu-mode)
   (corfu-popupinfo-mode)
   :custom
-  (corfu-auto t)        ;; auto completion
+  (corfu-auto t)   ;; auto completion
   (corfu-cycle t))      ;; cycle candidates
 
 ;; Cape: completion sources
@@ -181,66 +186,8 @@
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
-;; Embark: contextual actions
-(use-package embark
-  :ensure t
-  :bind
-  (("C-," . embark-act)         ;; pick an action
-   ("C-;" . embark-dwim)        ;; do what I mean
-   ("C-h B" . embark-bindings)) ;; show keybindings
-  :init
-  ;; Replace the default help with Embark
-  (setq prefix-help-command #'embark-prefix-help-command))
-
-(setq denote-directory (expand-file-name "~/Documents/notes"))
-;; helper function to search notes with consult given that
-;; the denote builtin grep command does not work on windows
-;; due to `xargs' dependencies
-(defun denote-ripgrep ()
-  (interactive)
-  (consult-ripgrep denote-directory))
-;; same for `denote-dired'
-(defun denote-fd ()
-  (interactive)
-  (consult-fd denote-directory))
-
-(use-package denote
-  :ensure t
-  :hook (dired-mode . denote-dired-mode)
-  :bind
-  (("C-c n n" . denote)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n l" . denote-link)
-   ("C-c n b" . denote-backlinks)
-   ("C-c n d" . denote-dired)
-   ("C-c n g" . denote-ripgrep)
-   ("C-c n f" . denote-fd))
-  :config
-  ;; Automatically shorten Denote buffers names
-  (denote-rename-buffer-mode 1))
-
-
-(use-package denote-journal
-  :ensure t
-  ;; Bind those to some key for your convenience.
-  :commands ( denote-journal-new-entry
-              denote-journal-new-or-existing-entry
-              denote-journal-link-or-create-entry )
-  :hook (calendar-mode . denote-journal-calendar-mode)
-  :config
-  ;; Use the "journal" subdirectory of the `denote-directory'.  Set this
-  ;; to nil to use the `denote-directory' instead.
-  (setq denote-journal-directory
-        (expand-file-name "journal" denote-directory))
-  ;; Default keyword for new journal entries. It can also be a list of
-  ;; strings.
-  (setq denote-journal-keyword "journal")
-  ;; Read the doc string of `denote-journal-title-format'.
-  (setq denote-journal-title-format 'day-date-month-year))
-
 (use-package evil
   :ensure t
-  :if config-evil-enabled
   :custom
   (evil-want-integration t)
   (evil-want-keybinding nil)
@@ -256,6 +203,10 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :config (rainbow-delimiters-mode +1))
 
 ;; SBCl / common lisp config
 (use-package sly
@@ -305,13 +256,9 @@
   :hook ((python-mode zig-mode) . eglot-ensure))
 
 (use-package apheleia
+  :if (not (eq system-type 'windows-nt))
   :ensure t
   :config (apheleia-global-mode +1))
-
-(use-package empv
-  :ensure nil
-  :config
-  (setq empv-video-dir "D:/Videos"))
 
 (use-package which-key
   :ensure nil ;; Don't install which-key because it's now built-in
@@ -328,7 +275,6 @@
   (which-key-allow-imprecise-window-fit nil)) ;; Fixes which-key window slipping out in Emacs Daemon
 
 (use-package ultra-scroll
-                                        ;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; if desired (emacs>=v30)
   :ensure t
   :init
   (setq scroll-conservatively 3 ; or whatever value you prefer, since v0.4
@@ -336,18 +282,10 @@
   :config
   (ultra-scroll-mode 1))
 
-;; theme switching
-
-(defun cycle-theme-selection ()
-  (interactive)
-  (setq my-theme-candidates (-rotate 1 my-theme-candidates))
-  (consult-theme (nth 0 my-theme-candidates)))
-
 ;; Keybindings
 ;; additional global keybindings
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key [remap list-buffers] 'ibuffer)
-(global-set-key (kbd "M-o") 'other-window)
 (global-set-key [remap cycle-spacing] 'just-one-space)
 
 (global-set-key (kbd "C-x C-r") 'recentf)
